@@ -1,13 +1,16 @@
 /*
-  THE OBSERVATORY — fictional, client-only RP mini-game.
-  No actual hacking, protected account service or server-side security exists here.
+  THE OBSERVATORY — client-side archive interface.
+  The terminal games, location scan and credential gate are theatrical UI effects.
   Everything inside this static site (including the archive) is public.
 */
 (() => {
   'use strict';
 
-  const STORAGE = 'observatory-rp-v1';
-  const SESSION = 'observatory-rp-session';
+  const STORAGE = 'observatory-access-v3';
+  const SESSION = 'observatory-ephemeral-v3';
+  const SESSION_MS = 120000;
+  const CORTEX_USER = 'cortex';
+  const CORTEX_PASS = 'element12';
   const TOTAL_ATTEMPTS = 5;
   const STAGES = 5;
   const $ = id => document.getElementById(id);
@@ -41,19 +44,24 @@
   let toastTimer = 0;
   let terminalHasBooted = false;
   let lastTerminalMode = null;
+  let sessionIdentity = null;
+  let traceClock = null;
+  let traceSweep = null;
+  let traceActive = false;
   const terminalHistory = [];
 
   function readState() {
     try {
       const parsed = JSON.parse(localStorage.getItem(STORAGE) || '{}');
       const attempts = Number.isInteger(parsed.attempts) ? Math.max(0, Math.min(TOTAL_ATTEMPTS, parsed.attempts)) : TOTAL_ATTEMPTS;
-      return { attempts, account: parsed.account || null, overrideGranted: Boolean(parsed.overrideGranted) };
-    } catch (_) { return { attempts: TOTAL_ATTEMPTS, account: null, overrideGranted: false }; }
+      return { attempts, overrideGranted: Boolean(parsed.overrideGranted) };
+    } catch (_) { return { attempts: TOTAL_ATTEMPTS, overrideGranted: false }; }
   }
   function persist() { localStorage.setItem(STORAGE, JSON.stringify(state)); }
   function showView(name) {
     for (const id of ['accessView', 'accountView', 'wikiView']) $(id).classList.toggle('hidden', id !== name);
     document.body.classList.toggle('archive-active', name === 'wikiView');
+    window.ObservatoryAudio?.page();
     window.scrollTo({ top: 0, behavior: 'instant' });
   }
   function showModal(id) { $(id).classList.remove('hidden'); $(id).setAttribute('aria-hidden', 'false'); }
@@ -66,6 +74,7 @@
     $('errorTitle').textContent = title;
     $('errorMessage').textContent = message;
     $('errorOverlay').classList.remove('hidden');
+    window.ObservatoryAudio?.error();
     clearTimeout(noticeTimer); noticeTimer = setTimeout(() => $('errorOverlay').classList.add('hidden'), 1150);
   }
   function updateAttempts() {
@@ -77,14 +86,86 @@
     button.textContent = state.attempts === 0 ? '[ >_ ] OPEN TERMINAL // RESET AVAILABLE' : '[ >_ ] OPEN EMERGENCY TERMINAL';
   }
   function consumeAttempt() {
-    if (state.attempts <= 0) { toast('SESSION LOCKED. Open terminal and type reset to restart the RP simulation.'); return false; }
+    if (state.attempts <= 0) { toast('SESSION LOCKED. Open terminal and type reset to restore the gateway.'); return false; }
     state.attempts--; persist(); updateAttempts(); return true;
   }
+  function clearTraceClock() {
+    clearInterval(traceClock); traceClock = null;
+  }
+  function clearSession() {
+    clearTraceClock();
+    sessionIdentity = null;
+    sessionStorage.removeItem(SESSION);
+  }
   function resetLocalDemo() {
-    if (!confirm('Reset this browser’s RP demo? This clears the local demo account, five-attempt counter, and current session.')) return;
-    localStorage.removeItem(STORAGE); localStorage.removeItem('observatory-rp-private-device-notes-v2'); sessionStorage.removeItem(SESSION);
-    state = readState(); closeGame(false); hideModal('terminalModal'); $('loginForm').reset();
-    updateAttempts(); showView('accessView'); toast('Local RP simulation reset. Five attempts restored.');
+    if (!confirm('Reset this terminal? This restores five attempts and removes saved field notes on this browser.')) return;
+    clearSession();
+    localStorage.removeItem(STORAGE);
+    localStorage.removeItem('observatory-rp-private-device-notes-v2');
+    state = readState();
+    closeGame(false); hideModal('terminalModal');
+    $('loginForm').reset(); $('accountForm').reset();
+    history.replaceState(null, '', location.pathname + location.search);
+    updateAttempts(); showView('accessView'); toast('Local terminal reset. Five attempts restored.');
+  }
+  function startSession(alias, origin) {
+    const entry = { alias, origin, expiresAt: Date.now() + SESSION_MS };
+    sessionStorage.setItem(SESSION, JSON.stringify(entry));
+    activateSession(entry);
+  }
+  function activateSession(entry) {
+    clearTraceClock();
+    sessionIdentity = entry;
+    if (entry.expiresAt <= Date.now()) { triggerLocationTrace(); return; }
+    populateWiki(); showView('wikiView');
+    function tick() {
+      if (!sessionIdentity || traceActive) return;
+      const left = Math.max(0, entry.expiresAt - Date.now());
+      const mm = String(Math.floor(left / 60000)).padStart(2,'0');
+      const ss = String(Math.floor(left % 60000 / 1000)).padStart(2,'0');
+      $('traceCountdown').textContent = `${mm}:${ss}`;
+      $('traceIndicator').classList.toggle('trace-critical', left <= 30000);
+      if (left <= 0) triggerLocationTrace();
+    }
+    tick(); traceClock = setInterval(tick, 180);
+  }
+  function triggerLocationTrace() {
+    if (traceActive) return;
+    traceActive = true;
+    clearSession();
+    hideModal('terminalModal'); hideModal('gameModal');
+    $('errorOverlay').classList.add('hidden');
+    $('traceLayer').classList.remove('hidden');
+    $('traceFill').style.width = '0%';
+    $('traceLog').textContent = 'SIGNAL LOCK ACQUIRED...';
+    window.ObservatoryAudio?.alarm();
+    const lines = [
+      '> LOCATION SIGNATURE IDENTIFIED',
+      '> SEARCHING ACTIVE CONNECTION...',
+      '> SWEEPING NETWORK NODES...',
+      '> TRACE COMPLETE // SESSION EXPOSED',
+      '> ERASING TEMPORARY CREDENTIALS...',
+      '> REINITIALISING ACCESS GATEWAY...'
+    ];
+    let n = 0;
+    clearInterval(traceSweep);
+    traceSweep = setInterval(() => {
+      n++;
+      $('traceFill').style.width = `${Math.min(100, n * 10)}%`;
+      $('traceLog').textContent = lines.slice(0, Math.min(lines.length, Math.ceil(n / 1.6))).join('\n');
+      if (n >= 10) {
+        clearInterval(traceSweep); traceSweep = null;
+        setTimeout(() => {
+          $('traceLayer').classList.add('hidden');
+          state.overrideGranted = false; state.attempts = TOTAL_ATTEMPTS; persist();
+          $('loginForm').reset(); $('accountForm').reset(); updateAttempts();
+          history.replaceState(null, '', location.pathname + location.search);
+          traceActive = false;
+          showView('accessView');
+          window.ObservatoryAudio?.page();
+        }, 500);
+      }
+    }, 650);
   }
 
   function terminalLine(message, tone = '') {
@@ -106,7 +187,7 @@
       terminalHasBooted = false; lastTerminalMode = mode;
     }
     $('terminalTitle').textContent = isArchive ? '● OBSERVATORY // ARCHIVE_SHELL' : '● OBSERVATORY_SHELL.exe';
-    $('terminalFooterLeft').textContent = isArchive ? 'FILE DIRECTORY // READ-ONLY PUBLIC RP DATA' : 'SIMULATED RECOVERY OPTIONS';
+    $('terminalFooterLeft').textContent = isArchive ? 'FILE DIRECTORY // RECORD INDEX' : 'EMERGENCY RECOVERY CHANNELS';
     $('terminalInput').placeholder = isArchive ? 'help / list / open tiffy / search Hazel' : 'help / overload / bruteforce / status';
     showModal('terminalModal');
     if (!terminalHasBooted) {
@@ -118,7 +199,7 @@
         terminalLine(':: Type HELP for available commands.', 'muted');
       } else {
         terminalLine('OBSERVATORY RECOVERY SHELL // VERSION 0.5', 'success');
-        terminalLine(':: Remote authorisation failed. Simulated emergency channels available.');
+        terminalLine(':: Emergency recovery channels available.');
         terminalLine(':: Five global attempts; each recovery run spends ONE attempt.');
         terminalLine(':: Each route has THREE lives across FIVE escalating stages.');
         terminalLine(':: Select a protocol or type help to view commands.', 'muted');
@@ -133,7 +214,7 @@
     $('terminalOptions').classList.toggle('hidden', archive);
     if (archive) return;
     for (const btn of $('terminalOptions').querySelectorAll('[data-route]')) btn.disabled = state.attempts === 0;
-    if (state.attempts === 0) terminalLine(':: SYSTEM LOCKED. Type reset to clear LOCAL demo data.', 'error');
+    if (state.attempts === 0) terminalLine(':: SYSTEM LOCKED. Type reset to restore terminal settings.', 'error');
   }
   function runCommand(raw) {
     const command = raw.trim().toLowerCase(); if (!command) return;
@@ -150,7 +231,7 @@
       terminalLine('COMMANDS: help | status | overload | bruteforce | clear | exit | reset');
       terminalLine('overload = hold and trace 5 circuits // bruteforce = type 5 codes against the clock');
     } else if (command === 'status') {
-      terminalLine(`SECURITY: ${state.attempts}/5 attempts | identity: ${state.account ? state.account.alias : 'UNREGISTERED'} | override: ${state.overrideGranted ? 'GRANTED' : 'DENIED'}`);
+      terminalLine(`SECURITY: ${state.attempts}/5 attempts | session: ${sessionIdentity?.alias || 'NONE'} | override: ${state.overrideGranted ? 'GRANTED' : 'DENIED'}`);
     } else if (['overload','power','wire','01'].includes(command)) startGame('wire');
     else if (['bruteforce','brute','02'].includes(command)) startGame('brute');
     else if (command === 'clear') { terminalHistory.splice(0); $('terminalLog').textContent = ''; }
@@ -332,9 +413,10 @@
   function stagePassed() {
     if (!game) return;
     stopGameClock();
+    window.ObservatoryAudio?.success();
     const isFinal = game.stage >= STAGES;
     $('gameContent').innerHTML = `<div class="stage-pass"><div class="success-icon">◈</div><div class="eyebrow">${ROUTES[game.type].name} // STAGE ${game.stage} OF ${STAGES}</div><h3>${isFinal ? 'OVERRIDE SUCCESSFUL' : 'STAGE CLEARED'}</h3>
-      <p>${isFinal ? 'All five recovery stages are complete. The archive will now perform a simulated safety reboot and enable identity registration.' : `Protocol integrity restored. Prepare for level ${game.stage+1}: the challenge becomes more difficult, and your remaining lives carry forward.`}</p>
+      <p>${isFinal ? 'All five recovery stages are complete. The archive will now restart and activate the temporary identity gateway.' : `Protocol integrity restored. Prepare for level ${game.stage+1}: the challenge becomes more difficult, and your remaining lives carry forward.`}</p>
       <button class="primary-button" id="advanceStage" type="button">${isFinal ? 'INITIATE REBOOT ↵' : 'NEXT STAGE ↵'}</button></div>`;
     $('advanceStage').addEventListener('click', () => {
       if (!game) return;
@@ -354,12 +436,13 @@
     const lines = [
       '[ OK ] Initialising emergency fallback kernel...',
       '[ OK ] Flushing failed authentication cache...',
-      '[ OK ] Isolating RP archive interface...',
-      '[ OK ] Restoring identity registration service...',
+      '[ OK ] Isolating archive interface...',
+      '[ OK ] Restoring temporary session gateway...',
       '[ OK ] Five login attempts replenished...',
-      '[ OK ] ACCESS GRANTED // NEW IDENTITY REQUIRED.'
+      '[ OK ] ACCESS GRANTED // NAME REQUIRED.'
     ];
     $('rebootTitle').textContent = 'SAFETY REBOOT // RECOVERY OVERRIDE ACCEPTED';
+    window.ObservatoryAudio?.reboot();
     $('rebootLog').textContent = '';
     $('rebootFill').style.width = '0%'; $('rebootPercent').textContent = '0%';
     $('rebootLayer').classList.remove('hidden');
@@ -377,61 +460,57 @@
     }, 235);
   }
 
-  function toBase64(bytes) { return btoa(String.fromCharCode(...bytes)); }
-  function fromBase64(value) { return Uint8Array.from(atob(value), ch => ch.charCodeAt(0)); }
-  async function keyHash(passphrase, salt) {
-    if (!crypto.subtle) throw new Error('Secure context unavailable. Please use localhost or HTTPS (GitHub Pages).');
-    const keyMaterial = await crypto.subtle.importKey('raw', new TextEncoder().encode(passphrase), 'PBKDF2', false, ['deriveBits']);
-    const derived = await crypto.subtle.deriveBits({ name:'PBKDF2', salt, iterations:150000, hash:'SHA-256' }, keyMaterial, 256);
-    return toBase64(new Uint8Array(derived));
-  }
-  async function login(evt) {
+  function login(evt) {
     evt.preventDefault();
-    if (state.attempts === 0) { toast('Session locked. Use terminal command reset.'); return; }
-    const alias = $('loginName').value.trim(), pass = $('loginPass').value;
-    const button = $('loginForm').querySelector('button[type="submit"]'); button.disabled = true;
-    try {
-      if (state.account && alias.toLowerCase() === state.account.alias.toLowerCase()) {
-        const hash = await keyHash(pass, fromBase64(state.account.salt));
-        if (hash === state.account.hash) {
-          state.attempts = TOTAL_ATTEMPTS; persist(); updateAttempts();
-          sessionStorage.setItem(SESSION,'1'); $('loginPass').value=''; showView('wikiView'); populateWiki(); return;
-        }
-      }
-      consumeAttempt(); errorFlash('ACCESS DENIED', state.account ? 'INVALID CREDENTIALS' : 'NO ACCOUNT FOUND // USE TERMINAL');
-      toast(state.account ? 'Incorrect alias or password.' : 'No local identity exists. Use the terminal recovery challenge to create one.');
-    } catch (err) { toast(`Login unavailable: ${err.message}`); }
-    finally { updateAttempts(); }
+    if (traceActive) return;
+    if (state.attempts === 0) { toast('Terminal locked. Use emergency recovery or type reset.'); return; }
+    const alias = $('loginName').value.trim();
+    const pass = $('loginPass').value;
+    if (alias.toLowerCase() === CORTEX_USER && pass === CORTEX_PASS) {
+      state.attempts = TOTAL_ATTEMPTS;
+      state.overrideGranted = false;
+      persist(); updateAttempts();
+      $('loginPass').value = '';
+      window.ObservatoryAudio?.success();
+      startSession('CORTEX', 'credentials');
+      toast('PRIMARY ACCESS ACCEPTED // SESSION ACTIVE');
+      return;
+    }
+    consumeAttempt();
+    errorFlash('ACCESS DENIED', 'INVALID ACCESS CREDENTIALS');
+    toast('Authentication failed. Emergency recovery is available.');
   }
-  async function register(evt) {
+  function register(evt) {
     evt.preventDefault();
-    if (!state.overrideGranted) { toast('Complete one recovery challenge to unlock registration.'); showView('accessView'); return; }
-    const alias = $('newAlias').value.trim(), pass = $('newPass').value, confirmPass = $('confirmPass').value;
-    if (!/^[A-Za-z0-9_-]{3,24}$/.test(alias)) { toast('Alias must be 3–24 letters, numbers, hyphens or underscores.'); return; }
-    if (pass.length < 8 || pass !== confirmPass) { errorFlash('INPUT ERROR', 'PASSPHRASES DO NOT MATCH OR ARE TOO SHORT'); return; }
-    const button = $('accountForm').querySelector('button[type="submit"]'); button.disabled = true;
-    try {
-      const salt = crypto.getRandomValues(new Uint8Array(16));
-      state.account = { alias, salt:toBase64(salt), hash:await keyHash(pass, salt) };
-      state.overrideGranted = false; state.attempts = TOTAL_ATTEMPTS; persist();
-      sessionStorage.setItem(SESSION,'1'); $('accountForm').reset(); updateAttempts(); populateWiki(); showView('wikiView');
-      toast(`Identity ${alias} created on this browser. Welcome to the fictional archive.`);
-    } catch (err) { toast(`Registration unavailable: ${err.message}`); }
-    finally { button.disabled = false; }
+    if (!state.overrideGranted) { toast('Complete one emergency recovery protocol to unlock temporary access.'); showView('accessView'); return; }
+    const alias = $('newAlias').value.trim();
+    if (!/^[A-Za-z0-9_\- ]{2,24}$/.test(alias)) { toast('Enter 2–24 letters, numbers, spaces, hyphens or underscores.'); return; }
+    state.overrideGranted = false;
+    state.attempts = TOTAL_ATTEMPTS;
+    persist();
+    $('accountForm').reset(); updateAttempts();
+    window.ObservatoryAudio?.success();
+    startSession(alias, 'recovery');
+    toast(`Temporary session active: ${alias}`);
   }
 
   function escapeHTML(value) {
     return String(value).replace(/[&<>"']/g, ch => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' })[ch]);
   }
   function populateWiki() {
-    if (window.ObservatoryArchive) window.ObservatoryArchive.render(state.account?.alias || 'OPERATIVE');
+    if (window.ObservatoryArchive) window.ObservatoryArchive.render(sessionIdentity?.alias || 'OPERATIVE');
   }
 
   function initialize() {
     updateAttempts();
-    if (state.account && sessionStorage.getItem(SESSION) === '1') { populateWiki(); showView('wikiView'); }
-    else if (state.overrideGranted) showView('accountView');
-    else showView('accessView');
+    let entry = null;
+    try { entry = JSON.parse(sessionStorage.getItem(SESSION) || 'null'); } catch (_) { entry = null; }
+    if (entry?.alias && Number.isFinite(entry?.expiresAt) && entry.expiresAt > Date.now()) activateSession(entry);
+    else {
+      if (entry) sessionStorage.removeItem(SESSION);
+      if (state.overrideGranted) showView('accountView');
+      else showView('accessView');
+    }
     $('loginForm').addEventListener('submit', login);
     $('openTerminal').addEventListener('click', openTerminal);
     $('closeTerminal').addEventListener('click', () => hideModal('terminalModal'));
@@ -442,9 +521,15 @@
     $('closeGame').addEventListener('click', () => closeGame());
     $('accountForm').addEventListener('submit', register);
     $('archiveTerminal').addEventListener('click', openTerminal);
-    $('logoutButton').addEventListener('click', () => { sessionStorage.removeItem(SESSION); $('loginForm').reset(); showView('accessView'); });
+    $('logoutButton').addEventListener('click', () => {
+      clearSession();
+      $('loginForm').reset();
+      history.replaceState(null,'',location.pathname + location.search);
+      showView('accessView');
+    });
     $('resetDemo').addEventListener('click', resetLocalDemo);
     window.addEventListener('keydown', evt => {
+      if (traceActive) return;
       if (evt.key === 'Escape') {
         if (!$('gameModal').classList.contains('hidden')) closeGame();
         else if (!$('terminalModal').classList.contains('hidden')) hideModal('terminalModal');

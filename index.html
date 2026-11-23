@@ -4,11 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#050505">
-  <meta name="description" content="A fictional RP dossier archive with interactive hacking minigames, case files, redacted records and a command-line terminal.">
+  <meta name="description" content="The Observatory classified intelligence archive and recovery gateway.">
   <title>THE OBSERVATORY // ACCESS</title>
   <link rel="stylesheet" href="styles.css">
   <script defer src="data.js"></script>
   <script defer src="archive.js"></script>
+  <script defer src="audio.js"></script>
   <script defer src="app.js"></script>
 </head>
 <body>
@@ -56,26 +57,22 @@
         <div class="attempt-warning" id="attemptWarning" role="status">WE ONLY HAVE <strong>5</strong> LOGIN ATTEMPTS.</div>
         <div class="terminal-divider"><span></span> OR <span></span></div>
         <button id="openTerminal" class="ghost-button terminal-launch" type="button"><span class="bracket">[ &gt;_ ]</span> OPEN EMERGENCY TERMINAL</button>
-        <div class="subnote">Unrecognised identity? Attempt an authorised <strong>RP override</strong>.</div>
+        <div class="subnote">Unrecognised identity? Attempt an <strong>emergency override</strong>.</div>
       </section>
       <div class="under-panel"><span></span> <b>• • •</b> <span></span></div>
-      <p class="site-footer">A FICTIONAL ROLEPLAY EXPERIENCE // NO REAL SYSTEMS ARE ACCESSED</p>
+      <p class="site-footer">SECURE UPLINK // RESTRICTED ARCHIVE NODE</p>
     </section>
 
     <section id="accountView" class="view account-view hidden" aria-labelledby="accountTitle">
       <div class="mini-mark">◈ OBSERVATORY // SYSTEM RECOVERED</div>
-      <h1 id="accountTitle">IDENTITY RESET</h1>
-      <p class="view-intro">Emergency access has been restored. For this RP session, register an archive identity to enter the records.</p>
+      <h1 id="accountTitle">TEMPORARY ACCESS</h1>
+      <p class="view-intro">Security controls have been reset. Enter a name to activate a temporary archive session. No password is required.</p>
       <form id="accountForm" class="login-panel account-panel">
-        <div class="panel-inscription">NEW USER REGISTRATION <span>//</span> LOCAL DEMO ACCOUNT</div>
-        <label for="newAlias">Archive alias</label>
-        <input id="newAlias" type="text" minlength="3" maxlength="24" autocomplete="username" pattern="[A-Za-z0-9_\-]{3,24}" title="3–24 letters, numbers, underscores or hyphens" required placeholder="e.g. WITNESS_07">
-        <label for="newPass">Passphrase (8+ characters)</label>
-        <input id="newPass" type="password" minlength="8" maxlength="128" autocomplete="new-password" required placeholder="choose a passphrase">
-        <label for="confirmPass">Confirm passphrase</label>
-        <input id="confirmPass" type="password" minlength="8" maxlength="128" autocomplete="new-password" required placeholder="repeat passphrase">
-        <button class="primary-button" type="submit">CREATE IDENTITY ↵</button>
-        <p class="form-help">This is an in-browser RP demo account. It is not secure authentication; do not use a real password.</p>
+        <div class="panel-inscription">FAILSAFE IDENTIFICATION <span>//</span> ONE-TIME SESSION</div>
+        <label for="newAlias">Session name</label>
+        <input id="newAlias" type="text" minlength="2" maxlength="24" autocomplete="off" pattern="[A-Za-z0-9_\- ]{2,24}" title="2–24 letters, numbers, spaces, underscores or hyphens" required placeholder="enter your name">
+        <button class="primary-button" type="submit">ENTER ARCHIVE ↵</button>
+        <p class="form-help">Ephemeral credentials // Session expires automatically after 02:00.</p>
       </form>
     </section>
 
@@ -84,9 +81,9 @@
       <header class="wiki-header">
         <div class="archive-heading">
           <div class="archive-brand-mark" aria-hidden="true"><svg viewBox="0 0 90 65"><path d="M3 32 Q45 -13 87 32 Q45 78 3 32Z M45 0V65 M36 19Q25 32 36 46 M54 19Q65 32 54 46" stroke="currentColor" stroke-width="2.6" fill="none"/><circle cx="35" cy="45" r="2" fill="currentColor"/><circle cx="55" cy="45" r="2" fill="currentColor"/></svg></div>
-          <div><div class="mini-mark">THE OBSERVATORY / INTELLIGENCE DIVISION</div><h1 id="wikiTitle">CLASSIFIED <em>ARCHIVE</em></h1><p class="wiki-subtitle">A searchable RP casefile directory. Every record leaves a trace.</p></div>
+          <div><div class="mini-mark">THE OBSERVATORY / INTELLIGENCE DIVISION</div><h1 id="wikiTitle">CLASSIFIED <em>ARCHIVE</em></h1><p class="wiki-subtitle">A searchable casefile directory. Every record leaves a trace.</p></div>
         </div>
-        <div class="wiki-session"><span><i class="signal-dot"></i> ACCESS GRANTED / <b id="wikiAlias">OPERATIVE</b></span><div class="wiki-actions"><button id="archiveTerminal" class="ghost-button archive-command" type="button">&gt;_ CONSOLE</button><button id="logoutButton" class="ghost-button" type="button">LOG OUT ↗</button></div></div>
+        <div class="wiki-session"><span><i class="signal-dot"></i> ACCESS GRANTED / <b id="wikiAlias">OPERATIVE</b></span><span class="trace-indicator" id="traceIndicator">TRACE WINDOW / <b id="traceCountdown">02:00</b></span><div class="wiki-actions"><button id="archiveTerminal" class="ghost-button archive-command" type="button">&gt;_ CONSOLE</button><button id="logoutButton" class="ghost-button" type="button">LOG OUT ↗</button></div></div>
       </header>
       <section class="archive-hero" aria-label="Archive system overview"><div class="archive-hero-left"><div class="archive-overline">◈ NODE_001 / DATABASE ONLINE <span class="archive-led"></span></div><h2>THE TRUTH IS<br><span>IN THE FILES.</span></h2><p>Browse subject dossiers, reconstruct the Tiff–Delilah case and investigate incomplete entries. Withdrawn files remain crossed out in the index.</p><span class="archive-micro">VERIFIED TO SOURCE WHERE AVAILABLE // UNRESOLVED = OPEN</span></div><div class="archive-hero-right"><div class="signal-radar" aria-hidden="true"><div class="radar-circle r1"></div><div class="radar-circle r2"></div><div class="radar-circle r3"></div><div class="radar-scan"></div><span class="radar-eye">◈</span></div><div class="radar-caption">RECORD INTEGRITY: PARTIAL / MONITORING</div></div></section>
       <div class="archive-metrics" aria-label="Archive counts"><div><span>ARCHIVE ENTRIES</span><strong id="metricTotal">10</strong></div><div><span>LINKED CASES</span><strong id="metricCases">01</strong></div><div><span>WITHDRAWN FILES</span><strong id="metricRedacted">03</strong></div><div><span>CONNECTION STATUS</span><strong class="live-text">● LIVE</strong></div></div>
@@ -97,11 +94,11 @@
           <div class="archive-filters" id="archiveFilters" aria-label="Filter archive files"><button type="button" class="active" data-filter="ALL">ALL FILES</button><button type="button" data-filter="PERSONNEL">SUBJECTS</button><button type="button" data-filter="LINKED CASE">CASES</button><button type="button" data-filter="REDACTED">REDACTED</button></div>
           <div class="file-count"><span id="wikiCount">10 / 10 FILES</span><span>↙ SELECT TO VIEW</span></div>
           <nav id="wikiCards" class="archive-file-list" aria-label="Available records"></nav>
-          <div class="sidebar-terminal"><div><span class="status-pulse"></span> INTEGRITY CHECK</div><p>No unauthorised access detected.<br>Last backup: <span>LOCAL DEMO</span></p><button id="sidebarConsole" type="button">&gt;_ OPEN ARCHIVE TERMINAL ↵</button></div>
+          <div class="sidebar-terminal"><div><span class="status-pulse"></span> INTEGRITY CHECK</div><p>No unauthorised access detected.<br>Last backup: <span>LOCAL NODE</span></p><button id="sidebarConsole" type="button">&gt;_ OPEN ARCHIVE TERMINAL ↵</button></div>
         </aside>
         <section id="recordPanel" class="record-panel" aria-label="Selected dossier" aria-live="polite"></section>
       </div>
-      <footer class="wiki-foot"><p>FICTIONAL RP ARCHIVE // Source-backed entries derive from the supplied Tiff–Delilah dossier. Unprovided character histories stay blank. All archive data is public when hosted on GitHub Pages; this login is a gameplay simulation, not real access protection.</p><button id="resetDemo" type="button" class="text-button">RESET THIS DEVICE'S DEMO DATA</button></footer>
+      <footer class="wiki-foot"><p>RECORDS ARE INCOMPLETE // Verification is pending where supporting material is unavailable.</p><button id="resetDemo" type="button" class="text-button">RESET LOCAL TERMINAL</button></footer>
     </section>
   </main>
 
@@ -116,7 +113,7 @@
         </div>
         <form id="terminalForm" class="terminal-prompt" autocomplete="off"><label for="terminalInput">guest@observatory:~$</label><input id="terminalInput" type="text" spellcheck="false" aria-label="Terminal command" placeholder="help / overload / bruteforce / status" maxlength="80"><button type="submit" aria-label="Run command">↵</button></form>
       </div>
-      <div class="window-footer"><span id="terminalFooterLeft">SIMULATED RECOVERY OPTIONS</span><span>TYPE HELP FOR COMMANDS</span></div>
+      <div class="window-footer"><span id="terminalFooterLeft">EMERGENCY RECOVERY CHANNELS</span><span>TYPE HELP FOR COMMANDS</span></div>
     </section>
   </div>
 
@@ -132,6 +129,18 @@
   </div>
 
   <div id="errorOverlay" class="error-overlay hidden" role="alert"><div class="error-box"><strong id="errorTitle">ERROR</strong><span id="errorMessage">CONNECTION LOST</span></div></div>
+  <div id="traceLayer" class="trace-layer hidden" role="alertdialog" aria-modal="true" aria-labelledby="traceTitle">
+    <div class="trace-box">
+      <div class="trace-classification">◉ LIVE SIGNAL INTERCEPT / NODE 001</div>
+      <div class="trace-symbol" aria-hidden="true"><span>◎</span></div>
+      <h2 id="traceTitle">YOUR LOCATION HAS BEEN FOUND</h2>
+      <p class="trace-warning">SEARCH PROTOCOL INITIATED // SIGNAL SWEEP IN PROGRESS</p>
+      <div class="trace-progress"><div id="traceFill"></div></div>
+      <pre id="traceLog" aria-live="polite">INITIALISING SCAN...</pre>
+      <small id="traceResetLabel">PURGING SESSION // RETURNING TO GATEWAY</small>
+    </div>
+  </div>
+  <button id="soundToggle" class="sound-toggle" type="button" aria-label="Mute website audio" aria-pressed="true"><span aria-hidden="true">◖))</span> SOUND ON</button>
   <div id="toast" class="toast hidden" role="status"></div>
 </body>
 </html>

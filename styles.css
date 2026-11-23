@@ -79,3 +79,27 @@ button,input{font:inherit}button{cursor:pointer}button:disabled{cursor:not-allow
 @media(prefers-reduced-motion:reduce){.radar-scan{animation:none}}
 
 body.archive-active .corner-console{display:none}
+
+/* V3 // Signal trace, ephemeral status, audio control */
+.sound-toggle{position:fixed;bottom:16px;left:16px;z-index:81;border:1px solid #54715d;background:#09100df1;color:#bfe7cc;padding:10px 13px;min-height:36px;font:10px var(--mono);letter-spacing:.12em;box-shadow:0 0 18px #000b;cursor:pointer;backdrop-filter:blur(6px)}
+.sound-toggle:hover,.sound-toggle:focus-visible{background:#193020;border-color:#92c49c;color:white;outline:none}
+.wiki-session .trace-indicator{border:1px solid #375a46;background:#0b1710;padding:7px 11px;color:#a1dcab;letter-spacing:.14em}
+.wiki-session .trace-indicator b{font:700 14px var(--mono);color:#d7f4e0;margin-left:8px;font-variant-numeric:tabular-nums}
+.wiki-session .trace-indicator.trace-critical{border-color:#c4514b;background:#230e0e;color:#f7b2ad;animation:trace-blink 1s steps(2,end) infinite}
+.wiki-session .trace-indicator.trace-critical b{color:#ffd7d2}
+@keyframes trace-blink{50%{opacity:.53}}
+.trace-layer{position:fixed;z-index:90;inset:0;background:radial-gradient(circle at 50% 45%,#290d0d 0%,#120607 38%,#050404 75%);display:grid;place-items:center;padding:25px;color:#f1b7b4;overflow:hidden}
+.trace-layer:before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent 0 5px,#de353511 5px 6px);pointer-events:none;animation:trace-scroll 8s linear infinite}
+.trace-layer:after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 40%,transparent,#000a 68%);pointer-events:none}
+.trace-box{position:relative;z-index:2;text-align:center;width:min(670px,95vw);border:1px solid #a64c49;padding:36px 40px;background:linear-gradient(145deg,#190909f0,#080707f7);box-shadow:0 0 110px #d52b292e,inset 0 0 75px #a7261712}
+.trace-classification{letter-spacing:.24em;color:#dc7d7c;font:11px var(--mono)}
+.trace-symbol{font-size:112px;height:130px;line-height:1.1;color:#f67e7d;text-shadow:0 0 45px #e53934;animation:trace-spin 3.8s linear infinite}
+.trace-box h2{font:clamp(22px,4vw,38px) var(--display);letter-spacing:.08em;margin:11px 0 17px;color:#fff3ee;text-shadow:0 0 13px #cb343a80}
+.trace-warning{font:11px/1.6 var(--mono);letter-spacing:.16em;color:#e48782}
+.trace-progress{height:13px;padding:2px;border:1px solid #be716a;margin:28px 0 17px}.trace-progress>div{width:0;height:100%;background:#f56c65;box-shadow:0 0 14px #fc5854;transition:width .5s linear}
+.trace-box pre{text-align:left;white-space:pre-wrap;min-height:128px;border-left:2px solid #9c3c3d;padding:13px 17px;font:11px/1.9 var(--mono);color:#f49e9c;background:#130909}.trace-box small{display:block;text-transform:uppercase;letter-spacing:.15em;color:#a76b69}
+@keyframes trace-spin{50%{transform:rotate(12deg) scale(1.07);opacity:.66}100%{transform:rotate(0)}}
+@keyframes trace-scroll{to{transform:translateY(18px)}}
+@media(max-width:620px){.sound-toggle{bottom:9px;left:9px;font-size:9px;padding:8px}.trace-box{padding:22px 18px}.trace-symbol{font-size:82px;height:100px}.trace-box pre{font-size:10px}.wiki-session .trace-indicator{font-size:9px}}
+@media(prefers-reduced-motion:reduce){.trace-layer:before,.trace-symbol,.wiki-session .trace-indicator.trace-critical{animation:none}}
+.trace-box h2{font-size:clamp(23px,3.5vw,34px)!important;font-family:'Special Elite',Georgia,serif!important;font-weight:700;line-height:1.27;}

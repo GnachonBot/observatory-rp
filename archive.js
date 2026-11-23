@@ -1,4 +1,4 @@
-/* OBSERVATORY ARCHIVE VIEWER // fictional RP records, all public static data. */
+/* OBSERVATORY ARCHIVE VIEWER // static archive dataset. */
 (() => {
   'use strict';
   const $ = id => document.getElementById(id);
@@ -67,7 +67,7 @@
   }
   function renderOverview(r) {
     if (r.completeness === 'EMPTY') return `
-      <div class="empty-transmission"><div class="empty-icon">⌁</div><span class="eyebrow">TRANSMISSION INCOMPLETE / INDEX ONLY</span><h3>NO VERIFIED FILE BODY</h3><p>${esc(r.lead)}</p><div class="empty-command">&gt; awaiting user-supplied RP intelligence<span class="cursor">_</span></div></div>
+      <div class="empty-transmission"><div class="empty-icon">⌁</div><span class="eyebrow">TRANSMISSION INCOMPLETE / INDEX ONLY</span><h3>NO VERIFIED FILE BODY</h3><p>${esc(r.lead)}</p><div class="empty-command">&gt; awaiting supplemental intelligence<span class="cursor">_</span></div></div>
       ${sectionTitle('00','RESERVED RECORD FIELDS')}${makeFactGrid(r)}
       <div class="archive-notice">No history, affiliations, incidents or personal information have been fabricated for this entry. Edit <code>data.js</code> when you have the character details.</div>`;
     return `${sectionTitle('00','PROFILE SNAPSHOT','DECODED')}${makeFactGrid(r)}
@@ -100,9 +100,9 @@
   function renderNotes(r) {
     const notes = getNotes();
     return `<div class="notes-area">${sectionTitle('05','FIELD NOTES','DEVICE ONLY')}
-      <p>Write your own RP clues or follow-up questions for this file. Notes are saved only on this browser, not shared through GitHub or visible to other users.</p>
+      <p>Write your own clues or follow-up questions for this file. Notes are saved only on this browser, not shared through GitHub or visible to other users.</p>
       <label for="archiveNote">PRIVATE LOCAL NOTE // ${esc(r.id)}</label>
-      <textarea id="archiveNote" rows="6" maxlength="4000" placeholder="Your observations, possible connections, future RP leads…">${esc(notes[r.id] || '')}</textarea>
+      <textarea id="archiveNote" rows="6" maxlength="4000" placeholder="Your observations, possible connections, future leads…">${esc(notes[r.id] || '')}</textarea>
       <div class="notes-actions"><button type="button" data-save-note="${esc(r.id)}">SAVE LOCAL NOTE ↓</button><span id="notesFeedback" aria-live="polite">NOT SYNCHRONISED</span></div></div>`;
   }
   function renderRedacted(r) {
@@ -112,7 +112,7 @@
       <h3>FILE CONTENTS WITHDRAWN</h3><p>${esc(r.lead)}</p>
       <div class="redact-meta">ERROR 0x00F / INDEX ONLY / NO BODY STORED</div>
       <button type="button" class="small-action decrypt-action" data-decrypt="true">[ >_ ] REQUEST RESTORATION</button>
-      <p class="redaction-aside">The crossed-out presentation is an RP visual effect. There is no concealed biography behind this page.</p>
+      <p class="redaction-aside">[ DATA PURGED // NO RECOVERABLE PAYLOAD ]</p>
     </div>`;
   }
   function renderDetail() {
@@ -160,7 +160,7 @@
     }
     if (cmd==='search') { $('wikiSearch').value=arg; currentFilter='ALL'; renderList(); emit(`${records.filter(matches).length} FILE(S) MATCH QUERY: ${arg || 'ALL'}`,'success');return true;}
     if (cmd==='scan') {const r=recordById(selectedId); emit(`${r.id} -> ${r.kind==='redacted'?'NO RECOVERABLE BODY':r.completeness==='EMPTY'?'AWAITING INTEL':'SOURCE FILE INDEXED / '+(r.events?.length||0)+' INCIDENTS'}`,r.kind==='redacted'?'error':'success');return true;}
-    if (cmd==='status') {emit(`ARCHIVE ONLINE // ${records.length} FILES // ${records.filter(r=>r.kind==='redacted').length} WITHDRAWN // DEVICE-LOCAL ACCOUNT`,'success');return true;}
+    if (cmd==='status') {emit(`ARCHIVE ONLINE // ${records.length} FILES // ${records.filter(r=>r.kind==='redacted').length} WITHDRAWN // TEMPORARY ACCESS TOKEN`,'success');return true;}
     if (cmd==='logout') { $('logoutButton').click(); $('closeTerminal').click(); emit('LOCAL SESSION ENDED.','muted');return true; }
     return false;
   }
