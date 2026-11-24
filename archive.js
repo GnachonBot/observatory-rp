@@ -26,6 +26,7 @@
     $('errorTitle').textContent = title;
     $('errorMessage').textContent = message;
     $('errorOverlay').classList.remove('hidden');
+    window.ObservatoryAudio?.error();
     setTimeout(() => $('errorOverlay').classList.add('hidden'), 950);
   }
   function noteToast(message) {
@@ -137,8 +138,10 @@
   }
   function select(id, options={}) {
     const r = recordById(id); if (!r) return false;
+    const changed = selectedId !== r.id;
     selectedId = r.id; selectedTab='overview';
     renderList(); renderDetail();
+    if (changed) window.ObservatoryAudio?.accent(r.kind === 'redacted' ? 'redacted' : 'dossier');
     if (options.scroll) {
       const panel=$('recordPanel'); if (panel) panel.scrollIntoView({behavior:'smooth',block:'start'});
     }
@@ -181,12 +184,12 @@
   $('wikiCards')?.addEventListener('click',e=>{const b=e.target.closest('[data-file]');if(b)select(b.dataset.file,{scroll:window.innerWidth<1050});});
   $('recordPanel')?.addEventListener('click',async e=>{
     const b=e.target.closest('button');if(!b)return;
-    if(b.dataset.tab){selectedTab=b.dataset.tab;renderDetail();return;}
+    if(b.dataset.tab){selectedTab=b.dataset.tab;renderDetail();window.ObservatoryAudio?.accent('tab');return;}
     if(b.dataset.openFile){select(b.dataset.openFile,{scroll:window.innerWidth<1050});return;}
     if(b.hasAttribute('data-decrypt')){flash('FILE PURGED','NO RECOVERABLE DATA FOUND // ACCESS DENIED');return;}
     if(b.dataset.saveNote){const txt=$('archiveNote')?.value||'';const ok=setNotes(b.dataset.saveNote,txt);if($('notesFeedback'))$('notesFeedback').textContent=ok?'SAVED ON THIS DEVICE':'LOCAL STORAGE UNAVAILABLE';noteToast(ok?'Field note saved on this browser.':'Could not save note. Check local storage settings.');return;}
     if(b.dataset.copyFile){try {await navigator.clipboard.writeText(b.dataset.copyFile);noteToast(`Copied file ID: ${b.dataset.copyFile}`);}catch{noteToast(`File ID: ${b.dataset.copyFile} (copy manually)`);}return;}
-    if(b.hasAttribute('data-scan')){ const r=recordById(selectedId);const output=$('scanReadout');if(!output)return;output.textContent='SCANNING ARCHIVE INDEX // PLEASE STAND BY';output.classList.add('scanning');setTimeout(()=>{if(!$('scanReadout')||selectedId!==r.id)return;output.textContent=r.kind==='redacted'?'SCAN ERROR: NO RECOVERABLE PAYLOAD':r.completeness==='EMPTY'?'SCAN COMPLETE: INDEX ONLY // AWAITING INTEL':`SCAN COMPLETE: ${r.events?.length||0} CHRONOLOGY ENTRIES / RECORD STATUS ${r.completeness}`;output.classList.remove('scanning');},850);}
+    if(b.hasAttribute('data-scan')){ window.ObservatoryAudio?.accent('scan');const r=recordById(selectedId);const output=$('scanReadout');if(!output)return;output.textContent='SCANNING ARCHIVE INDEX // PLEASE STAND BY';output.classList.add('scanning');setTimeout(()=>{if(!$('scanReadout')||selectedId!==r.id)return;output.textContent=r.kind==='redacted'?'SCAN ERROR: NO RECOVERABLE PAYLOAD':r.completeness==='EMPTY'?'SCAN COMPLETE: INDEX ONLY // AWAITING INTEL':`SCAN COMPLETE: ${r.events?.length||0} CHRONOLOGY ENTRIES / RECORD STATUS ${r.completeness}`;output.classList.remove('scanning');},850);}
   });
   $('sidebarConsole')?.addEventListener('click',()=> $('archiveTerminal')?.click());
   window.addEventListener('keydown',e=>{

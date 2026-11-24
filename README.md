@@ -1,4 +1,4 @@
-# THE OBSERVATORY // Archive Access (v3)
+# THE OBSERVATORY // Archive Access (v4 — adaptive soundtrack)
 
 A static website for GitHub Pages with an eye-shaped login gateway, an emergency terminal, two escalating recovery challenges, a reboot sequence and the interactive classified dossier archive.
 
@@ -8,7 +8,9 @@ A static website for GitHub Pages with an eye-shaped login gateway, an emergency
 - **Emergency route:** choose **OPEN EMERGENCY TERMINAL**, then run **Power Overload** (trace wires) or **Brute Force** (type the sequences). Each has five levels and three lives per run. Each run consumes one of five attempts.
 - **After successful recovery:** an animated reboot opens **TEMPORARY ACCESS**. Enter a name (no password). The name is saved in that browser's current tab session only.
 - **Session timer:** both routes have **two minutes** after entering the archive. When it expires, the website displays **YOUR LOCATION HAS BEEN FOUND**, performs a cinematic *simulated* network search for approximately seven seconds, clears the temporary session and returns to the original login screen. Reloading does not extend a session.
-- **Audio:** low-volume synthesized interface clicks, page cues, successes, errors, reboot and trace siren. Click the bottom-left **SOUND ON / OFF** control to mute or unmute. Browsers generally allow audio only after the first user interaction.
+- **Adaptive soundtrack:** original, synthesised dark electronic music plays continuously after the visitor first interacts with the page. The mood, melody, bass and rhythm change between the gateway, terminal, archive, recovery games, reboot and final trace. The Power Overload and Brute Force tracks grow faster and more intense over their five stages. Dossier navigation, redacted files and archive scans also trigger individual musical cues.
+- **Final cutoff:** after two minutes in the archive, the normal track switches to a harsher, faster alarm arrangement with low pulses, discordant notes, mechanical noise and rising siren effects. The cinematic scan still returns the visitor to the gateway, where the original ambience resumes.
+- **Audio controls:** the bottom-left **AUDIO ON · [CURRENT SCREEN] / AUDIO OFF** button mutes or unmutes all music and effects. Your preference is remembered locally. Sound pauses when the browser tab is not visible. Most browsers block music until the first click, tap or keypress. Audio uses the Web Audio API, so no MP3s or streaming services are needed. If Web Audio is unsupported, the rest of the site remains playable.
 
 ## Existing archive
 

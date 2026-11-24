@@ -103,3 +103,10 @@ body.archive-active .corner-console{display:none}
 @media(max-width:620px){.sound-toggle{bottom:9px;left:9px;font-size:9px;padding:8px}.trace-box{padding:22px 18px}.trace-symbol{font-size:82px;height:100px}.trace-box pre{font-size:10px}.wiki-session .trace-indicator{font-size:9px}}
 @media(prefers-reduced-motion:reduce){.trace-layer:before,.trace-symbol,.wiki-session .trace-indicator.trace-critical{animation:none}}
 .trace-box h2{font-size:clamp(23px,3.5vw,34px)!important;font-family:'Special Elite',Georgia,serif!important;font-weight:700;line-height:1.27;}
+
+/* V4 // reactive original score indicator */
+.sound-toggle{transition:background .18s,color .18s,border-color .18s,box-shadow .18s;min-width:183px;text-align:left;white-space:nowrap;}
+.sound-toggle[aria-pressed="true"]{border-color:#567e66;box-shadow:0 0 24px #12391e77,inset 2px 0 #82b98b;}
+.sound-toggle[aria-pressed="false"]{border-color:#3e4943;color:#808c82;box-shadow:0 0 15px #0009;}
+body:has(.trace-layer:not(.hidden)) .sound-toggle{border-color:#ad4b4b;background:#250909e6;color:#ffc2bc;box-shadow:0 0 25px #99272252;}
+@media(max-width:620px){.sound-toggle{min-width:0;max-width:calc(100vw - 20px);font-size:9px;padding:9px 11px;}}

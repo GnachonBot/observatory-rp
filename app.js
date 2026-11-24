@@ -58,14 +58,27 @@
     } catch (_) { return { attempts: TOTAL_ATTEMPTS, overrideGranted: false }; }
   }
   function persist() { localStorage.setItem(STORAGE, JSON.stringify(state)); }
+  function syncSoundtrack() {
+    const audio = window.ObservatoryAudio;
+    if (!audio) return;
+    let mode = 'login';
+    if (traceActive) mode = 'trace';
+    else if (!$('rebootLayer').classList.contains('hidden')) mode = 'reboot';
+    else if (!$('gameModal').classList.contains('hidden') && game) mode = game.type;
+    else if (!$('terminalModal').classList.contains('hidden')) mode = 'terminal';
+    else if (!$('wikiView').classList.contains('hidden')) mode = 'archive';
+    else if (!$('accountView').classList.contains('hidden')) mode = 'temp';
+    audio.setMode(mode);
+  }
   function showView(name) {
     for (const id of ['accessView', 'accountView', 'wikiView']) $(id).classList.toggle('hidden', id !== name);
     document.body.classList.toggle('archive-active', name === 'wikiView');
+    syncSoundtrack();
     window.ObservatoryAudio?.page();
     window.scrollTo({ top: 0, behavior: 'instant' });
   }
-  function showModal(id) { $(id).classList.remove('hidden'); $(id).setAttribute('aria-hidden', 'false'); }
-  function hideModal(id) { $(id).classList.add('hidden'); $(id).setAttribute('aria-hidden', 'true'); }
+  function showModal(id) { $(id).classList.remove('hidden'); $(id).setAttribute('aria-hidden', 'false'); syncSoundtrack(); }
+  function hideModal(id) { $(id).classList.add('hidden'); $(id).setAttribute('aria-hidden', 'true'); syncSoundtrack(); }
   function toast(message) {
     const box = $('toast'); box.textContent = message; box.classList.remove('hidden');
     clearTimeout(toastTimer); toastTimer = setTimeout(() => box.classList.add('hidden'), 3300);
@@ -136,6 +149,7 @@
     hideModal('terminalModal'); hideModal('gameModal');
     $('errorOverlay').classList.add('hidden');
     $('traceLayer').classList.remove('hidden');
+    syncSoundtrack();
     $('traceFill').style.width = '0%';
     $('traceLog').textContent = 'SIGNAL LOCK ACQUIRED...';
     window.ObservatoryAudio?.alarm();
@@ -255,6 +269,7 @@
     hideModal('terminalModal');
     game = { type, stage: 1, lives: 3, active: false, progress: 0, interval: null, expected: '', timeLimit: 0, endsAt: 0 };
     $('gameTitle').textContent = `${type === 'wire' ? '01' : '02'} // ${ROUTES[type].name}`;
+    window.ObservatoryAudio?.setIntensity(1);
     showModal('gameModal'); renderGame();
   }
   function gameHeader() {
@@ -263,7 +278,7 @@
     return `<div class="game-lead"><div><div class="eyebrow">EMERGENCY RECOVERY // STAGE ${game.stage} OF ${STAGES}</div><h2>${route.name}</h2><p>${route.subtitle}</p></div></div>
       <div class="game-meta"><div class="stat">CIRCUIT <strong>${String(game.stage).padStart(2, '0')} / 0${STAGES}</strong></div><div class="stat lives">LIVES <strong>${'♥'.repeat(game.lives)}${'♡'.repeat(3 - game.lives)}</strong></div><div class="stat">TIME LEFT <strong id="timerLabel">--.-s</strong></div></div>`;
   }
-  function renderGame() { if (!game) return; game.type === 'wire' ? renderWire() : renderBrute(); }
+  function renderGame() { if (!game) return; window.ObservatoryAudio?.setIntensity(game.stage); game.type === 'wire' ? renderWire() : renderBrute(); }
   function startClock(seconds, onTimeout) {
     if (!game) return;
     clearInterval(game.interval);
@@ -446,6 +461,7 @@
     $('rebootLog').textContent = '';
     $('rebootFill').style.width = '0%'; $('rebootPercent').textContent = '0%';
     $('rebootLayer').classList.remove('hidden');
+    syncSoundtrack();
     let n = 0;
     const interval = setInterval(() => {
       n++;
