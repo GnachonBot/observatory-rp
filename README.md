@@ -1,8 +1,14 @@
-# The Observatory // Cortex Private Vault (V7)
+# The Observatory // Cortex Private Vault (V8)
 
-A fictional interactive archive website. V7 revises **the presentation of the V6 archive** so visitors see Cortex's own files, as though they have gained access to his private recovery system. The dossiers are not a player briefing or a set of missions.
+A fictional interactive archive website. V8 revises **the presentation of the V6 archive** so visitors see Cortex's own files, as though they have gained access to his private recovery system. The dossiers are not a player briefing or a set of missions.
 
-## What changed
+## What changed in V8
+
+- Archive sessions end after **05:00** instead of 02:00.
+- An open emergency/archive terminal shell has its own **05:00** auto-close timer; entering a game closes the shell timer.
+- The “YOUR LOCATION HAS BEEN FOUND” screen lasts approximately **20 seconds** before returning to the login.
+
+## What changed in V7
 
 - The archive is titled **CORTEX // PRIVATE ARCHIVE**. The session identifies itself as a mirrored, unverified connection.
 - The introductory directive has become **PERSONAL MEMO 001 // UNSENT** with internal cross-reference buttons.
@@ -17,7 +23,7 @@ A fictional interactive archive website. V7 revises **the presentation of the V6
 - Five-login-attempt limit and emergency terminal.
 - Power Overload wire trace game and Brute Force typing game.
 - Five stages, lives, reboot, and name-only temporary session.
-- Two-minute simulated trace warning / reset sequence.
+- Five-minute archive sessions followed by an approximately 20-second simulated location-found trace before reset.
 - Adaptive background soundscape, effects, mute toggle, music volume and test button.
 - The complete 16-file dossier archive, including search, redacted records, and locally saved notes.
 
