@@ -8,7 +8,11 @@
 
   const STORAGE = 'observatory-access-v3';
   const SESSION = 'observatory-ephemeral-v3';
-  const SESSION_MS = 120000;
+  const SESSION_MS = 5 * 60 * 1000;  // Archive access ends after five minutes.
+  const TERMINAL_MS = 5 * 60 * 1000; // An open terminal shell also closes after five minutes.
+  const TRACE_STEPS = 12;
+  const TRACE_STEP_MS = 1500;
+  const TRACE_FINAL_HOLD_MS = 2000; // The location screen stays up for ~20 seconds total.
   const CORTEX_USER = 'cortex';
   const CORTEX_PASS = 'element12';
   const TOTAL_ATTEMPTS = 5;
@@ -48,6 +52,8 @@
   let traceClock = null;
   let traceSweep = null;
   let traceActive = false;
+  let terminalClock = null;
+  let terminalExpiresAt = null;
   const terminalHistory = [];
 
   function readState() {
@@ -78,7 +84,34 @@
     window.scrollTo({ top: 0, behavior: 'instant' });
   }
   function showModal(id) { $(id).classList.remove('hidden'); $(id).setAttribute('aria-hidden', 'false'); syncSoundtrack(); }
-  function hideModal(id) { $(id).classList.add('hidden'); $(id).setAttribute('aria-hidden', 'true'); syncSoundtrack(); }
+  function hideModal(id) {
+    $(id).classList.add('hidden'); $(id).setAttribute('aria-hidden', 'true');
+    if (id === 'terminalModal') clearTerminalClock();
+    syncSoundtrack();
+  }
+  function clearTerminalClock() {
+    clearInterval(terminalClock);
+    terminalClock = null;
+    terminalExpiresAt = null;
+  }
+  function startTerminalClock() {
+    clearTerminalClock();
+    terminalExpiresAt = Date.now() + TERMINAL_MS;
+    function tick() {
+      if ($('terminalModal').classList.contains('hidden') || traceActive) { clearTerminalClock(); return; }
+      const left = Math.max(0, terminalExpiresAt - Date.now());
+      const minutes = String(Math.floor(left / 60000)).padStart(2, '0');
+      const seconds = String(Math.floor(left % 60000 / 1000)).padStart(2, '0');
+      $('terminalTTL').textContent = `SHELL TTL / ${minutes}:${seconds}`;
+      if (left <= 0) {
+        hideModal('terminalModal');
+        window.ObservatoryAudio?.error();
+        toast('SHELL CONNECTION EXPIRED // TERMINAL CLOSED');
+      }
+    }
+    tick();
+    terminalClock = setInterval(tick, 500);
+  }
   function toast(message) {
     const box = $('toast'); box.textContent = message; box.classList.remove('hidden');
     clearTimeout(toastTimer); toastTimer = setTimeout(() => box.classList.add('hidden'), 3300);
@@ -165,9 +198,9 @@
     clearInterval(traceSweep);
     traceSweep = setInterval(() => {
       n++;
-      $('traceFill').style.width = `${Math.min(100, n * 10)}%`;
-      $('traceLog').textContent = lines.slice(0, Math.min(lines.length, Math.ceil(n / 1.6))).join('\n');
-      if (n >= 10) {
+      $('traceFill').style.width = `${Math.min(100, n / TRACE_STEPS * 100)}%`;
+      $('traceLog').textContent = lines.slice(0, Math.min(lines.length, Math.ceil(n / TRACE_STEPS * lines.length))).join('\n');
+      if (n >= TRACE_STEPS) {
         clearInterval(traceSweep); traceSweep = null;
         setTimeout(() => {
           $('traceLayer').classList.add('hidden');
@@ -177,9 +210,9 @@
           traceActive = false;
           showView('accessView');
           window.ObservatoryAudio?.page();
-        }, 500);
+        }, TRACE_FINAL_HOLD_MS);
       }
-    }, 650);
+    }, TRACE_STEP_MS);
   }
 
   function terminalLine(message, tone = '') {
@@ -204,6 +237,7 @@
     $('terminalFooterLeft').textContent = isArchive ? 'FILE DIRECTORY // RECORD INDEX' : 'EMERGENCY RECOVERY CHANNELS';
     $('terminalInput').placeholder = isArchive ? 'help / list / open tiffy / search Hazel' : 'help / overload / bruteforce / status';
     showModal('terminalModal');
+    startTerminalClock();
     if (!terminalHasBooted) {
       terminalHasBooted = true;
       if (isArchive) {
