@@ -72,7 +72,7 @@
         <label for="newAlias">Session alias</label>
         <input id="newAlias" type="text" minlength="2" maxlength="24" autocomplete="off" pattern="[A-Za-z0-9_\- ]{2,24}" title="2–24 letters, numbers, spaces, underscores or hyphens" required placeholder="alias / unregistered">
         <button class="primary-button" type="submit">ENTER ARCHIVE ↵</button>
-        <p class="form-help">TOKEN TTL: 02:00 // AUTO-PURGE ENABLED // LOCAL IDENTITY UNVERIFIED</p>
+        <p class="form-help">TOKEN TTL: 05:00 // AUTO-PURGE ENABLED // LOCAL IDENTITY UNVERIFIED</p>
       </form>
     </section>
 
@@ -83,7 +83,7 @@
           <div class="archive-brand-mark" aria-hidden="true"><svg viewBox="0 0 90 65"><path d="M3 32 Q45 -13 87 32 Q45 78 3 32Z M45 0V65 M36 19Q25 32 36 46 M54 19Q65 32 54 46" stroke="currentColor" stroke-width="2.6" fill="none"/><circle cx="35" cy="45" r="2" fill="currentColor"/><circle cx="55" cy="45" r="2" fill="currentColor"/></svg></div>
           <div><div class="mini-mark">CORTEX // LOCAL INTELLIGENCE STORAGE</div><h1 id="wikiTitle">PRIVATE <em>ARCHIVE</em></h1><p class="wiki-subtitle">Personal recovery index // MIB archive mirror // last verified sync: unknown.</p></div>
         </div>
-        <div class="wiki-session"><span><i class="signal-dot"></i> ACCESS GRANTED / <b id="wikiAlias">OPERATIVE</b></span><span class="trace-indicator" id="traceIndicator">TRACE WINDOW / <b id="traceCountdown">02:00</b></span><div class="wiki-actions"><button id="archiveTerminal" class="ghost-button archive-command" type="button">&gt;_ CONSOLE</button><button id="logoutButton" class="ghost-button" type="button">LOG OUT ↗</button></div></div>
+        <div class="wiki-session"><span><i class="signal-dot"></i> ACCESS GRANTED / <b id="wikiAlias">OPERATIVE</b></span><span class="trace-indicator" id="traceIndicator">TRACE WINDOW / <b id="traceCountdown">05:00</b></span><div class="wiki-actions"><button id="archiveTerminal" class="ghost-button archive-command" type="button">&gt;_ CONSOLE</button><button id="logoutButton" class="ghost-button" type="button">LOG OUT ↗</button></div></div>
       </header>
       <section class="mission-banner" aria-label="Recovered private memorandum">
         <span class="mission-dot" aria-hidden="true"></span>
@@ -118,7 +118,7 @@
         </div>
         <form id="terminalForm" class="terminal-prompt" autocomplete="off"><label for="terminalInput">guest@observatory:~$</label><input id="terminalInput" type="text" spellcheck="false" aria-label="Terminal command" placeholder="help / overload / bruteforce / status" maxlength="80"><button type="submit" aria-label="Run command">↵</button></form>
       </div>
-      <div class="window-footer"><span id="terminalFooterLeft">EMERGENCY RECOVERY CHANNELS</span><span>TYPE HELP FOR COMMANDS</span></div>
+      <div class="window-footer"><span id="terminalFooterLeft">EMERGENCY RECOVERY CHANNELS</span><span id="terminalTTL">SHELL TTL / 05:00</span></div>
     </section>
   </div>
 
