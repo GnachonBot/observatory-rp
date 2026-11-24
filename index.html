@@ -66,44 +66,44 @@
     <section id="accountView" class="view account-view hidden" aria-labelledby="accountTitle">
       <div class="mini-mark">◈ OBSERVATORY // SYSTEM RECOVERED</div>
       <h1 id="accountTitle">TEMPORARY ACCESS</h1>
-      <p class="view-intro">Security controls have been reset. Enter a name to activate a temporary archive session. No password is required.</p>
+      <p class="view-intro">Failsafe authentication bypassed. Temporary identity token awaiting session alias.</p>
       <form id="accountForm" class="login-panel account-panel">
-        <div class="panel-inscription">FAILSAFE IDENTIFICATION <span>//</span> ONE-TIME SESSION</div>
-        <label for="newAlias">Session name</label>
-        <input id="newAlias" type="text" minlength="2" maxlength="24" autocomplete="off" pattern="[A-Za-z0-9_\- ]{2,24}" title="2–24 letters, numbers, spaces, underscores or hyphens" required placeholder="enter your name">
+        <div class="panel-inscription">FAILSAFE GATEWAY <span>//</span> SINGLE-USE TOKEN</div>
+        <label for="newAlias">Session alias</label>
+        <input id="newAlias" type="text" minlength="2" maxlength="24" autocomplete="off" pattern="[A-Za-z0-9_\- ]{2,24}" title="2–24 letters, numbers, spaces, underscores or hyphens" required placeholder="alias / unregistered">
         <button class="primary-button" type="submit">ENTER ARCHIVE ↵</button>
-        <p class="form-help">Ephemeral credentials // Session expires automatically after 02:00.</p>
+        <p class="form-help">TOKEN TTL: 02:00 // AUTO-PURGE ENABLED // LOCAL IDENTITY UNVERIFIED</p>
       </form>
     </section>
 
     <section id="wikiView" class="view wiki-view hidden" aria-labelledby="wikiTitle">
-      <div class="archive-topline"><span><i class="signal-dot"></i> ENCRYPTED CONNECTION ESTABLISHED</span><span>OBSERVATORY://ARCHIVE/ROOT</span><span id="archiveLocalClock">LIVE ARCHIVE</span></div>
+      <div class="archive-topline"><span><i class="signal-dot"></i> MIRRORED SESSION / CONNECTION UNVERIFIED</span><span>CORTEX://PRIVATE/VAULT</span><span id="archiveLocalClock">LIVE ARCHIVE</span></div>
       <header class="wiki-header">
         <div class="archive-heading">
           <div class="archive-brand-mark" aria-hidden="true"><svg viewBox="0 0 90 65"><path d="M3 32 Q45 -13 87 32 Q45 78 3 32Z M45 0V65 M36 19Q25 32 36 46 M54 19Q65 32 54 46" stroke="currentColor" stroke-width="2.6" fill="none"/><circle cx="35" cy="45" r="2" fill="currentColor"/><circle cx="55" cy="45" r="2" fill="currentColor"/></svg></div>
-          <div><div class="mini-mark">THE OBSERVATORY / INTELLIGENCE DIVISION</div><h1 id="wikiTitle">CLASSIFIED <em>ARCHIVE</em></h1><p class="wiki-subtitle">Compromised intelligence database // every signal leaves a trace.</p></div>
+          <div><div class="mini-mark">CORTEX // LOCAL INTELLIGENCE STORAGE</div><h1 id="wikiTitle">PRIVATE <em>ARCHIVE</em></h1><p class="wiki-subtitle">Personal recovery index // MIB archive mirror // last verified sync: unknown.</p></div>
         </div>
         <div class="wiki-session"><span><i class="signal-dot"></i> ACCESS GRANTED / <b id="wikiAlias">OPERATIVE</b></span><span class="trace-indicator" id="traceIndicator">TRACE WINDOW / <b id="traceCountdown">02:00</b></span><div class="wiki-actions"><button id="archiveTerminal" class="ghost-button archive-command" type="button">&gt;_ CONSOLE</button><button id="logoutButton" class="ghost-button" type="button">LOG OUT ↗</button></div></div>
       </header>
-      <section class="mission-banner" aria-label="Current operational directive">
+      <section class="mission-banner" aria-label="Recovered private memorandum">
         <span class="mission-dot" aria-hidden="true"></span>
-        <div class="mission-objective"><small>DIRECTIVE 001 // CORTEX PRIORITY</small><strong>LOCATE TIFFY LOU</strong><span>Location unresolved. Delilah remains the active signal. Do not assume recovered contact.</span></div>
-        <div class="mission-buttons" id="directiveActions"><button type="button" data-mission-file="SUB-TIFF">SUBJECT ↗</button><button type="button" data-mission-file="SUB-DELILAH">SIGNAL ↗</button><button type="button" data-mission-file="CASE-BLACKVEIN">BLACK VEIN ↗</button></div>
+        <div class="mission-objective"><small>PERSONAL MEMO 001 // UNSENT // CORTEX</small><strong>TIFFY LOU // NO POSITION</strong><span>Delilah sighted again. No reunion. No blood sample. Connection still unverified.</span></div>
+        <div class="mission-buttons" id="directiveActions"><button type="button" data-mission-file="SUB-TIFF">SUB-TIFF ↗</button><button type="button" data-mission-file="SUB-DELILAH">SUB-DELILAH ↗</button><button type="button" data-mission-file="CASE-BLACKVEIN">BV-INDEX ↗</button></div>
       </section>
-      <section class="archive-hero" aria-label="Archive system overview"><div class="archive-hero-left"><div class="archive-overline">◈ NODE_001 / DATABASE ONLINE <span class="archive-led"></span></div><h2>SOMEONE IS<br><span>STILL MISSING.</span></h2><p>Find the missing connections between Echo, Element12, Black Vein and the person Cortex cannot locate. Every file is partial; every blank is deliberate.</p><span class="archive-micro">SURVEILLANCE ACTIVE // DIRECT LOCATOR UNAVAILABLE</span></div><div class="archive-hero-right"><div class="signal-radar" aria-hidden="true"><div class="radar-circle r1"></div><div class="radar-circle r2"></div><div class="radar-circle r3"></div><div class="radar-scan"></div><span class="radar-eye">◈</span></div><div class="radar-caption">CORTEX SIGNAL ANALYSIS / INCOMPLETE</div></div></section>
+      <section class="archive-hero" aria-label="Archive system overview"><div class="archive-hero-left"><div class="archive-overline">◈ NODE_001 / DATABASE ONLINE <span class="archive-led"></span></div><h2>STILL NO<br><span>SIGNAL.</span></h2><p>TIFFY LOU // last known contact: unverified. Delilah observed; no confirmed rendezvous. Echo, Element12 and Black Vein records remain uncorrelated. Last sweep returned no position.</p><span class="archive-micro">SURVEILLANCE ACTIVE // DIRECT LOCATOR UNAVAILABLE</span></div><div class="archive-hero-right"><div class="signal-radar" aria-hidden="true"><div class="radar-circle r1"></div><div class="radar-circle r2"></div><div class="radar-circle r3"></div><div class="radar-scan"></div><span class="radar-eye">◈</span></div><div class="radar-caption">SUB-TIFF // LAST SCAN: NO FIX</div></div></section>
       <div class="archive-metrics" aria-label="Archive counts"><div><span>ARCHIVE ENTRIES</span><strong id="metricTotal">16</strong></div><div><span>LINKED CASES</span><strong id="metricCases">07</strong></div><div><span>WITHDRAWN FILES</span><strong id="metricRedacted">03</strong></div><div><span>CONNECTION STATUS</span><strong class="live-text">● LIVE</strong></div></div>
       <div class="archive-body">
         <aside class="archive-sidebar" aria-label="Dossier directory">
-          <div class="sidebar-heading"><span>FILE DIRECTORY</span><span>01 / ROOT</span></div>
+          <div class="sidebar-heading"><span>LOCAL FILE INDEX</span><span>CORTEX / 001</span></div>
           <div class="archive-search-wrap"><label for="wikiSearch" class="sr-only">Search archive records</label><span aria-hidden="true">⌕</span><input id="wikiSearch" type="search" placeholder="Search subjects, incidents…" autocomplete="off"><kbd>/</kbd></div>
           <div class="archive-filters" id="archiveFilters" aria-label="Filter archive files"><button type="button" class="active" data-filter="ALL">ALL FILES</button><button type="button" data-filter="PERSONNEL">SUBJECTS</button><button type="button" data-filter="LINKED CASE">CASES</button><button type="button" data-filter="REDACTED">REDACTED</button></div>
-          <div class="file-count"><span id="wikiCount">16 / 16 FILES</span><span>↙ SELECT TO VIEW</span></div>
+          <div class="file-count"><span id="wikiCount">16 / 16 FILES</span><span>INDEX / UNSYNCED</span></div>
           <nav id="wikiCards" class="archive-file-list" aria-label="Available records"></nav>
-          <div class="sidebar-terminal"><div><span class="status-pulse"></span> CORTEX // LIVE MONITOR</div><p>TIFFY LOU <span class="missing-red">[ NO POSITION ]</span><br>DELILAH <span>[ SIGNAL ACTIVE ]</span><br>VEIL HOST <span>[ NOT RESOLVED ]</span></p><button id="sidebarConsole" type="button">&gt;_ OPEN ARCHIVE TERMINAL ↵</button></div>
+          <div class="sidebar-terminal"><div><span class="status-pulse"></span> CORTEX // PERSONAL SIGNAL LOG</div><p>TIFFY LOU <span class="missing-red">[ NO POSITION ]</span><br>DELILAH <span>[ SIGNAL ACTIVE ]</span><br>VEIL HOST <span>[ NOT RESOLVED ]</span></p><button id="sidebarConsole" type="button">&gt;_ OPEN ARCHIVE TERMINAL ↵</button></div>
         </aside>
         <section id="recordPanel" class="record-panel" aria-label="Selected dossier" aria-live="polite"></section>
       </div>
-      <footer class="wiki-foot"><p>DIRECTIVE 001 UNRESOLVED // TIFF HAS NOT BEEN LOCATED // INTEGRITY PARTIAL</p><button id="resetDemo" type="button" class="text-button">RESET LOCAL TERMINAL</button></footer>
+      <footer class="wiki-foot"><p>LAST BACKUP: INCOMPLETE // TIFF: NO SIGNAL // MIB NODE: CORTEX</p><button id="resetDemo" type="button" class="text-button">ERASE LOCAL CACHE + RESET</button></footer>
     </section>
   </main>
 

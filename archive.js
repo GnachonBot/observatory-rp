@@ -3,7 +3,7 @@
   'use strict';
   const $ = id => document.getElementById(id);
   const records = Array.isArray(window.ARCHIVE_RECORDS) ? window.ARCHIVE_RECORDS : [];
-  const notesKey = 'observatory-rp-private-device-notes-v2'; // Retained key so existing field notes survive site upgrades.
+  const notesKey = 'observatory-rp-private-device-notes-v2'; // Legacy storage key retained for local note continuity.
   let selectedId = records[0]?.id || '';
   let selectedTab = 'overview';
   let currentFilter = 'ALL';
@@ -54,7 +54,7 @@
           <span class="file-row-top"><span class="file-index">${stripCount(index+1)} // ${esc(r.id)}</span><span class="file-signal">${r.kind==='redacted'?'×':r.kind==='case'?'◆':'+'}</span></span>
           <span class="file-name">${esc(r.name)}</span>
           <span class="file-sub">${r.kind==='redacted'?'[ WITHDRAWN ]':r.completeness==='EMPTY'?'[ AWAITING INTEL ]':esc(r.label.toUpperCase())}</span>
-        </button>`).join('') : '<div class="no-records">NO MATCHING RECORDS. TRY ANOTHER SEARCH OR CLEAR FILTERS.</div>';
+        </button>`).join('') : '<div class="no-records">QUERY RETURNED NULL // ZERO MATCHING INDEX ENTRIES</div>';
     for (const btn of $('archiveFilters').querySelectorAll('button')) {
       btn.classList.toggle('active',btn.dataset.filter===currentFilter);
       btn.setAttribute('aria-pressed',btn.dataset.filter===currentFilter?'true':'false');
@@ -79,55 +79,55 @@
   function renderIntel(r) {
     const intel = r.intercepts || [];
     return `${sectionTitle('05','RECOVERED FRAGMENTS',`${stripCount(intel.length)} EXCERPTS`)}
-      <p class="tab-intro">Recovered transmissions, deleted passages and Cortex's private notes. Assumptions remain unconfirmed until a source can be verified.</p>
+      <p class="tab-intro">PRIVATE CACHE / RECOVERED TRANSCRIPT SEGMENTS / DELETION MARKERS PRESERVED / RELIABILITY: UNVERIFIED.</p>
       ${intel.length?`<div class="intel-fragment-stack">${intel.map(([head,origin,line],i)=>`<article class="intercept-card">
         <div class="intercept-top"><span>◈ ENTRY_${stripCount(i+1)} / ${esc(head)}</span><em>${esc(origin)}</em></div>
         <p>${fragmentLine(line)}</p><div class="intercept-foot">[ END EXCERPT ] <span>${i%2===0?'INTEGRITY: PARTIAL':'RECOVERED / UNVERIFIED'}</span></div>
-      </article>`).join('')}</div>`:'<div class="empty-relations">NO INTERCEPTS RECOVERED FOR THIS FILE.</div>'}
+      </article>`).join('')}</div>`:'<div class="empty-relations">RECOVERED FRAGMENT REGISTER EMPTY.</div>'}
       <div class="intel-stamp">CORTEX // SUBJECT LOCATION REMAINS UNKNOWN</div>`;
   }
   function renderOverview(r) {
     if (r.completeness === 'EMPTY') return `
-      <div class="empty-transmission"><div class="empty-icon">⌁</div><span class="eyebrow">TRANSMISSION INCOMPLETE / INDEX ONLY</span><h3>NO VERIFIED FILE BODY</h3><p>${esc(r.lead)}</p><div class="empty-command">&gt; awaiting supplemental intelligence<span class="cursor">_</span></div></div>
+      <div class="empty-transmission"><div class="empty-icon">⌁</div><span class="eyebrow">TRANSMISSION INCOMPLETE / INDEX ONLY</span><h3>FILE PAYLOAD NOT PRESENT</h3><p>${esc(r.lead)}</p><div class="empty-command">&gt; NO REMAINING DATA BLOCKS<span class="cursor">_</span></div></div>
       ${sectionTitle('00','RESERVED RECORD FIELDS')}${makeFactGrid(r)}
-      <div class="archive-notice">No history, affiliations, incidents or personal information have been fabricated for this entry. Edit <code>data.js</code> when you have the character details.</div>`;
+      <div class="archive-notice">RECOVERY FAILED // ORIGINAL PAYLOAD NOT PRESENT IN LOCAL BACKUP. HEADER AND INDEX MARKERS ONLY.</div>`;
     return `${sectionTitle('00','PROFILE SNAPSHOT','DECODED')}${makeFactGrid(r)}
       ${sectionTitle('01','INTELLIGENCE SUMMARY','SOURCE MATERIAL')}
       <div class="brief-grid"><div class="brief-main"><p class="record-lead">${esc(r.lead)}</p>
         ${(r.paragraphs||[]).map(p=>`<div class="brief-section"><h3>${esc(p.title)}</h3><p>${esc(p.body)}</p></div>`).join('')}</div>
-        <div class="brief-sidebar"><span>ATTACHED RECORDS</span><strong>${stripCount(r.events?.length||0)}</strong><p>Chronology entries indexed from the supplied case file.</p><button type="button" class="small-action" data-tab="incidents">OPEN INCIDENT LOG ↗</button></div></div>
-      ${sectionTitle('02','RECENT FILED INCIDENTS','SELECT FOR DETAILS')}
+        <div class="brief-sidebar"><span>ATTACHED RECORDS</span><strong>${stripCount(r.events?.length||0)}</strong><p>Indexed from recovered incident records. Last synchronization unavailable.</p><button type="button" class="small-action" data-tab="incidents">OPEN INCIDENT LOG ↗</button></div></div>
+      ${sectionTitle('02','RECENT FILED INCIDENTS','INDEXED FRAGMENTS')}
       <div class="incident-teaser">${(r.events||[]).slice(0,3).map(ev=>`<button type="button" data-tab="incidents"><span>${esc(ev[0])}</span><strong>${esc(ev[1])}</strong><em>↗</em></button>`).join('')}</div>
       ${sectionTitle('03','ATTACHED OPERATOR NOTES','INTERCEPTED / PARTIAL')}
       ${cortexSnippet(r,2)}
-      <div class="brief-intel-jump"><button class="small-action" type="button" data-tab="intel">OPEN ALL RECOVERED FRAGMENTS ↗</button></div>`;
+      <div class="brief-intel-jump"><button class="small-action" type="button" data-tab="intel">FRAGMENT REGISTER ↗</button></div>`;
   }
   function renderIncidents(r) {
-    if (!r.events?.length) return `<div class="empty-transmission"><span class="eyebrow">NO TIMELINE RECEIVED</span><h3>INCIDENT LOG EMPTY</h3><p>There are no supplied incident statements for this entry.</p></div>`;
+    if (!r.events?.length) return `<div class="empty-transmission"><span class="eyebrow">CHRONOLOGY INDEX NULL</span><h3>INCIDENT LOG EMPTY</h3><p>NO INCIDENT DATA STORED IN RECOVERED CACHE.</p></div>`;
     return `${sectionTitle('02','CHRONOLOGICAL INCIDENT LOG',`${stripCount(r.events.length)} ENTRIES`)}
-      <p class="tab-intro">Reassembled fragments, witness accounts and surveillance notes. Entries are listed in file order, not an exact calendar timeline; several links are still unresolved.</p>
+      <p class="tab-intro">LOCAL CHRONOLOGY REBUILD // chronological order approximate // timestamp checksums missing // several entries unverified.</p>
       <div class="incident-list">${r.events.map((ev,i)=>`<details class="incident-entry" ${i===0?'open':''}><summary><span class="incident-number">${esc(ev[0])}</span><span class="incident-index">${stripCount(i+1)}</span><strong>${esc(ev[1])}</strong><span class="incident-toggle">+</span></summary><p>${fragmentLine(ev[2])}</p>${ev[3]?`<div class="incident-annotation">◉ ${fragmentLine(ev[3])}</div>`:''}</details>`).join('')}</div>`;
   }
   function renderConnections(r) {
     const links = r.links || [];
     return `${sectionTitle('03','SUBJECT CONNECTIONS',`${stripCount(links.length)} CROSS-REFERENCES`)}
-      <p class="tab-intro">Select a linked record to jump to its dossier. Follow the cross-references left in the recovered index. Some links remain unverified or incomplete.</p>
+      <p class="tab-intro">LOCAL CORRELATION TABLE // links recovered from surviving cross-index // several relationships unverified.</p>
       ${links.length?`<div class="connection-grid">${links.map(([id,name,desc])=>`<button type="button" data-open-file="${esc(id)}" class="connection-link"><span class="connection-icon">◈</span><span><small>RELATED FILE // ${esc(id)}</small><strong>${esc(name)}</strong><em>${esc(desc)}</em></span><b>↗</b></button>`).join('')}</div>`:'<div class="empty-relations">NO VERIFIED CONNECTIONS INDEXED FOR THIS RECORD.</div>'}
-      ${hasContent(r)?`<div class="source-chain"><span>RECOVERY SOURCE / NODE LOG</span><p>${esc(r.source || 'INDEX CACHE')}</p><small>STATUS: FRAGMENTED // Assumptions and missing data are not confirmed intelligence.</small></div>`:''}`;
+      ${hasContent(r)?`<div class="source-chain"><span>RECOVERY SOURCE / NODE LOG</span><p>${esc(r.source || 'INDEX CACHE')}</p><small>STATUS: FRAGMENTED // UNVERIFIED LINKS / MISSING SOURCE BLOCKS.</small></div>`:''}`;
   }
   function renderQuestions(r) {
     const issues = r.questions || [];
     return `${sectionTitle('04','UNRESOLVED INTELLIGENCE',`${stripCount(issues.length)} OPEN`)}
-      ${issues.length?`<div class="question-list">${issues.map((q,i)=>`<article class="question-row"><span>Q-${stripCount(i+1)}</span><p>${esc(q)}</p><em>OPEN</em></article>`).join('')}</div>`:`<div class="empty-relations">NO OPEN QUESTIONS IN SOURCE. RECORD BODY ${r.kind==='redacted'?'WITHDRAWN':'AWAITING INPUT'}.</div>`}
-      <div class="archive-notice">NO ESTABLISHED ANSWER // Continue investigation. Do not promote an unverified lead to a confirmed location.</div>`;
+      ${issues.length?`<div class="question-list">${issues.map((q,i)=>`<article class="question-row"><span>Q-${stripCount(i+1)}</span><p>${esc(q)}</p><em>OPEN</em></article>`).join('')}</div>`:`<div class="empty-relations">NO UNRESOLVED QUERY FLAGS. RECORD BODY ${r.kind==='redacted'?'WITHDRAWN':'AWAITING INPUT'}.</div>`}
+      <div class="archive-notice">NO ESTABLISHED ANSWER // CORRELATION ENGINE RETURNED ZERO CONFIRMED LOCATIONS.</div>`;
   }
   function renderNotes(r) {
     const notes = getNotes();
-    return `<div class="notes-area">${sectionTitle('05','FIELD NOTES','DEVICE ONLY')}
-      <p>Write your own clues or follow-up questions for this file. Notes are saved only on this browser, not shared through GitHub or visible to other users.</p>
-      <label for="archiveNote">PRIVATE LOCAL NOTE // ${esc(r.id)}</label>
-      <textarea id="archiveNote" rows="6" maxlength="4000" placeholder="Your observations, possible connections, future leads…">${esc(notes[r.id] || '')}</textarea>
-      <div class="notes-actions"><button type="button" data-save-note="${esc(r.id)}">SAVE LOCAL NOTE ↓</button><span id="notesFeedback" aria-live="polite">NOT SYNCHRONISED</span></div></div>`;
+    return `<div class="notes-area">${sectionTitle('06','UNSYNCED SCRATCH BUFFER','LOCAL ONLY')}
+      <p>UNREGISTERED SCRATCH BUFFER // STORED LOCALLY // NOT PRESENT IN CORTEX MASTER INDEX.</p>
+      <label for="archiveNote">LOCAL BUFFER / ${esc(r.id)}</label>
+      <textarea id="archiveNote" rows="6" maxlength="4000" placeholder="unsynchronised text buffer...">${esc(notes[r.id] || '')}</textarea>
+      <div class="notes-actions"><button type="button" data-save-note="${esc(r.id)}">COMMIT TO LOCAL BUFFER ↓</button><span id="notesFeedback" aria-live="polite">NOT SYNCHRONISED</span></div></div>`;
   }
   function renderRedacted(r) {
     return `<div class="redaction-file">
@@ -153,7 +153,7 @@
       </div>
       <div class="file-toolbar"><div class="file-path">ROOT / VAULT / <span>${esc(r.slug.toUpperCase())}</span></div><div class="file-buttons"><button type="button" data-copy-file="${esc(r.id)}">⧉ COPY ID</button><button type="button" data-scan="true">◉ RUN SCAN</button></div></div>
       <div id="scanReadout" class="scan-readout" role="status">${redacted?'FILE BODY UNAVAILABLE':'FILE INTEGRITY: '+esc(r.completeness)} <span>// ${esc(r.id)}</span></div>
-      ${redacted?renderRedacted(r):`<div class="record-tabs" role="tablist" aria-label="Dossier sections">${[['overview','OVERVIEW'],['incidents','INCIDENT LOG'],['connections','CONNECTIONS'],['questions','OPEN QUESTIONS'],['intel','CORTEX NOTES'],['notes','FIELD NOTES']].map(([key,label])=>`<button type="button" role="tab" aria-selected="${selectedTab===key?'true':'false'}" class="${selectedTab===key?'active':''}" data-tab="${key}">${label}</button>`).join('')}</div>
+      ${redacted?renderRedacted(r):`<div class="record-tabs" role="tablist" aria-label="Dossier sections">${[['overview','OVERVIEW'],['incidents','INCIDENT LOG'],['connections','CONNECTIONS'],['questions','OPEN QUESTIONS'],['intel','PRIVATE LOGS'],['notes','LOCAL BUFFER']].map(([key,label])=>`<button type="button" role="tab" aria-selected="${selectedTab===key?'true':'false'}" class="${selectedTab===key?'active':''}" data-tab="${key}">${label}</button>`).join('')}</div>
       <div class="tab-body" role="tabpanel">${selectedTab==='overview'?renderOverview(r):selectedTab==='incidents'?renderIncidents(r):selectedTab==='connections'?renderConnections(r):selectedTab==='questions'?renderQuestions(r):selectedTab==='intel'?renderIntel(r):renderNotes(r)}</div>`}
       <div class="record-bottom"><span>${redacted?'INDEX SURVIVED / SOURCE LOST':esc(r.source||'RECOVERED CACHE / UNVERIFIED')}</span><span>EOF // ${esc(r.id)}</span></div>`;
     const currentHash = location.hash;
@@ -210,7 +210,7 @@
     if(b.dataset.tab){selectedTab=b.dataset.tab;renderDetail();window.ObservatoryAudio?.accent('tab');return;}
     if(b.dataset.openFile){select(b.dataset.openFile,{scroll:window.innerWidth<1050});return;}
     if(b.hasAttribute('data-decrypt')){flash('FILE PURGED','NO RECOVERABLE DATA FOUND // ACCESS DENIED');return;}
-    if(b.dataset.saveNote){const txt=$('archiveNote')?.value||'';const ok=setNotes(b.dataset.saveNote,txt);if($('notesFeedback'))$('notesFeedback').textContent=ok?'SAVED ON THIS DEVICE':'LOCAL STORAGE UNAVAILABLE';noteToast(ok?'Field note saved on this browser.':'Could not save note. Check local storage settings.');return;}
+    if(b.dataset.saveNote){const txt=$('archiveNote')?.value||'';const ok=setNotes(b.dataset.saveNote,txt);if($('notesFeedback'))$('notesFeedback').textContent=ok?'SAVED ON THIS DEVICE':'LOCAL STORAGE UNAVAILABLE';noteToast(ok?'Local buffer committed.':'Write error // local cache unavailable.');return;}
     if(b.dataset.copyFile){try {await navigator.clipboard.writeText(b.dataset.copyFile);noteToast(`Copied file ID: ${b.dataset.copyFile}`);}catch{noteToast(`File ID: ${b.dataset.copyFile} (copy manually)`);}return;}
     if(b.hasAttribute('data-scan')){ window.ObservatoryAudio?.accent('scan');const r=recordById(selectedId);const output=$('scanReadout');if(!output)return;output.textContent='SCANNING ARCHIVE INDEX // PLEASE STAND BY';output.classList.add('scanning');setTimeout(()=>{if(!$('scanReadout')||selectedId!==r.id)return;output.textContent=r.kind==='redacted'?'SCAN ERROR: NO RECOVERABLE PAYLOAD':r.completeness==='EMPTY'?'SCAN COMPLETE: INDEX ONLY // AWAITING INTEL':`SCAN COMPLETE: ${r.events?.length||0} CHRONOLOGY ENTRIES / RECORD STATUS ${r.completeness}`;output.classList.remove('scanning');},850);}
   });

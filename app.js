@@ -111,7 +111,7 @@
     sessionStorage.removeItem(SESSION);
   }
   function resetLocalDemo() {
-    if (!confirm('Reset this terminal? This restores five attempts and removes saved field notes on this browser.')) return;
+    if (!confirm('Purge this local cache? Five access attempts will be restored and unsynchronised notes stored in this browser will be erased.')) return;
     clearSession();
     localStorage.removeItem(STORAGE);
     localStorage.removeItem('observatory-rp-private-device-notes-v2');
@@ -208,8 +208,8 @@
       terminalHasBooted = true;
       if (isArchive) {
         terminalLine('OBSERVATORY ARCHIVE SHELL // NODE 001 ONLINE', 'success');
-        terminalLine(':: Indexed casefiles loaded. Enter LIST to enumerate the archive.');
-        terminalLine(':: OPEN <name> selects a dossier. SEARCH <term> filters the directory.');
+        terminalLine(':: LOCAL FILE INDEX ONLINE // CACHE INTEGRITY: PARTIAL');
+        terminalLine(':: COMMAND REGISTER PRESENT: LIST / OPEN / SEARCH / SCAN / STATUS');
         terminalLine(':: Type HELP for available commands.', 'muted');
       } else {
         terminalLine('OBSERVATORY RECOVERY SHELL // VERSION 0.5', 'success');
