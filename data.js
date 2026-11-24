@@ -1,104 +1,266 @@
 /*
-  THE OBSERVATORY // ARCHIVE INTELLIGENCE INDEX
-  Source: user-provided "Tiff_Delilah_Combined_RP_Dossier_v4 (1).pdf" (five pages).
-  The chronology and subject incidents below are paraphrased from that supplied document.
-  Unknown names are deliberately left as empty index files: no biography is invented.
-  WARNING: data.js is publicly readable by anyone who visits a GitHub Pages site.
-*/
+ * THE OBSERVATORY // COMPROMISED INTELLIGENCE INDEX
+ * In-universe working archive from Cortex's limited point of view.
+ * Foundation: supplied Tiff–Delilah dossier, revised by subsequent story instructions.
+ * Everything displayed is fictional narrative material. No actual user location is tracked.
+ * PUBLIC WEBSITE NOTE: anyone can read this file on GitHub Pages.
+ */
 window.ARCHIVE_RECORDS = [
   {
-    id:'TFD-COMB', slug:'tiff-delilah', name:'TIFF // DELILAH', label:'Linked case', kind:'case', category:'LINKED CASE', status:'OPEN / PARTIAL', clearance:'INTERNAL // 04', source:'Tiff & Delilah Combined Dossier v4 · pp. 1–5', completeness:'PARTIAL', accent:'green',
-    excerpt:'A shared history of retaliation, House of Havoc, Pizza This, conflict with RDMC, medical crises, disappearance and recovered memory.',
-    lead:'This joint file begins with retaliation planning against Hazel Lee and grows into a durable alliance between Tiff and Delilah. Its chronology is compiled from witness statements, subject reports and recollections; unresolved gaps remain open.',
-    facts:[['CASE REFERENCE','TFD-COMB'],['LINKED SUBJECTS','Tiff / Delilah'],['PRIMARY BOND','Best friends · operational loyalty'],['SHARED WORKPLACE','Pizza This'],['SHARED ORGANISATION','House of Havoc'],['CONFLICT CHAIN','Hazel Lee / RDMC / HOH']],
+    id:'TFD-COMB',slug:'tiff-delilah',name:'TIFF // DELILAH',label:'Priority case',kind:'case',category:'LINKED CASE',status:'ACTIVE SURVEILLANCE',clearance:'CORTEX // EYES ONLY',completeness:'FRAGMENTED',accent:'green',source:'COMPILED CASE / MIB RECOVERY CACHE / FIELD OBSERVATIONS',
+    excerpt:'Two lives, one missing target. Delilah may be the only surviving route to Tiff.',
+    lead:'The original case follows a friendship forged through retaliation, House of Havoc, serious injury and a disappearance that should not have been survivable. Its current purpose is different: locate Tiff. She has gone silent; Delilah is still visible. That makes Delilah the signal.',
+    facts:[['PRIMARY TARGET','TIFFY LOU // LOCATION UNKNOWN'],['SIGNAL SUBJECT','DELILAH // UNDER OBSERVATION'],['KNOWN RELATION','Best friends / past operational loyalty'],['LAST CONTACT','NO CONFIRMED SIGHTING OF TIFF'],['CURRENT THEORY','Follow Delilah → locate Tiff'],['OPERATOR','CORTEX // FINAL MIB NODE']],
     paragraphs:[
-      {title:'CASE SYNOPSIS',body:'Bidwell introduces Tiff to Delilah while Tiff seeks help against Hazel Lee. An early kidnapping plan is abandoned. Instead, the two develop a close friendship, work together at Pizza This and become linked through House of Havoc. Their later history includes conflict with RDMC, the stabbing of Aiden, a breach of FIB Tower, the HOH Manor raid and Delilah’s disappearance.'},
-      {title:'RECORD INTEGRITY NOTICE',body:'Compiled from incomplete accounts. The source does not establish a complete dated chronology. Incidents are presented as recorded, and specific unresolved questions remain open instead of being guessed.'}
+      {title:'OPERATIONAL PREMISE',body:'Cortex has no verified address, recent contact or direct trace for Tiff. He believes her history with Delilah makes a future reunion possible. Rather than find Tiff head-on, he has started following Delilah in the hope she leads him to her former closest friend.'},
+      {title:'THE QUESTION BEHIND THE SEARCH',body:'Tiff reportedly survived a lethal mismatch of Black Vein, an experimental memory-erasing substance. That result should have killed her. Cortex wants a blood sample to discover why. Delilah is a second anomaly: she was presumed dead and then appeared with missing memories. Cortex cannot account for the transition.'},
+      {title:'CONTAINMENT OF INFORMATION',body:'Later history cannot be verified. Cortex has no reliable intelligence that Delilah recovered any lost memories. Such a claim must not enter this file as fact. Earlier reports, testimonies and intercepted surveillance remain incomplete.'}
     ],
     events:[
-      ['L01','Prior connection','Tiff and Hazel Lee know one another through police work. Racing-scene tension and conflict connected with Caspian later damage the relationship.'],
-      ['L02','The assault on Tiff','Hazel Lee slits Tiff’s throat, becoming the catalyst for the subsequent revenge-driven events.'],
-      ['L03','Introduction through Bidwell','Bidwell, connected to both Tiff’s earlier police work and Delilah’s crew, introduces Tiff to Delilah.'],
-      ['L04','Abandoned retaliation plan','A proposed kidnapping of Hazel Lee is discussed, but does not happen. This is a non-executed plan.'],
-      ['L05','House of Havoc','Tiff spends more time with Delilah, joins HOH and eventually becomes Storm Captain of the Hearts section. Delilah leads the organisation.'],
-      ['L06','Pizza This','Tiff and Delilah work together at Pizza This, strengthening their friendship around the period of the Aiden incident.'],
-      ['L07','Tokyo Customs stabbing','During a hostage-related situation involving Delilah and HOH, Tiff argues with Hazel Lee and stabs her in the alley by Tokyo Customs.'],
-      ['L08','RDMC retaliation','RDMC responds to the stabbing by shooting several HOH members, escalating conflict between the groups.'],
-      ['L09','Codi and Delilah','Delilah begins a relationship with Codi, Hazel Lee’s brother and an RDMC member. Their bond helps reconcile HOH and RDMC. After RDMC disbands, Codi joins HOH and marries Delilah.'],
-      ['L10','FIB Tower breach','Delilah is shot during the FIB Tower breach. Her injuries lead to the need for a second heart transplant.'],
-      ['L11','HOH Manor raid','Following HOH involvement in recovering seized weapons from an LSPD evidence locker, the manor is raided. Delilah is shot and presumed dead while still awaiting her required transplant.'],
-      ['L12','Disappearance and memory loss','Unknown individuals later kidnap Delilah and remove her memories. She resurfaces in the same motorcycle club as Tiff with no recollection of their past.'],
-      ['L13','Separation','According to Tiff, Delilah’s loss of their shared memories is too painful to bear, and Tiff distances herself.'],
-      ['L14','Memory restored','The effect of the memory-erasing injection eventually wears off, allowing Delilah to regain her memories.']
+      ['L01','Before the fracture','Tiff and Hazel Lee were connected through police work; later personal and racing-scene tensions ended that friendship.'],
+      ['L02','Violence against Tiff','Hazel slit Tiff’s throat. Surviving this attack begins a chain of retaliation and unexpected alliances.'],
+      ['L03','The introduction','Bidwell introduced Tiff to Delilah. A retaliation plan involving Hazel was considered and abandoned.'],
+      ['L04','House of Havoc','Tiff became Storm Captain of the Hearts under Delilah, who led House of Havoc. Their connection grew into a close friendship.'],
+      ['L05','Aiden incident','Aiden stabbed Delilah, leaving her in a coma. Tiff retaliated by stabbing Aiden and later served a prison sentence.'],
+      ['L06','Tokyo Customs','Tiff stabbed Hazel after a confrontation outside Tokyo Customs. RDMC retaliated against House of Havoc.'],
+      ['L07','Alliance shift','Delilah’s relationship with Codi, Hazel’s brother, helped settle tensions between RDMC and House of Havoc.'],
+      ['L08','FIB Tower','Delilah was shot during the tower breach; a second heart-transplant crisis followed.'],
+      ['L09','Manor raid','Delilah was shot at the HOH Manor raid and presumed dead before the transplant she required.'],
+      ['L10','Missing interval','Unknown parties were later connected to Delilah’s disappearance and induced memory loss. The full sequence remains missing.'],
+      ['L11','Unrecognised connection','Delilah later appeared in the same motorcycle club as Tiff but did not remember her. Tiff withdrew from the relationship for a period.'],
+      ['L12','Unconfirmed colour signal','A recent surveillance pattern placed Delilah in yellow repeatedly. The colour no longer appears in newer sightings. No meaning has been established.', 'CORTEX: “Yellow was easy to follow. Now there is nothing consistent. Is it coincidence, or a warning?”'],
+      ['L13','Current dead end','Cortex has no confirmed location for Tiff. Continued surveillance on Delilah has produced no reunion and no verified contact.', 'CORTEX: “I am not looking for where she is. I am looking for where she will go.”']
     ],
-    links:[['SUB-TIFF','TIFFY LOU','Primary subject / Hearts'],['SUB-DELILAH','DELILAH','Primary subject / HOH leader']],
-    questions:[
-      'What exact order connects FIB Tower, the delayed transplant, the manor raid and Delilah’s disappearance?',
-      'Which motorcycle club did Tiff and memory-impaired Delilah share?',
-      'Who specifically took Delilah after the HOH Manor raid?',
-      'Did Tiff and Hazel reconcile, or did peace come mainly through Codi and Delilah?',
-      'What dates belong to the Aiden incident, Tokyo Customs, FIB Tower and HOH Manor?',
-      'Who abducted Tiff, and what demands were made?',
-      'How long was Tiff imprisoned after pleading guilty over Aiden?',
-      'Who took Delilah after she was presumed dead?',
-      'How long was Delilah missing before resurfacing with memory loss?'
+    links:[['SUB-TIFF','TIFFY LOU','Missing primary target'],['SUB-DELILAH','DELILAH','Live surveillance signal'],['CASE-BLACKVEIN','BLACK VEIN','Unexplained survival'],['CASE-VEIL','VEIL','Possible rival tracking system'],['SUB-RICK','RICK GNORC','Tiff’s partner / location unconfirmed']],
+    questions:['Where is Tiff now?','Will Delilah ever lead Cortex to Tiff?','Did the repeated yellow clothing carry any meaning?','Why did Tiff survive the lethal Black Vein mismatch?','Who administered Black Vein to Tiff?','Who took Delilah after the manor raid?','What explains Delilah’s survival and memory loss?','What does Rick’s Veil program know that Cortex cannot recover?'],
+    intercepts:[
+      ['DIRECTIVE 001','CORTEX // PRIVATE', 'Find Tiff. Obtain blood. Do not mistake a rumour for a location.'],
+      ['SURVEILLANCE NOTE','CORTEX // UNSENT', 'Delilah is visible. Tiff is not. Friends find their way back to each other. I only need that to happen once.'],
+      ['RECOVERED FRAGMENT','SIGNAL 7-A', 'yellow / yellow / yellow / ███████ / colour pattern ceased / no confirmed rendezvous']
     ]
   },
   {
-    id:'SUB-TIFF',slug:'tiffy-lou',name:'TIFFY LOU',label:'Subject file',kind:'person',category:'PERSONNEL',status:'ACTIVE / FILE PARTIAL',clearance:'INTERNAL // 03',source:'Tiff & Delilah Combined Dossier v4 · pp. 2–4',completeness:'COMPILED',accent:'green',
-    excerpt:'A former EMS, FIB, SAST and Marshals operative who becomes Storm Captain of Hearts in House of Havoc.',
-    lead:'The supplied dossier refers to this subject as “Tiff.” “Tiffy Lou” is the requested website heading; her longer name is not confirmed by the document. Her history spans public service, retaliation, severe injury, imprisonment and loyalty to Delilah.',
-    facts:[['NAME ON SOURCE','Tiff'],['ARCHIVE DISPLAY NAME','Tiffy Lou (requested)'],['HOH POSITION','Storm Captain / Hearts'],['FORMER SERVICE','EMS · FIB · SAST · Marshals'],['CLOSEST RECORDED BOND','Delilah'],['LEGAL NOTE','Served time after stabbing Aiden']],
+    id:'SUB-TIFF',slug:'tiffy-lou',name:'TIFFY LOU',label:'Primary target',kind:'person',category:'PERSONNEL',status:'MISSING / PRIORITY ONE',clearance:'CORTEX // EYES ONLY',completeness:'INCOMPLETE',accent:'green',source:'PRIOR SUBJECT DOSSIER / BLACK VEIN LEAD',
+    excerpt:'Former service operative. House of Havoc Hearts captain. Survived the wrong Black Vein strain. Location unknown.',
+    lead:'Cortex wants Tiff alive, not for her past offences, but for what her blood may reveal. She was reportedly given the wrong strain of Black Vein—the lethal one—and survived. There is no verified live signal, address or direct contact. Her relationship with Delilah remains the strongest lead.',
+    facts:[['SUBJECT','TIFFY LOU'],['LOCATION','UNKNOWN // SIGNAL LOST'],['KNOWN PARTNER','RICK GNORC'],['CLOSEST KNOWN FRIEND','DELILAH'],['HISTORICAL ROLE','HOH / STORM CAPTAIN OF HEARTS'],['BIOLOGICAL FLAG','BLACK VEIN ANOMALY']],
     paragraphs:[
-      {title:'SUBJECT PROFILE',body:'Tiff moves through several official roles: EMS, FIB, SAST and the Marshals. Her relationship with Hazel Lee worsens around the racing scene and Caspian. After Hazel slits Tiff’s throat, the search for help introduces Tiff to Delilah, transforming a revenge-driven connection into an enduring friendship.'},
-      {title:'MEDICAL AND PERSONAL RECORD',body:'The dossier records a severe abduction involving assault and stabbing, removal of her spleen, use of an insulin pump and eventual lung transplantation. Her connection to Delilah is tested when Delilah returns without memories of their shared past. Tiff describes the loss as emotionally unbearable.'}
+      {title:'BEFORE THE DISAPPEARANCE',body:'Tiff served in EMS, FIB, SAST and the Marshals. Her conflict with Hazel Lee brought severe injury and revenge. Through Bidwell she met Delilah and later joined House of Havoc. Tiff retaliated against Aiden after he stabbed Delilah and was imprisoned following that act.'},
+      {title:'MEDICAL HISTORY // RECOVERED RECORD',body:'A later abduction caused serious injuries, including spleen removal, an insulin pump and an eventual lung transplant. These records predate the FIB Tower and Manor incidents. Precise dates are unavailable.'},
+      {title:'BLACK VEIN TEST',body:'A separate report states Tiff received a lethal incompatible variant of Black Vein. That variant should have killed its recipient. Tiff survived. No blood analysis is available to Cortex, and no cause for this survival has been established.'},
+      {title:'WHY DELILAH MATTERS',body:'Tiff considered Delilah her best friend. When Delilah resurfaced without memories of their history, Tiff reportedly could not bear the encounter and stepped away. Cortex is wagering that the bond may eventually draw them together again.'}
     ],
     events:[
-      ['T01','Official service','Tiff joins EMS after beginning a relationship with Caspian. She later moves to FIB, is fired, joins SAST, transfers to the Marshals and leaves after administrative leave.'],
-      ['T02','Break with Hazel Lee','Resentment in the racing scene and Hazel flirting with Caspian after the breakup worsen their friendship.'],
-      ['T03','Throat injury','Hazel Lee slits Tiff’s throat; the incident shapes Tiff’s later actions.'],
-      ['T04','Delilah introduced','Bidwell introduces Tiff to Delilah while Tiff is seeking help against Hazel. The connection grows into a close friendship.'],
-      ['T05','Retaliation for Delilah','During their Pizza This period, Aiden stabs Delilah. Tiff later tracks him down and stabs him in retaliation.'],
-      ['T06','Imprisonment','Aiden reports Tiff to authorities. Tiff’s police-officer brother handles questioning. Tiff pleads guilty and serves prison time; duration is not recorded.'],
-      ['T07','Hearts leadership','Tiff rises to Storm Captain of the Hearts section of HOH under Delilah.'],
-      ['T08','Tokyo Customs','Tiff stabs Hazel Lee after an argument outside the Tokyo Customs noodle shop.'],
-      ['T09','Abduction','A person linked to Delilah’s past kidnaps Tiff to hurt Delilah. The file records severe assault with a sledgehammer and stabbing when demands are not met.'],
-      ['T10','Consequences','The kidnapping causes spleen removal, an insulin pump and eventually a lung transplant. The abduction predates FIB Tower and HOH Manor.'],
-      ['T11','Delilah’s lost memories','After Delilah returns without memories, Tiff steps away because seeing her best friend without their shared history is too painful.']
+      ['T01','Service record','EMS → FIB → SAST → Marshals. Tiff left the Marshals after an administrative leave.'],
+      ['T02','Hazel Lee','Their friendship collapsed amid racing tensions and conflict over Caspian. Hazel later slashed Tiff’s throat.'],
+      ['T03','Meeting Delilah','Bidwell arranged an introduction after Tiff sought help against Hazel; the connection became a close friendship.'],
+      ['T04','Hearts captain','Tiff became Storm Captain of the Hearts within Delilah’s House of Havoc.'],
+      ['T05','Aiden retaliation','After Aiden stabbed Delilah, Tiff found and stabbed him. She pleaded guilty and served time.'],
+      ['T06','Tokyo Customs','Tiff stabbed Hazel Lee in an alley after an argument; RDMC’s retaliation escalated the dispute.'],
+      ['T07','Abduction injuries','A figure linked to Delilah’s past abducted Tiff to hurt Delilah. Violence during captivity caused injuries requiring extensive treatment.'],
+      ['T08','Black Vein mismatch','An incompatible / lethal Black Vein dose was reportedly administered. Against expected outcomes, Tiff survived.', 'CORTEX: “A lethal dose. A living patient. The blood holds the contradiction.”'],
+      ['T09','No signal','Later records provide no verified sighting, address or active contact for Tiff. Rick’s current location is also unconfirmed.']
     ],
-    links:[['SUB-DELILAH','DELILAH','Closest bond / HOH leader'],['TFD-COMB','JOINT CASE','Full shared chronology']],
-    questions:['Does “Tiffy Lou” refer to the same Tiff named in the source dossier?','How long was Tiff imprisoned?','Who abducted Tiff and what demands were made?','What are the dates of the major incidents?']
+    links:[['SUB-DELILAH','DELILAH','Best friend / live signal'],['SUB-RICK','RICK GNORC','Partner / whereabouts unclear'],['CASE-BLACKVEIN','BLACK VEIN','Survival anomaly'],['TFD-COMB','JOINT CASE','Cortex surveillance file'],['CASE-VEIL','PROJECT VEIL','Possible contact route']],
+    questions:['What biological factor allowed Tiff to survive lethal Black Vein?','Where is Tiff?','Did she know which strain was used?','Has she had recent contact with Delilah?','What does Rick’s tracking program know about her?'],
+    intercepts:[
+      ['UNSENT MEMO','CORTEX // PRIVATE', 'Everyone else became a trail. She became a blank space.'],
+      ['SAMPLE REQUEST','LAB / PRIORITY RED', 'TIFFY LOU // BLOOD SAMPLE REQUIRED // NO SAMPLE SECURED'],
+      ['DELETED ITEM','CORRUPT MEDICAL INDEX', 'patient T███ / variant B-VN-██ / outcome: ALIVE / mechanism: █████']
+    ]
   },
   {
-    id:'SUB-DELILAH',slug:'delilah',name:'DELILAH',label:'Subject file',kind:'person',category:'PERSONNEL',status:'RECOVERED / FILE PARTIAL',clearance:'INTERNAL // 03',source:'Tiff & Delilah Combined Dossier v4 · pp. 2–5',completeness:'COMPILED',accent:'green',
-    excerpt:'Leader of House of Havoc. Her case includes the Aiden incident, two heart-transplant arcs, a disappearance and recovered memory.',
-    lead:'Delilah is recorded as the leader of House of Havoc, Tiff’s best friend and Codi’s spouse. Medical crises and the loss of her memory lie at the centre of the joint case.',
-    facts:[['POSITION','Leader / House of Havoc'],['FAMILY','Mother of three'],['PARTNER','Codi (married)'],['MAJOR MEDICAL HISTORY','Two heart-transplant arcs'],['STATUS HISTORY','Presumed dead · later recovered'],['PRIMARY CONNECTION','Tiff']],
+    id:'SUB-DELILAH',slug:'delilah',name:'DELILAH',label:'Signal subject',kind:'person',category:'PERSONNEL',status:'OBSERVED / UNRESOLVED',clearance:'SURVEILLANCE // 02',completeness:'MONITORED',accent:'green',source:'CASE HISTORY / RECENT FIELD OBSERVATIONS',
+    excerpt:'Once presumed dead; later seen with memory loss. A visible subject whose closest friend has vanished.',
+    lead:'Delilah led House of Havoc and shared a powerful friendship with Tiff. Following a shooting at the manor, she was presumed dead. She later appeared alive but without memories of Tiff. Cortex has never established how that happened. His surveillance has found Delilah, but not the missing person he hopes she will lead him to.',
+    facts:[['STATUS','OBSERVED // MEMORY CONDITION UNKNOWN'],['HISTORY','HOH LEADER'],['KNOWN CLOSE FRIEND','TIFFY LOU'],['PAST STATUS','PRESUMED DEAD'],['RECENT OBSERVATION','YELLOW CLOTHING PATTERN CEASED'],['KNOWN LOCATION','NOT LOGGED // MOVING SIGNAL']],
     paragraphs:[
-      {title:'LEADERSHIP AND FAMILY',body:'Delilah leads House of Havoc and develops a close bond with Tiff through their time working at Pizza This. Her relationship with Codi, Hazel Lee’s brother and a member of RDMC, eventually helps resolve tension between the groups. After RDMC disbands, Codi joins HOH and they marry.'},
-      {title:'RECOVERY RECORD',body:'The dossier describes two separate heart-transplant arcs, severe injury during the FIB Tower breach and a later HOH Manor shooting. She is presumed dead at one point. Unknown persons subsequently abduct her and administer a memory-erasing substance. She eventually returns with her memories restored.'}
+      {title:'THE IMPOSSIBLE RETURN',body:'Delilah was seriously injured during FIB Tower and then the later HOH Manor raid, after which she was believed dead. She subsequently appeared alive, with gaps in her memory. Cortex lacks the chain of custody, the identities of those responsible or an explanation for her return.'},
+      {title:'WHY CORTEX WATCHES',body:'Delilah and Tiff were best friends. Cortex cannot find Tiff directly, so he observes Delilah’s movements in hopes their history leads to a meeting. No recent encounter is confirmed. Tracking Delilah is a theory, not a solved route.'},
+      {title:'YELLOW // VISUAL MARKER',body:'Older surveillance notes repeatedly mention Delilah wearing yellow. Newer sightings no longer show the same pattern. Cortex has not determined whether the change was deliberate, incidental or related to anything else. He has not been able to link the colour change to Tiff.'}
     ],
     events:[
-      ['D01','House of Havoc leadership','Delilah leads HOH and is central to the group’s structure and major incidents.'],
-      ['D02','Shared workplace','She and Tiff work together at Pizza This, strengthening their friendship.'],
-      ['D03','Graveyard stabbing','After a breakup, Aiden persuades Delilah to leave Pizza This and meet him at their former spot in the graveyard. He stabs her, leaving her in a coma, and attempts to deflect blame.'],
-      ['D04','First heart-transplant arc','The stabbing by Aiden leads to Delilah’s first heart-transplant arc. Tiff later retaliates against him.'],
-      ['D05','Conflict bridge','Delilah’s relationship with Codi helps reconcile House of Havoc and RDMC after the Tokyo Customs violence.'],
-      ['D06','Marriage','Codi, Hazel Lee’s brother, joins HOH after RDMC disbands and marries Delilah.'],
-      ['D07','FIB Tower injury','After an escalation, Delilah breaches FIB Tower using C4 and is shot, leading to a need for a second heart transplant.'],
-      ['D08','Presumed death','At a later HOH Manor raid, Delilah is shot and presumed dead while still in need of her second transplant.'],
-      ['D09','Memory erasure','Unknown individuals kidnap Delilah and inject a memory-erasing substance. Their identities are not recorded.'],
-      ['D10','Unrecognised friend','Delilah resurfaces in the same motorcycle club as Tiff, but does not remember her.'],
-      ['D11','Memories return','When the injection’s effect wears off, Delilah regains her lost memories and prior connections.']
+      ['D01','House of Havoc','Delilah led House of Havoc; Tiff served as Storm Captain of Hearts.'],
+      ['D02','Aiden incident','Aiden lured Delilah to the graveyard, stabbed her and left her in a coma. The injury began her first heart-transplant arc.'],
+      ['D03','Codi','Her relationship with Codi, Hazel Lee’s brother, helped reconcile House of Havoc and RDMC and later became a marriage.'],
+      ['D04','FIB Tower','Delilah was shot during a tower breach and required a second heart transplant.'],
+      ['D05','Manor raid','She was later shot during the raid on HOH Manor and presumed dead.'],
+      ['D06','Memory loss','Unknown parties were implicated in her disappearance and administration of a memory-erasing substance. The details remain missing.'],
+      ['D07','Resurfacing','Delilah reappeared in the same motorcycle club as Tiff and did not recognise their shared past. Cortex has no reliable update on the current state of her memories.'],
+      ['D08','Yellow pattern','Repeated yellow clothing in older observations; later observations no longer show that preference.', 'CORTEX: “She stopped wearing yellow. No address. No contact. No Tiff.”'],
+      ['D09','Observation continues','Cortex keeps Delilah under surveillance, hoping she inadvertently reconnects with Tiff. No positive trace has been obtained.']
     ],
-    links:[['SUB-TIFF','TIFFY LOU','Closest bond / Hearts'],['TFD-COMB','JOINT CASE','Full shared chronology']],
-    questions:['Who kidnapped Delilah after the manor raid?','How long was she missing?','What motorcycle club did Tiff and Delilah share during her memory loss?','What is the precise FIB Tower / transplant / manor sequence?']
+    links:[['SUB-TIFF','TIFFY LOU','Missing close friend'],['TFD-COMB','JOINT CASE','Shared history'],['CASE-BLACKVEIN','BLACK VEIN','Possible memory-erasure connection'],['CASE-VEIL','VEIL','Unconfirmed tracking overlap']],
+    questions:['How did Delilah survive after being presumed dead?','Who caused the memory loss?','Was Black Vein involved in Delilah’s disappearance?','Why has the yellow clothing pattern ended?','Will she contact Tiff?','Does Delilah know she is being followed?'],
+    intercepts:[
+      ['OBSERVATION 06','CORTEX // PERSONAL', 'Yellow again. Same person, same uncertainty. Continue watching.'],
+      ['OBSERVATION 11','CORTEX // PERSONAL', 'No yellow today. Or the last few days. It is not proof of anything.'],
+      ['UNSENT MEMO','CORTEX // PERSONAL', 'I do not need Delilah’s answers. I need her to lead me to Tiff.']
+    ]
   },
-  {id:'SUB-RICK',slug:'rick-gnorc',name:'RICK GNORC',label:'Subject file',kind:'person',category:'PERSONNEL',status:'AWAITING INTEL',clearance:'UNASSIGNED',completeness:'EMPTY',accent:'neutral',excerpt:'Subject indexed. No character history or corroborated details supplied yet.',lead:'An archive entry has been reserved for Rick Gnorc. No dossier material about this subject appears in the uploaded Tiff–Delilah document.',facts:[['IDENTITY','Rick Gnorc'],['RECORD STATE','No source details supplied'],['AFFILIATION','UNKNOWN'],['INCIDENTS','NOT YET FILED']],links:[],questions:['Who is Rick Gnorc?','Which people, groups and incidents should be cross-linked?']},
-  {id:'SUB-ECHO',slug:'original-echo',name:'ORIGINAL ECHO',label:'Subject file',kind:'person',category:'PERSONNEL',status:'AWAITING INTEL',clearance:'UNASSIGNED',completeness:'EMPTY',accent:'neutral',excerpt:'Index entry reserved for Original Echo. The archive currently contains no biography.',lead:'This is an intentionally empty character entry. Upload or provide Original Echo’s case history to populate the file.',facts:[['IDENTITY','Original Echo'],['RECORD STATE','No source details supplied'],['AFFILIATION','UNKNOWN'],['INCIDENTS','NOT YET FILED']],links:[],questions:['Who is Original Echo?','What chronology should be preserved?']},
-  {id:'SUB-EGG',slug:'eggplant',name:'EGGPLANT',label:'Subject file',kind:'person',category:'PERSONNEL',status:'AWAITING INTEL',clearance:'UNASSIGNED',completeness:'EMPTY',accent:'neutral',excerpt:'A named archive slot with no supplied evidence or subject history.',lead:'Eggplant has been indexed at the user’s request. This file does not invent an identity, relationships or events.',facts:[['IDENTITY','Eggplant'],['RECORD STATE','No source details supplied'],['AFFILIATION','UNKNOWN'],['INCIDENTS','NOT YET FILED']],links:[],questions:['What is Eggplant’s background?','Which related incidents should be attached?']},
-  {id:'SUB-VEIL',slug:'black-veil',name:'BLACK VEIL',label:'Subject / organisation index',kind:'person',category:'PERSONNEL',status:'AWAITING INTEL',clearance:'UNASSIGNED',completeness:'EMPTY',accent:'neutral',excerpt:'The name Black Veil is recorded, but its identity and role have not been supplied.',lead:'The term Black Veil appears only in the requested page list. Its status as a person, group or alias is not established; the entry remains unfilled.',facts:[['INDEXED NAME','Black Veil'],['ENTITY TYPE','UNCONFIRMED'],['RECORD STATE','No source details supplied'],['INCIDENTS','NOT YET FILED']],links:[],questions:['Is Black Veil a person, group or codename?','What verified connections should be added?']},
-  {id:'X-001',slug:'skeleton-crew',name:'SKELETON CREW',label:'Withdrawn file',kind:'redacted',category:'REDACTED',status:'PURGED / ACCESS DENIED',clearance:'████████',completeness:'REDACTED',accent:'red',excerpt:'ENTRY WITHDRAWN // No content available in the current archive.',lead:'The title remains in the index. Its contents have been crossed out by design. No details were supplied for this archive entry.',facts:[['LAST KNOWN TITLE','Skeleton Crew'],['DOCUMENT BODY','██████ ██ ████████'],['INDEX STATE','WITHDRAWN'],['ACCESS','DENIED']],links:[],questions:[]},
-  {id:'X-002',slug:'daisy-andrews',name:'DAISY ANDREWS',label:'Withdrawn file',kind:'redacted',category:'REDACTED',status:'PURGED / ACCESS DENIED',clearance:'████████',completeness:'REDACTED',accent:'red',excerpt:'ENTRY WITHDRAWN // No content available in the current archive.',lead:'The title remains in the index. Its contents have been crossed out by design. No details were supplied for this archive entry.',facts:[['LAST KNOWN TITLE','Daisy Andrews'],['DOCUMENT BODY','██████ ██ ████████'],['INDEX STATE','WITHDRAWN'],['ACCESS','DENIED']],links:[],questions:[]},
-  {id:'X-003',slug:'the-sanctary',name:'THE SANCTARY',label:'Withdrawn file',kind:'redacted',category:'REDACTED',status:'PURGED / ACCESS DENIED',clearance:'████████',completeness:'REDACTED',accent:'red',excerpt:'ENTRY WITHDRAWN // No content available in the current archive.',lead:'The requested name is preserved as “The Sanctary”. Its contents have been crossed out by design; no source details were supplied.',facts:[['LAST KNOWN TITLE','The Sanctary (requested spelling)'],['DOCUMENT BODY','██████ ██ ████████'],['INDEX STATE','WITHDRAWN'],['ACCESS','DENIED']],links:[],questions:[]}
+  {
+    id:'SUB-RICK',slug:'rick-gnorc',name:'RICK GNORC',label:'Historical operator',kind:'person',category:'PERSONNEL',status:'UNLOCATED / ACTIVE LEAD',clearance:'INTELLIGENCE // 03',completeness:'PARTIAL',accent:'green',source:'ECHO ARCHIVE / INTERCEPTED VEIL REFERENCES',
+    excerpt:'Founder of Operation Echo, partner to Tiff. Believed to operate Veil; current position cannot be fixed.',
+    lead:'Rick Gnorc devised the original Echo operation with Sid Knee. Following the time fractures, reports place Rick and others living around a small farm. The location is unknown to Cortex. References to a tracking program named Veil appear tied to Rick, but its deployment and its capabilities have not been confirmed.',
+    facts:[['IDENTITY','RICK GNORC'],['ASSOCIATES','SID KNEE / ECHO TEAM'],['KNOWN PARTNER','TIFFY LOU'],['HISTORICAL PROJECT','OPERATION ECHO'],['SUSPECTED PROJECT','VEIL // TRACKING'],['CURRENT LOCATION','UNKNOWN / FARM RUMOUR']],
+    paragraphs:[
+      {title:'OPERATION ECHO',body:'Rick used staged video transmissions to frighten viewers into assisting the cause, portraying government wrongdoing as a threat. Echo involved people including Skeleton Crew and Daisy Andrews. Rick’s stated aim was not destruction: he wanted to hatch a creature that became Koa.'},
+      {title:'THE FRACTURES',body:'After Element12 attracted a larger creature, a rupture pushed Echo’s participants into another timeline. The group continued seeking cracks in time until a final fracture scattered them into different places. Their present-day connections are broken.'},
+      {title:'VEIL // UNVERIFIED INTERCEPT',body:'The newest fragments suggest Rick has been running a search or tracking program called Veil. A small-farm residence with others is mentioned, but no usable location exists in Cortex’s files. Cortex wants to use Veil, yet cannot find the system or its operator.'}
+    ],
+    events:[
+      ['R01','Echo designed','Rick Gnorc planned Echo with help from Sid Knee.'],
+      ['R02','Recruitment videos','Scare-oriented videos portrayed government wrongdoing to draw people into Echo.'],
+      ['R03','The first hatch','Rick’s intended outcome was hatching Koa, not causing public harm.'],
+      ['R04','Unplanned consequence','Eggplant also hatched and produced Freedium, later called Element12.'],
+      ['R05','MIB opposition','Cortex’s MIB crew pursued the creatures as potential energy sources.'],
+      ['R06','Temporal displacement','A large creature hunted Element12, tearing a timeline apart and displacing Echo.'],
+      ['R07','The last crack','After several searches for time fractures, a final crack scattered the group.'],
+      ['R08','Post-fracture rumour','Rick and others are said to have settled near a small farm. Its whereabouts remain unknown to Cortex.'],
+      ['R09','Veil signatures','Fragments link Rick to a person-tracking program named Veil, but Cortex cannot pinpoint its infrastructure or users.']
+    ],
+    links:[['SUB-SID','SID KNEE','Original collaborator'],['SUB-ECHO','ORIGINAL ECHO','Founding operation'],['SUB-TIFF','TIFFY LOU','Partner / missing target'],['CASE-VEIL','VEIL','Suspected tracking system'],['SUB-KOA','KOA','First hatch'],['SUB-EGG','EGGPLANT','Element12 source']],
+    questions:['Where is Rick’s farm?','Who else lives there?','Can Cortex access Veil?','Does Rick have current contact with Tiff?','Why did the final crack separate the team?'],
+    intercepts:[['PARTIAL AUDIO','ORIGIN LOST','... Gnorc ... farm ... ██████████ ... Veil still running ...'],['CORTEX // PRIVATE','ANALYST NOTE','If Rick can track people, why can I not track Rick?'],['FAILED PING','VEIL/CORE','route █████ / node unavailable / no coordinates returned']]
+  },
+  {
+    id:'SUB-ECHO',slug:'original-echo',name:'ORIGINAL ECHO',label:'Operation file',kind:'case',category:'LINKED CASE',status:'HISTORICAL / FRACTURED',clearance:'RECOVERED // 05',completeness:'PATCHED',accent:'green',source:'ECHO RECORDINGS / TEMPORAL INCIDENT REPORTS',
+    excerpt:'A recruitment operation designed to hatch Koa. Its participants were scattered after a chain of time fractures.',
+    lead:'Echo was an operation, not a person. Rick Gnorc directed it with Sid Knee. The frightening videos made recruits think the government was acting maliciously. Behind the fear campaign was an attempt to hatch Koa. Eggplant’s emergence and Element12 changed everything.',
+    facts:[['FOUNDER','RICK GNORC'],['SUPPORT','SID KNEE'],['METHOD','ALARM VIDEO TRANSMISSIONS'],['INTENDED OBJECTIVE','HATCH KOA'],['SECOND EMERGENCE','EGGPLANT / ELEMENT12'],['FINAL STATUS','TEAM SCATTERED']],
+    paragraphs:[
+      {title:'THE VIDEOS',body:'Echo distributed unsettling videos that suggested the government was committing serious wrongdoing. Rick used the fear they created to enlist assistance. Skeleton Crew, Daisy Andrews and others became involved. Cortex’s surviving MIB logs treat these transmissions as deliberate recruitment tools.'},
+      {title:'WHAT HATCHED',body:'Koa emerged as the intended creature; no recent sightings have been confirmed. Eggplant hatched during the same broad period and produced Freedium, now named Element12, drawing MIB interest.'},
+      {title:'DISPLACEMENT CASCADE',body:'The team searched for cracks in time. A much larger creature hunted Element12 and tore their timeline apart, forcing them into a new one. After continued attempts to locate cracks, the final rupture separated the group into random locations.'}
+    ],
+    events:[
+      ['E01','Founding','Rick and Sid Knee begin Echo.'],
+      ['E02','Fear campaign','Government-allegation videos convince people to support the operation.'],
+      ['E03','Supporters','Skeleton Crew, Daisy Andrews and other recruits are used to advance Echo’s plans.'],
+      ['E04','Koa hatches','Echo succeeds in hatching Koa. The creature later disappears from known view.'],
+      ['E05','Eggplant hatches','Eggplant emerges and produces Freedium, now called Element12.'],
+      ['E06','MIB pursuit','Cortex’s organisation attempts to capture the creatures and exploit their output.'],
+      ['E07','Larger predator','A bigger creature pursues Element12 and tears the original timeline apart.'],
+      ['E08','Arrival elsewhere','Survivors arrive in a different timeline and continue searching for cracks.'],
+      ['E09','Final fracture','The last crack divides the team and leaves them scattered.']
+    ],
+    links:[['SUB-RICK','RICK GNORC','Founder'],['SUB-SID','SID KNEE','Collaborator'],['SUB-KOA','KOA','Intended hatch'],['SUB-EGG','EGGPLANT','Element12 source'],['CASE-MIB','MIB','Pursuing organisation'],['X-001','SKELETON CREW','[ WITHDRAWN ]'],['X-002','DAISY ANDREWS','[ WITHDRAWN ]'],['CASE-FRACTURE','TEMPORAL FRACTURES','Group displacement']],
+    questions:['Where did each Echo member arrive after the final crack?','Where is Koa?','What was the larger creature?','How many people saw the original recordings?','Can any of the original cracks be reopened?'],
+    intercepts:[['CAPTURED VIDEO','ECHO/TRANSMISSION_04','THEY ARE NOT TELLING YOU THE TRUTH // [ VIDEO CORRUPT ]'],['CORTEX // REASSESSMENT','PRIVATE','The fear was manufactured. The hatch was real. We chased the wrong consequence.'],['REMOVED ROSTER','INDEX 06','R. GNORC / S. KNEE / SKELETON ████ / DAISY A██████ / █████████']]
+  },
+  {
+    id:'SUB-EGG',slug:'eggplant',name:'EGGPLANT',label:'Anomalous entity',kind:'person',category:'PERSONNEL',status:'NOT LOCATED / RESOURCE SIGNAL',clearance:'MIB // LOST ASSETS',completeness:'PARTIAL',accent:'green',source:'ECHO HATCH LOG / MIB RESOURCE TRACKER',
+    excerpt:'A hatched creature associated with Freedium—now known as Element12. Sought as a power source.',
+    lead:'Eggplant emerged during the Echo era. The creature could produce a substance once called Freedium, now called Element12. MIB tried to capture Eggplant and other creatures to harness that output. The bunker raid ended MIB’s operation before it could secure the energy source.',
+    facts:[['SPECIMEN','EGGPLANT'],['EVENT','SECOND HATCH'],['OUTPUT','FREEDIUM'],['CURRENT MATERIAL NAME','ELEMENT12'],['PURSUIT','MIB / CORTEX'],['WHEREABOUTS','UNCONFIRMED']],
+    paragraphs:[
+      {title:'PRODUCTION',body:'Freedium was the original name for Eggplant’s energy-producing substance. Element12 is the present designation. Cortex continues pursuing that material after MIB’s collapse, but no currently secured sample is listed.'},
+      {title:'THE HUNTER',body:'A larger creature appeared to hunt Element12. The resulting damage to the timeline forced Echo’s survivors into another era, then a further fracture scattered the team.'}
+    ],
+    events:[['G01','Unplanned hatch','Eggplant emerges during the Echo operation.'],['G02','Freedium','Eggplant is capable of producing the material first called Freedium.'],['G03','Element12','The material is later known as Element12.'],['G04','MIB pursuit','Cortex’s crew attempts to take the creatures for energy extraction.'],['G05','Predator response','A larger creature hunts Element12 and triggers a destructive fracture.']],
+    links:[['SUB-ECHO','ECHO','Original hatch operation'],['CASE-MIB','MIB','Historic capture effort'],['CASE-FRACTURE','FRACTURES','Timeline displacement'],['SUB-KOA','KOA','Another creature from Echo']],
+    questions:['Is Eggplant still producing Element12?','Where is the creature now?','What drew the larger predator to the material?','Did MIB keep any usable samples?'],
+    intercepts:[['FORMER MIB INVENTORY','PARTIAL','FREEDIUM -> ELEMENT12 // extract: █████ // containment: FAILED'],['CORTEX // NOTE','UNSENT','Energy has a source. The source has a body. We lost both.']]
+  },
+  {
+    id:'SUB-VEIL',slug:'black-veil',name:'BLACK VEIL',label:'Corrupted index',kind:'case',category:'LINKED CASE',status:'LABEL COLLISION / UNRESOLVED',clearance:'CORTEX // REVIEW',completeness:'FRAGMENTED',accent:'red',source:'LEGACY INDEX / CROSS-LABEL ERROR',
+    excerpt:'An obsolete label found near “Black Vein” and “Veil”. Cortex has not verified that these terms describe the same thing.',
+    lead:'A recovered index labels a file BLACK VEIL, but separate records identify Black Vein as the memory-altering substance and Veil as Rick Gnorc’s possible tracking program. Whether Black Veil is an alias, a mistaken heading or a third project is unresolved.',
+    facts:[['ARCHIVED TITLE','BLACK VEIL'],['COMPETING REFERENCES','BLACK VEIN / VEIL'],['IDENTITY','UNCONFIRMED'],['CURRENT USE','CROSS-REFERENCE ONLY'],['VERIFIED LINK','NONE'],['STATUS','DO NOT MERGE']],
+    paragraphs:[{title:'INDEX CORRUPTION',body:'An entry marked BLACK VEIL appears between the Black Vein medical records and the Veil software signals. No reliable source establishes whether it refers to one, both or neither. Cortex has preserved the file instead of collapsing the names into a single explanation.'}],
+    events:[['BV01','Recovery','A BLACK VEIL header is found in a damaged index, with its main body deleted.'],['BV02','Conflict','BLACK VEIN appears in medical notes; VEIL appears in tracking-program references. No identity match is verified.']],
+    links:[['CASE-BLACKVEIN','BLACK VEIN','Memory agent / documented'],['CASE-VEIL','VEIL','Tracking program / suspected']],
+    questions:['Is Black Veil an old codename, a typo or an independent project?','Who deleted the payload?'],
+    intercepts:[['DELETED PAYLOAD','SYSTEM','BLACK VEIL / ███████ / RETENTION ERROR'],['CORTEX // NOTE','ANALYST','Three names. Two known functions. I will not assume they are the same.']]
+  },
+  {
+    id:'CASE-BLACKVEIN',slug:'black-vein',name:'BLACK VEIN',label:'Restricted substance',kind:'case',category:'LINKED CASE',status:'EXPERIMENTAL / HIGH RISK',clearance:'BIOLOGICAL // RED',completeness:'PARTIAL',accent:'red',source:'MEDICAL FRAGMENTS / TIFF SURVIVAL REPORT',
+    excerpt:'A memory-erasing agent. An incompatible dose can kill. Tiff survived the lethal version.',
+    lead:'Black Vein is described as a substance capable of removing memories. Administering the wrong variant is believed to be fatal. Tiff reportedly received that lethal variant yet survived. Cortex’s objective is to obtain a blood sample and learn what prevented her death.',
+    facts:[['NAME','BLACK VEIN'],['REPORTED EFFECT','MEMORY ERASURE'],['WRONG VARIANT','FATAL RISK'],['EXCEPTION','TIFFY LOU SURVIVED'],['LAB SAMPLE','NONE ACQUIRED'],['OPERATOR INTEREST','CORTEX']],
+    paragraphs:[{title:'ANOMALOUS OUTCOME',body:'The fatality profile and the survival report do not agree. Cortex has no laboratory confirmation, no sample and no explanation. He regards Tiff’s blood as the missing evidence.'},{title:'DELILAH CROSS-REFERENCE',body:'Delilah was presumed dead and later emerged with missing memories. That makes Black Vein a possible explanation in Cortex’s mind, not a confirmed cause. The agent involved in Delilah’s memory loss remains unidentified.'}],
+    events:[['B01','Memory suppression','Recovered material describes a substance that can erase memories.'],['B02','Variant warning','An incompatible version is reportedly lethal. The details of formulation remain deleted.'],['B03','Unexpected survivor','Tiff is recorded as having survived the lethal mismatch. No test results survive.'],['B04','Unproven parallel','Delilah’s memory-loss case may be related, but Cortex lacks a link.']],
+    links:[['SUB-TIFF','TIFFY LOU','Survived reported lethal variant'],['SUB-DELILAH','DELILAH','Separate memory-loss mystery'],['SUB-VEIL','BLACK VEIL','Unverified alias collision']],
+    questions:['Why did Tiff survive?','Who administered the dose and why?','Was Delilah exposed to this same agent?','Does Cortex have the correct formulation?'],
+    intercepts:[['BIOLOGY REQUEST','CORTEX // PRIORITY','Need blood. Not tissue. Not witness testimony. Blood.'],['REDACTED LAB EXCERPT','B-VN / ███','incompatible strain / expected outcome: TERMINAL / patient: ████ / result: SURVIVED'],['ANALYST WARNING','SYSTEM','THESE RECORDS DO NOT CONTAIN A USABLE FORMULA OR REAL MEDICAL GUIDANCE']]
+  },
+  {
+    id:'CASE-VEIL',slug:'project-veil',name:'PROJECT VEIL',label:'Tracking program',kind:'case',category:'LINKED CASE',status:'SIGNAL DETECTED / HOST UNKNOWN',clearance:'INTERCEPT // 04',completeness:'FRAGMENTED',accent:'green',source:'POST-FRACTURE INTERCEPTS / CORTEX ANALYSIS',
+    excerpt:'Suspected person-tracking program linked to Rick Gnorc. Cortex has the name, not the server or the operator.',
+    lead:'Veil appears in fragments attached to Rick Gnorc and the survivors of Echo. Cortex suspects it can track people. He has not located its host, mapped its data or confirmed the small farm connected with its operator.',
+    facts:[['DESIGNATION','VEIL'],['SUSPECTED PURPOSE','PERSON SEARCH / TRACKING'],['LINKED OPERATOR','RICK GNORC // UNVERIFIED'],['NETWORK LOCATION','NOT FOUND'],['REFERENCE PERSON','TIFFY LOU'],['CORTEX ACCESS','DENIED / NONE']],
+    paragraphs:[{title:'ACCESS ATTEMPTS',body:'Cortex has identified the name Veil but not a usable endpoint. The project might provide the route to Tiff that his own surveillance cannot. He continues observing Delilah while looking for traces of the program.'},{title:'RELATION TO BLACK VEIN',body:'VEIL is a possible tracking program. BLACK VEIN is a memory-erasing substance. BLACK VEIL is an unresolved legacy label. Their names overlap; their purposes should not be conflated.'}],
+    events:[['V01','Possible origin','Fragments suggest Rick Gnorc has established a people-tracking program.'],['V02','Farm rumour','Unverified reports connect Rick with a small farm, but Cortex knows neither its location nor occupants.'],['V03','Cortex search','Repeated queries produce no verified source or destination.'],['V04','Delilah as beacon','Unable to locate the system, Cortex continues using Delilah’s movements as an indirect lead.']],
+    links:[['SUB-RICK','RICK GNORC','Suspected creator'],['SUB-TIFF','TIFFY LOU','Target of search'],['SUB-DELILAH','DELILAH','Alternative signal'],['SUB-VEIL','BLACK VEIL','Unresolved index label']],
+    questions:['Where is the Veil system hosted?','Who has access?','Can it find Tiff?','How did Rick keep it operational after the fractures?'],
+    intercepts:[['QUERY LOG','VEIL://?','PING -> NO ROUTE / SEARCH -> NO RESPONSE / HOST -> █████'],['CORTEX // PRIVATE','PERSONAL','I know the name of the tool. I cannot find the hand holding it.']]
+  },
+  {
+    id:'CASE-MIB',slug:'mib',name:'MIB // COLLAPSE',label:'Organisation file',kind:'case',category:'LINKED CASE',status:'DISBANDED / SINGLE SURVIVOR',clearance:'LEGACY // CORE',completeness:'DEGRADED',accent:'green',source:'MIB BUNKER ARCHIVE / RECOVERY SNAPSHOTS',
+    excerpt:'The organisation that hunted Echo’s creatures for power. A bunker raid shut it down, leaving Cortex behind.',
+    lead:'Cortex once operated with the MIB crew. They attempted to seize Echo’s creatures and exploit the energy they could produce. A bunker raid ended the organisation. Cortex remains its only known active remnant and continues the search for power.',
+    facts:[['ORGANISATION','MIB'],['FORMER PURPOSE','CREATURE CAPTURE / ENERGY'],['TARGET MATERIAL','FREEDIUM → ELEMENT12'],['COLLAPSE','BUNKER RAID'],['REMAINING OPERATOR','CORTEX'],['CURRENT PRIORITY','TIFF SURVIVAL / BLOOD SAMPLE']],
+    paragraphs:[{title:'BEFORE THE RAID',body:'MIB sought the creatures hatched around Echo, believing their output could supply power. Its effort to capture and control those creatures made the group an opposing force to Echo.'},{title:'AFTER THE RAID',body:'The bunker raid shut MIB down. Its equipment, personnel and records were lost or dispersed. Cortex continues alone, first chasing the Element12 source and now investigating Tiff’s improbable survival from Black Vein.'}],
+    events:[['M01','Capture directive','MIB orders the retrieval of Echo’s creatures as energy assets.'],['M02','Element12 signal','Eggplant’s Freedium output becomes a key target.'],['M03','Bunker raid','A raid shuts down MIB’s operational base.'],['M04','Final operator','Cortex remains active and continues the search for power and the missing Tiff sample.']],
+    links:[['SUB-EGG','EGGPLANT','Energy-producing creature'],['SUB-ECHO','ORIGINAL ECHO','Original opposing operation'],['CASE-BLACKVEIN','BLACK VEIN','New focus of investigation'],['SUB-TIFF','TIFFY LOU','Current priority']],
+    questions:['What survived the bunker raid?','Who carried out the raid?','What does Cortex still have access to?','Did any Element12 samples remain?'],
+    intercepts:[['FINAL MIB LOG','CORE/ARCHIVE','BASE: OFFLINE / PERSONNEL: █████ / ACTIVE OPERATOR: CORTEX'],['CORTEX // PRIVATE','UNSENT','The bunker was the end of MIB. It was not the end of my work.']]
+  },
+  {
+    id:'SUB-KOA',slug:'koa',name:'KOA',label:'Anomalous entity',kind:'person',category:'PERSONNEL',status:'NO RECENT SIGHTINGS',clearance:'ECHO // RECOVERED',completeness:'PARTIAL',accent:'neutral',source:'ORIGINAL ECHO HATCH LOG',
+    excerpt:'The creature Rick Gnorc intended to hatch. No one has seen Koa for a long time.',
+    lead:'Koa was the original purpose of Echo. Rick’s fear campaign and recruitment efforts ultimately led to this hatch. Later sightings are absent. Koa’s current location and condition remain unknown.',
+    facts:[['NAME','KOA'],['FIRST APPEARANCE','ECHO HATCH'],['PROPOSED BY','RICK GNORC'],['RECENT SIGHTINGS','NONE CONFIRMED'],['CURRENT LOCATION','UNKNOWN']],
+    paragraphs:[{title:'INTENDED OUTCOME',body:'Rick believed the hatch was worth the deception used to organise Echo. The event succeeded, but the resulting timeline disruptions and subsequent separation of the group left Koa outside current observation.'}],
+    events:[['K01','Objective set','Echo is organised to hatch Koa.'],['K02','Hatch reported','Koa emerges.'],['K03','Long silence','No recent sighting of Koa can be verified.']],
+    links:[['SUB-ECHO','ORIGINAL ECHO','Founding operation'],['SUB-RICK','RICK GNORC','Organiser'],['SUB-EGG','EGGPLANT','Other known hatch']],
+    questions:['Where is Koa?','Was Koa affected by the fractures?','Could Koa still be found?'],
+    intercepts:[['ECHO ROSTER','RECOVERED','ENTITY // KOA // LAST CONFIRMED: █████'],['CORTEX // NOTE','ANALYSIS','The first hatch went silent while the second became valuable.']]
+  },
+  {
+    id:'SUB-SID',slug:'sid-knee',name:'SID KNEE',label:'Historical associate',kind:'person',category:'PERSONNEL',status:'DISPERSED / LOCATION UNKNOWN',clearance:'ECHO // RECOVERED',completeness:'PARTIAL',accent:'neutral',source:'ECHO TEAM ROSTER',
+    excerpt:'Rick Gnorc’s friend and collaborator in the original Echo operation. Present whereabouts unknown.',
+    lead:'Sid Knee helped Rick Gnorc organise Echo. He is associated with the recruitment videos and original hatch plan. The last time fracture scattered the team; Sid’s present location is not confirmed in Cortex’s records.',
+    facts:[['IDENTITY','SID KNEE'],['ASSOCIATE','RICK GNORC'],['OPERATION','ORIGINAL ECHO'],['KNOWN ROLE','ASSISTED FOUNDING'],['CURRENT LOCATION','UNKNOWN']],
+    paragraphs:[{title:'THE FOUNDING PAIR',body:'Rick led the Echo plan and Sid helped him. The full extent of Sid’s involvement in producing or distributing the fear videos remains unrecorded.'}],
+    events:[['S01','Echo founded','Sid helps his friend Rick organise Echo.'],['S02','Temporal dispersal','The final crack splits the team into untracked locations.']],
+    links:[['SUB-RICK','RICK GNORC','Friend / collaborator'],['SUB-ECHO','ORIGINAL ECHO','Operation'],['CASE-FRACTURE','FRACTURES','Group separated']],
+    questions:['Where is Sid Knee now?','What did he know of the recordings?','Did he remain in contact with Rick?'],
+    intercepts:[['DAMAGED ENTRY','TEAM LIST','SID KNEE / LAST NODE ██ / CONTACT ██ / TIMELINE UNKNOWN']]
+  },
+  {
+    id:'CASE-FRACTURE',slug:'temporal-fractures',name:'TEMPORAL FRACTURES',label:'Incident chain',kind:'case',category:'LINKED CASE',status:'LAST CRACK / LOST ROUTES',clearance:'ECHO // FRAGMENT',completeness:'PATCHED',accent:'green',source:'ECHO FRAGMENT TIMELINE',
+    excerpt:'The hunt for Element12 shattered one timeline, sent Echo into another and ultimately scattered the survivors.',
+    lead:'The Echo group searched for cracks in time. A larger creature seeking Element12 destroyed their timeline and forced them into a new one. The search continued until a final crack split the remaining members apart and deposited them in unknown locations.',
+    facts:[['INITIAL EVENT','ELEMENT12 PREDATOR'],['FIRST EFFECT','ORIGINAL TIME TORN APART'],['SECOND EFFECT','GROUP ENTERS NEW TIME'],['FINAL EFFECT','SURVIVORS SCATTERED'],['CURRENT COORDINATES','NONE']],
+    paragraphs:[{title:'NO RETURN PATH',body:'Cortex has no reliable route back through the cracks and no map of where each survivor landed. Rick, Sid Knee, Koa and Eggplant remain entangled with a timeline no longer accessible through the surviving records.'}],
+    events:[['F01','Crack searches','Echo members begin investigating cracks in time.'],['F02','Predator arrives','A larger creature hunts Element12.'],['F03','Rupture','The pursuit tears the original time apart and displaces Echo.'],['F04','New time','Survivors arrive in a new period and search for more fractures.'],['F05','Last crack','The final fracture scatters team members into different places.']],
+    links:[['SUB-ECHO','ORIGINAL ECHO','Displaced team'],['SUB-EGG','EGGPLANT','Source of Element12'],['SUB-RICK','RICK GNORC','Scattered leader'],['SUB-SID','SID KNEE','Scattered collaborator']],
+    questions:['What was the larger creature?','Where did the team arrive?','Are the cracks still active?','Did the final fracture affect Koa?'],
+    intercepts:[['FRACTURE RECORDING','DAMAGED','TIME INTEGRITY: 12% / SIGNAL ████ / TEAM POSITIONS: LOST'],['CORTEX // ANALYSIS','PRIVATE','The fracture scattered every witness I need.']]
+  },
+  {
+    id:'X-001',slug:'skeleton-crew',name:'SKELETON CREW',label:'Withdrawn file',kind:'redacted',category:'REDACTED',status:'PURGED / MIB CONFLICT',clearance:'████████',completeness:'REDACTED',accent:'red',source:'ECHO PERSONNEL ROSTER / DELETED',
+    excerpt:'[ RECORD ERASED ] A group linked to Echo’s frightening recruitment transmissions.',
+    lead:'The surviving Echo roster links Skeleton Crew to Rick’s recruitment campaign. Identity lists, members and later movements have been removed. Cortex has no usable location from this file.',
+    facts:[['INDEX','SKELETON CREW'],['ASSOCIATION','ECHO RECRUITMENT'],['PEOPLE','███████'],['LAST KNOWN','PURGED']],
+    links:[['SUB-ECHO','ORIGINAL ECHO','Recruitment operation'],['SUB-RICK','RICK GNORC','Operation leader']],
+    intercepts:[['ERASED ROSTER','████','SKELETON CREW // VIDEO DISTRIBUTION ███████'],['CORTEX // NOTE','PRIVATE','One more vanished group. One more possible witness.']]
+  },
+  {
+    id:'X-002',slug:'daisy-andrews',name:'DAISY ANDREWS',label:'Withdrawn file',kind:'redacted',category:'REDACTED',status:'PURGED / ACCESS DENIED',clearance:'████████',completeness:'REDACTED',accent:'red',source:'ECHO ASSOCIATES / DELETED',
+    excerpt:'[ RECORD ERASED ] Named among the people drawn into Operation Echo.',
+    lead:'A damaged list places Daisy Andrews among those used to support the Echo operation. The nature and extent of her participation cannot be recovered. Cortex keeps the name indexed.',
+    facts:[['INDEX','DAISY ANDREWS'],['ASSOCIATION','ORIGINAL ECHO'],['ROLE','████████'],['LOCATION','NOT RECOVERED']],
+    links:[['SUB-ECHO','ORIGINAL ECHO','Historical operation']],
+    intercepts:[['REMOVED PERSONNEL NOTE','██-██','DAISY ANDREWS // contacted after VIDEO_██ / outcome: █████'],['CORTEX // NOTE','PRIVATE','The name stayed. Everything useful did not.']]
+  },
+  {
+    id:'X-003',slug:'the-sanctary',name:'THE SANCTARY',label:'Withdrawn file',kind:'redacted',category:'REDACTED',status:'DELETED / NO CORRELATION',clearance:'████████',completeness:'REDACTED',accent:'red',source:'OLD INDEX / PAYLOAD REMOVED',
+    excerpt:'[ INDEX SURVIVED ] An older record with its body deliberately stripped.',
+    lead:'The Sanctary is preserved exactly as titled in the old archive. No verified link to Echo, MIB, Black Vein or Tiff survives in the available material.',
+    facts:[['INDEX','THE SANCTARY'],['FILE BODY','███████'],['CONNECTION','UNVERIFIED'],['STATUS','WITHDRAWN']],
+    links:[],
+    intercepts:[['EMPTY FILE','UNKNOWN','ENTRY ID REMAINS // BODY DELETED'],['CORTEX // NOTE','UNSORTED','No connection established. Leave it in the vault.']]
+  }
 ];

@@ -9,14 +9,14 @@
   const LABELS = {login:'GATEWAY', terminal:'TERMINAL', wire:'OVERLOAD', brute:'BRUTE FORCE',
     archive:'ARCHIVE', temp:'RECOVERY', reboot:'REBOOT', trace:'SIGNAL TRACE'};
   const SCENES = {
-    login:    {bpm:66, root:55.0, pad:.035, tone:410, rhythm:.30},
-    terminal: {bpm:83, root:55.0, pad:.041, tone:610, rhythm:.49},
-    wire:     {bpm:96, root:58.27,pad:.048, tone:930, rhythm:.69},
-    brute:    {bpm:112,root:55.0, pad:.047, tone:970, rhythm:.82},
-    archive:  {bpm:71, root:55.0, pad:.045, tone:510, rhythm:.35},
-    temp:     {bpm:61, root:65.41,pad:.026, tone:770, rhythm:.24},
-    reboot:   {bpm:91, root:65.41,pad:.04,  tone:1150,rhythm:.64},
-    trace:    {bpm:146,root:51.91,pad:.074,tone:1400,rhythm:1.00}
+    login:    {bpm:66, root:110.0, pad:.115, tone:410, rhythm:.38},
+    terminal: {bpm:83, root:110.0, pad:.137, tone:610, rhythm:.59},
+    wire:     {bpm:96, root:116.54,pad:.145, tone:930, rhythm:.76},
+    brute:    {bpm:112,root:110.0, pad:.147, tone:970, rhythm:.85},
+    archive:  {bpm:71, root:110.0, pad:.142, tone:510, rhythm:.50},
+    temp:     {bpm:61, root:130.82,pad:.092, tone:770, rhythm:.29},
+    reboot:   {bpm:91, root:130.82,pad:.124,tone:1150,rhythm:.68},
+    trace:    {bpm:146,root:103.82,pad:.17,tone:1400,rhythm:1.00}
   };
   const MELODY = {
     login:   [0,null,null,1,null,null,3,null,0,null,2,null,1,null,null,null],
@@ -31,6 +31,9 @@
   // Dorian and neighbouring half steps: a deliberately uneasy original motif.
   const STEPS = [1, 1.059463, 1.189207, 1.334840, 1.414214, 1.498307, 1.781797, 1.887749, 2.118926];
   const AudioContextImpl = window.AudioContext || window.webkitAudioContext;
+  const MUSIC_PREF = 'observatory-background-music-volume-v5';
+  let musicVolume = 82;
+  try { musicVolume = Math.max(0,Math.min(100,Number(localStorage.getItem(MUSIC_PREF) ?? 82))); } catch (_) {}
   let enabled = true;
   try { enabled = localStorage.getItem(PREF) !== '1'; } catch (_) {}
   let unlocked = false, ctx = null, master = null, sfxBus = null, musicBus = null;
@@ -75,17 +78,17 @@
       limiter.connect(ctx.destination);
       master = gainNode(.0001,limiter);
       sfxBus = gainNode(.8,master);
-      musicBus = gainNode(.85,master);
+      musicBus = gainNode(musicVolume / 100,master);
       padBus = gainNode(0,musicBus);
 
       const lowFilter = ctx.createBiquadFilter(); lowFilter.type='lowpass';
-      lowFilter.frequency.value=480; lowFilter.Q.value=.5; lowFilter.connect(padBus);
+      lowFilter.frequency.value=1100; lowFilter.Q.value=.5; lowFilter.connect(padBus);
       lowOsc=makeOsc('sine', SCENES[scene].root,lowFilter);
-      const upperGain = gainNode(.32,lowFilter);
+      const upperGain = gainNode(.55,lowFilter);
       highOsc=makeOsc('triangle',SCENES[scene].root*1.5,upperGain);
       const shimmer = ctx.createBiquadFilter(); shimmer.type='bandpass';
       shimmer.frequency.value=2100; shimmer.Q.value=.4;
-      const textureGain=gainNode(.003,musicBus);
+      const textureGain=gainNode(.009,musicBus);
       shimmer.connect(textureGain);
       noiseBuffer = makeNoiseBuffer();
       air=ctx.createBufferSource(); air.buffer=noiseBuffer; air.loop=true;
@@ -149,19 +152,19 @@
     if (pitch!==null) {
       const hz=root*4*STEPS[pitch];
       const bright=active==='trace' || active==='brute';
-      voice(hz,when,active==='archive'?.47:.19,{wave:bright?'square':'triangle',vol:(active==='archive'?.014:.013)*boost,
-        end:hz*(active==='trace'?.985:1),filter:bright?1300:2250});
+      voice(hz,when,active==='archive'?.47:.19,{wave:bright?'square':'triangle',vol:(active==='archive'?.033:.029)*boost,
+        end:hz*(active==='trace'?.985:1),filter:bright?1700:2600});
       if ((i%16)===0 && (active==='archive'||active==='login'))
-        voice(hz/2,when,.7,{wave:'sine',vol:.017});
+        voice(hz/2,when,.7,{wave:'sine',vol:.033});
     }
     if (halfbar===0 || (active==='trace'&&i%4===0) || (active==='brute'&&i%8===4)) {
       const bassFreq = root*((Math.floor(i/16)%4)===1 ? 1.05946:1);
-      voice(bassFreq,when,active==='trace'?.39:.45,{wave:'sine',vol:active==='trace'?.095:.045*boost,end:bassFreq*.91,attack:.018});
-      if (conf.rhythm>.45) voice(97,when,.17,{wave:'sine',vol:.045*conf.rhythm,end:36,attack:.009});
+      voice(bassFreq,when,active==='trace'?.39:.45,{wave:'sine',vol:active==='trace'?.13:.075*boost,end:bassFreq*.91,attack:.018});
+      if (conf.rhythm>.45) voice(97,when,.17,{wave:'sine',vol:.066*conf.rhythm,end:36,attack:.009});
     }
     const rhythm=conf.rhythm;
     if ((i%2===1 && rhythm>.40) || (i%4===2 && rhythm>.27))
-      noiseClick(when,.004+(rhythm*.009),.018+intensity*.008,2700);
+      noiseClick(when,.007+(rhythm*.012),.018+intensity*.008,2700);
     if (active==='terminal' && i%4===3) voice(988,when,.055,{wave:'sine',vol:.008,end:840});
     if (active==='wire' && i%4===1) voice(230+intensity*110,when,.095,{wave:'sawtooth',vol:.006,end:170,filter:590});
     if (active==='brute' && i%2===0) voice(430+i%8*35,when,.048,{wave:'square',vol:.004,end:380,filter:780});
@@ -237,6 +240,34 @@
     updateButton();
   }
   function setIntensity(next) {level=Math.max(1,Math.min(5,Number(next)||1));}
+  function setMusicVolume(value) {
+    musicVolume = Math.max(0,Math.min(100,Math.round(Number(value)||0)));
+    try {localStorage.setItem(MUSIC_PREF,String(musicVolume));} catch (_) {}
+    const number = document.getElementById('musicPercent');
+    if (number) number.textContent=`${musicVolume}%`;
+    const slider = document.getElementById('musicVolume');
+    if (slider) slider.value=String(musicVolume);
+    if (ctx && musicBus) smooth(musicBus.gain,musicVolume/100,.06);
+  }
+  async function testMusic() {
+    unlocked=true;
+    if (!enabled) { enabled=true; try {localStorage.setItem(PREF,'0');}catch(_) {} updateButton(); }
+    initAudio();
+    if (!ctx) return;
+    try {await ctx.resume();}catch(_) {return;}
+    if (musicVolume<10) setMusicVolume(82);
+    smooth(master.gain,.81,.05);
+    nextStepAt=ctx.currentTime+.08;
+    const t=ctx.currentTime+.035;
+    [330,392,440,587.33].forEach((hz,i)=>voice(hz,t+i*.13,.7,{wave:i%2?'sine':'triangle',vol:.115,attack:.025,filter:2100}));
+  }
+  function bindControls() {
+    const slider=document.getElementById('musicVolume');
+    if (slider) slider.addEventListener('input',e=>setMusicVolume(e.target.value));
+    const tester=document.getElementById('testMusic');
+    if (tester) tester.addEventListener('click',testMusic);
+    setMusicVolume(musicVolume); updateButton();
+  }
   function updateButton() {
     const btn=document.getElementById('soundToggle'); if(!btn) return;
     btn.textContent=enabled?`◖)) AUDIO ON · ${LABELS[scene]}`:'◖× AUDIO OFF';
@@ -266,7 +297,7 @@
   window.addEventListener('pagehide',()=>{
     if(ctx)smooth(master.gain,0,.02);
   });
-  window.ObservatoryAudio={click,page,error,success,reboot,alarm,accent,setMode,setIntensity};
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',updateButton);
-  else updateButton();
+  window.ObservatoryAudio={click,page,error,success,reboot,alarm,accent,setMode,setIntensity,setMusicVolume,testMusic};
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bindControls);
+  else bindControls();
 })();

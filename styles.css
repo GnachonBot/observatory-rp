@@ -110,3 +110,42 @@ body.archive-active .corner-console{display:none}
 .sound-toggle[aria-pressed="false"]{border-color:#3e4943;color:#808c82;box-shadow:0 0 15px #0009;}
 body:has(.trace-layer:not(.hidden)) .sound-toggle{border-color:#ad4b4b;background:#250909e6;color:#ffc2bc;box-shadow:0 0 25px #99272252;}
 @media(max-width:620px){.sound-toggle{min-width:0;max-width:calc(100vw - 20px);font-size:9px;padding:9px 11px;}}
+
+/* V6 // Cortex investigation and recovered intelligence */
+.mission-banner{display:flex;align-items:center;gap:18px;padding:14px 22px;margin:0 0 12px;border:1px solid #795d4a;background:linear-gradient(100deg,#271a15f2,#151a15 63%,#0a100c);box-shadow:inset 3px 0 #d49c69,0 12px 33px #0006}
+.mission-dot{width:11px;height:11px;flex:0 0 auto;border-radius:50%;background:#d99b74;box-shadow:0 0 16px #dc825a;animation:mission-pulse 2.5s infinite}
+@keyframes mission-pulse{50%{opacity:.36;box-shadow:0 0 4px #dc825a}}
+.mission-objective{display:flex;flex-direction:column;flex:1;gap:4px}.mission-objective small{font:9px var(--mono);letter-spacing:.16em;color:#dbab88}.mission-objective strong{font:20px var(--display);letter-spacing:.12em;color:#f2dec5}.mission-objective span{font:11px/1.5 var(--mono);color:#9fa99f}
+.mission-buttons{display:flex;flex-wrap:wrap;gap:6px}.mission-buttons button{border:1px solid #60755e;background:#0e1610;color:#bbd4b9;cursor:pointer;font:10px var(--mono);letter-spacing:.06em;padding:10px 11px}.mission-buttons button:hover,.mission-buttons button:focus-visible{background:#233323;border-color:#afd8b1;color:white}
+.missing-red{color:#e5a2a0!important}.archive-file-list .file-row .file-sub{letter-spacing:.08em}
+.cortex-slips,.cortex-snippets{display:grid;gap:11px;padding:10px 0 3px}
+.cortex-slip{position:relative;padding:15px 19px 16px;border-left:2px solid #d5ab81;border-top:1px solid #3b332a;border-right:1px solid #282d27;border-bottom:1px solid #282d27;background:linear-gradient(110deg,#241e17 0,#141813 55%,#0d110f 100%);overflow:hidden}
+.cortex-slip:after{content:'// EYES ONLY';position:absolute;right:10px;bottom:8px;letter-spacing:.13em;font:8px var(--mono);color:#b58e662d;pointer-events:none}
+.cortex-slip>div{display:flex;gap:9px;align-items:center;flex-wrap:wrap}.cortex-slip-icon{color:#e8b88b;font-size:13px}.cortex-slip strong{color:#dfbc96;font:10px var(--mono);letter-spacing:.13em}.cortex-slip em{font:9px var(--mono);font-style:normal;color:#849184;margin-left:auto;letter-spacing:.06em}.cortex-slip p{font:12px/1.75 var(--mono);color:#d7d3c5;margin:10px 0 5px;max-width:90%}
+.fragment-blackout{display:inline-block;background:#080908;letter-spacing:-.035em;color:#282b27;padding:1px 4px;box-shadow:0 0 0 1px #433c32;user-select:none}
+.brief-intel-jump{padding:13px 0 0}.intel-fragment-stack{display:grid;gap:14px}.intercept-card{border:1px solid #4e574b;background:linear-gradient(135deg,#0b130d,#0e1410);padding:18px 20px;position:relative}.intercept-card:nth-child(2n){background:linear-gradient(120deg,#1f1714,#0a0f0b);border-color:#695044}.intercept-top{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:#c7c9b2;font:10px var(--mono);letter-spacing:.1em}.intercept-top em{color:#9ba79b;font-style:normal}.intercept-card p{font:13px/1.9 var(--mono);color:#dedbd3;margin:19px 0;white-space:pre-wrap}.intercept-foot{display:flex;justify-content:space-between;gap:8px;border-top:1px solid #3c463d;padding-top:10px;color:#6a806d;font:9px var(--mono);letter-spacing:.08em}.intel-stamp{margin:25px 0 5px;padding:15px 20px;border:1px dashed #805b52;background:#23110f;color:#e4aaa0;text-align:center;letter-spacing:.17em;font:11px var(--mono)}
+.incident-annotation{border-top:1px dashed #685842;background:#231c16;color:#edc7a7;font:11px/1.6 var(--mono);padding:13px 16px;letter-spacing:.02em}
+.redact-clues{max-width:660px;margin:22px auto 10px;text-align:left}.redact-clues .cortex-slip{background:#1c0e0e;border-color:#653e3e}.redact-clues .cortex-slip p{max-width:100%}
+.record-tabs button[data-tab="intel"]{color:#d9b18c}.record-tabs button[data-tab="intel"].active{color:#fff2df;border-bottom-color:#d5a372}
+@media(max-width:960px){.mission-banner{align-items:flex-start;flex-wrap:wrap}.mission-buttons{width:100%}.mission-buttons button{flex:1}}@media(max-width:600px){.mission-banner{gap:10px;padding:14px}.mission-objective strong{font-size:17px}.mission-objective span{font-size:10px}.mission-buttons button{font-size:9px;padding:10px 6px}.cortex-slip{padding:12px}.cortex-slip p{max-width:100%;font-size:11px}.intercept-card{padding:13px}.intercept-card p{font-size:12px}.intercept-top{font-size:9px}}
+@media(prefers-reduced-motion:reduce){.mission-dot{animation:none}}
+
+/* V6 // Sound controls (music fix with test tone and separate gain) */
+.audio-controls{position:fixed;left:14px;bottom:14px;z-index:84;display:flex;align-items:center;gap:9px;padding:8px;border:1px solid #496c53;background:#08100deF;box-shadow:0 0 32px #000d;backdrop-filter:blur(8px);max-width:calc(100vw - 28px)}
+.audio-controls .sound-toggle{position:static;left:auto;bottom:auto;min-width:0;box-shadow:none;padding:8px 9px;font-size:9px;white-space:nowrap}
+.audio-controls .music-slider-label{color:#a9d0b3;font:10px var(--mono);letter-spacing:.07em;white-space:nowrap}
+.audio-controls .music-slider-label span{color:#f4efe6}.audio-controls input[type=range]{width:88px;min-width:35px;accent-color:#a9deb7;cursor:pointer}.audio-controls .test-music{background:#132418;border:1px solid #5a8866;color:#c1e8c9;padding:9px 10px;cursor:pointer;font:9px var(--mono);white-space:nowrap}.audio-controls .test-music:hover{background:#254832;color:#fff}.audio-controls:has(.sound-toggle[aria-pressed=false]){border-color:#4a4949}
+@media(max-width:700px){.audio-controls{padding:5px;gap:5px;left:5px;bottom:5px;max-width:calc(100vw - 10px)}.audio-controls .sound-toggle{font-size:8px;padding:8px 5px}.audio-controls .music-slider-label{font-size:8px}.audio-controls input[type=range]{width:56px}.audio-controls .test-music{font-size:8px;padding:9px 5px}}
+
+/* Narrow screens: prevent the trace timer + session controls from forcing a wide layout. */
+@media(max-width:620px){
+  .wiki-session{flex-direction:column;align-items:flex-start;min-width:0;width:100%;gap:9px;text-align:left}
+  .wiki-session>span{white-space:normal}
+  .wiki-actions{width:100%;display:flex;flex-wrap:wrap;gap:7px}
+  .archive-topline{overflow:hidden;white-space:normal}
+  .archive-topline span:nth-child(2){font-size:7px;overflow:hidden;text-overflow:ellipsis}
+  .archive-heading,.archive-heading>div:last-child{min-width:0}
+  .wiki-view{max-width:calc(100vw - 22px)}
+  .audio-controls{max-width:calc(100vw - 12px);flex-wrap:wrap;gap:5px}
+  .audio-controls .sound-toggle{flex:none}
+}
