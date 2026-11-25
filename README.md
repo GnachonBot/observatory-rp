@@ -1,8 +1,16 @@
-# The Observatory // Cortex Private Vault (V8)
+# The Observatory // Cortex Private Vault (V9)
 
 A fictional interactive archive website. V8 revises **the presentation of the V6 archive** so visitors see Cortex's own files, as though they have gained access to his private recovery system. The dossiers are not a player briefing or a set of missions.
 
-## What changed in V8
+## What changed in V9
+
+- The archive terminal has a new **03 // TRACE JAMMER** memory-minefield module (command: `mines`, `jammer` or `03`).
+- A 4 × 4 board displays six safe blocks for seven seconds, then hides them. Select all six from memory; three mine strikes fail the run. Retrying does not spend an access attempt.
+- A success disables the five-minute archive trace for the remainder of that browser-tab session (including refresh). It also disables the archive terminal's own shell timeout. The countdown reads `DISABLED`.
+- Normal five-minute timeout and the extended location-found animation remain active until the minigame is won. Access through the main login or emergency recovery still works as before.
+- This is a fictional, entirely client-side system. The archive remains public on GitHub Pages.
+
+## Prior changes in V8
 
 - Archive sessions end after **05:00** instead of 02:00.
 - An open emergency/archive terminal shell has its own **05:00** auto-close timer; entering a game closes the shell timer.
