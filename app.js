@@ -17,6 +17,9 @@
   const CORTEX_PASS = 'element12';
   const TOTAL_ATTEMPTS = 5;
   const STAGES = 5;
+  const JAMMER_REVEAL_MS = 7000;
+  const JAMMER_SIZE = 16;
+  const JAMMER_SAFE_COUNT = 6;
   const $ = id => document.getElementById(id);
   const ROUTES = {
     wire: { name: 'POWER OVERLOAD', subtitle: 'Maintain a live connection from SOURCE to TARGET. Do not release.' },
@@ -96,6 +99,10 @@
   }
   function startTerminalClock() {
     clearTerminalClock();
+    if (sessionIdentity?.traceDisabled && !$('wikiView').classList.contains('hidden')) {
+      $('terminalTTL').textContent = 'SHELL TTL / DISABLED';
+      return;
+    }
     terminalExpiresAt = Date.now() + TERMINAL_MS;
     function tick() {
       if ($('terminalModal').classList.contains('hidden') || traceActive) { clearTerminalClock(); return; }
@@ -162,8 +169,14 @@
   function activateSession(entry) {
     clearTraceClock();
     sessionIdentity = entry;
-    if (entry.expiresAt <= Date.now()) { triggerLocationTrace(); return; }
+    if (!entry.traceDisabled && (!Number.isFinite(entry.expiresAt) || entry.expiresAt <= Date.now())) { triggerLocationTrace(); return; }
     populateWiki(); showView('wikiView');
+    $('traceIndicator').classList.toggle('trace-jammed', Boolean(entry.traceDisabled));
+    $('traceIndicator').classList.remove('trace-critical');
+    if (entry.traceDisabled) {
+      $('traceCountdown').textContent = 'DISABLED';
+      return;
+    }
     function tick() {
       if (!sessionIdentity || traceActive) return;
       const left = Math.max(0, entry.expiresAt - Date.now());
@@ -175,10 +188,21 @@
     }
     tick(); traceClock = setInterval(tick, 180);
   }
+  function disableSessionTrace() {
+    if (!sessionIdentity || traceActive || sessionIdentity.traceDisabled) return false;
+    sessionIdentity = { ...sessionIdentity, traceDisabled: true, expiresAt: null };
+    sessionStorage.setItem(SESSION, JSON.stringify(sessionIdentity));
+    clearTraceClock();
+    $('traceIndicator').classList.remove('trace-critical');
+    $('traceIndicator').classList.add('trace-jammed');
+    $('traceCountdown').textContent = 'DISABLED';
+    return true;
+  }
   function triggerLocationTrace() {
     if (traceActive) return;
     traceActive = true;
     clearSession();
+    if (game) closeGame(false);
     hideModal('terminalModal'); hideModal('gameModal');
     $('errorOverlay').classList.add('hidden');
     $('traceLayer').classList.remove('hidden');
@@ -235,7 +259,7 @@
     }
     $('terminalTitle').textContent = isArchive ? '● OBSERVATORY // ARCHIVE_SHELL' : '● OBSERVATORY_SHELL.exe';
     $('terminalFooterLeft').textContent = isArchive ? 'FILE DIRECTORY // RECORD INDEX' : 'EMERGENCY RECOVERY CHANNELS';
-    $('terminalInput').placeholder = isArchive ? 'help / list / open tiffy / search Hazel' : 'help / overload / bruteforce / status';
+    $('terminalInput').placeholder = isArchive ? 'help / list / mines / search Hazel' : 'help / overload / bruteforce / status';
     showModal('terminalModal');
     startTerminalClock();
     if (!terminalHasBooted) {
@@ -243,7 +267,8 @@
       if (isArchive) {
         terminalLine('OBSERVATORY ARCHIVE SHELL // NODE 001 ONLINE', 'success');
         terminalLine(':: LOCAL FILE INDEX ONLINE // CACHE INTEGRITY: PARTIAL');
-        terminalLine(':: COMMAND REGISTER PRESENT: LIST / OPEN / SEARCH / SCAN / STATUS');
+        terminalLine(':: COMMAND REGISTER PRESENT: LIST / OPEN / SEARCH / SCAN / MINES / STATUS');
+        terminalLine(':: TRACE JAMMER MODULE ONLINE // MEMORY MINEFIELD');
         terminalLine(':: Type HELP for available commands.', 'muted');
       } else {
         terminalLine('OBSERVATORY RECOVERY SHELL // VERSION 0.5', 'success');
@@ -260,7 +285,13 @@
   function updateTerminalOptions() {
     const archive = !$('wikiView').classList.contains('hidden');
     $('terminalOptions').classList.toggle('hidden', archive);
-    if (archive) return;
+    $('traceJammerEntry').classList.toggle('hidden', !archive);
+    if (archive) {
+      const jammed = Boolean(sessionIdentity?.traceDisabled);
+      $('launchTraceJammer').disabled = jammed;
+      $('traceJammerStatus').textContent = jammed ? 'TRACE SIGNAL / OFFLINE // SESSION EXEMPT' : 'MEMORY GRID READY // TRACE LINK ACTIVE';
+      return;
+    }
     for (const btn of $('terminalOptions').querySelectorAll('[data-route]')) btn.disabled = state.attempts === 0;
     if (state.attempts === 0) terminalLine(':: SYSTEM LOCKED. Type reset to restore terminal settings.', 'error');
   }
@@ -269,6 +300,9 @@
     terminalLine(`guest@observatory:~$ ${raw}`);
     const archive = !$('wikiView').classList.contains('hidden');
     if (archive) {
+      if (['mines', 'minefield', 'jam', 'jammer', '03', 'traceoff'].includes(command)) { startTraceJammer(); return; }
+      if (command === 'status') terminalLine(`TRACE STATUS: ${sessionIdentity?.traceDisabled ? 'DISABLED' : 'LIVE // FIVE-MINUTE WINDOW'}`, sessionIdentity?.traceDisabled ? 'success' : 'muted');
+      if (command === 'help') terminalLine('MEMORY GRID: mines | jammer | 03 // Disable this session trace by clearing the safe blocks.');
       if (window.ObservatoryArchive?.terminalCommand(command, terminalLine)) return;
       if (command === 'clear') { terminalHistory.splice(0); $('terminalLog').textContent = ''; }
       else if (command === 'exit' || command === 'close') hideModal('terminalModal');
@@ -293,9 +327,13 @@
     clearInterval(game.interval); game.interval = null; game.active = false;
   }
   function closeGame(showMessage = true) {
-    if (game) stopGameClock();
+    const wasJammer = game?.type === 'jammer';
+    if (game) {
+      stopGameClock();
+      if (wasJammer) { clearTimeout(game.revealTimeout); clearInterval(game.revealTicker); }
+    }
     game = null; hideModal('gameModal');
-    if (showMessage) toast('Recovery run aborted. The spent access attempt is not refunded.');
+    if (showMessage) toast(wasJammer ? 'MEMORY GRID CLOSED // TRACE STILL ACTIVE' : 'Recovery run aborted. The spent access attempt is not refunded.');
   }
   function startGame(type) {
     if (!ROUTES[type]) return;
@@ -306,6 +344,91 @@
     window.ObservatoryAudio?.setIntensity(1);
     showModal('gameModal'); renderGame();
   }
+  function startTraceJammer() {
+    if ($('wikiView').classList.contains('hidden') || !sessionIdentity || traceActive) {
+      terminalLine('TRACE JAMMER UNAVAILABLE // ARCHIVE SESSION REQUIRED', 'error'); return;
+    }
+    if (sessionIdentity.traceDisabled) { terminalLine('TRACE ALREADY DISABLED // NO SIGNAL EMITTED', 'success'); return; }
+    hideModal('terminalModal');
+    const order = Array.from({length: JAMMER_SIZE}, (_, i) => i);
+    for (let i = order.length-1; i > 0; i--) {
+      const rand = new Uint32Array(1); crypto.getRandomValues(rand);
+      const j = rand[0] % (i + 1);
+      [order[i], order[j]] = [order[j], order[i]];
+    }
+    game = {
+      type: 'jammer', safe: new Set(order.slice(0, JAMMER_SAFE_COUNT)),
+      found: new Set(), hit: new Set(), lives: 3, active: false,
+      interval: null, revealTimeout: null, revealTicker: null
+    };
+    $('gameTitle').textContent = '03 // TRACE JAMMER / MEMORY MINEFIELD';
+    window.ObservatoryAudio?.setMode('wire');
+    window.ObservatoryAudio?.setIntensity(2);
+    showModal('gameModal');
+    renderJammer();
+  }
+  function renderJammer() {
+    if (!game || game.type !== 'jammer') return;
+    const current = game;
+    const cells = Array.from({length: JAMMER_SIZE}, (_, i) =>
+      `<button type="button" class="memory-tile ${current.safe.has(i) ? 'is-safe' : 'is-mine'}" data-cell="${i}" disabled aria-label="Grid cell ${i+1}">${current.safe.has(i) ? '◆' : '×'}</button>`).join('');
+    $('gameContent').innerHTML = `<div class="game-lead"><div class="eyebrow">CORTEX // TRACE-CONTROL MODULE</div><h2>MEMORY MINEFIELD</h2><p>Memorise the six illuminated safe blocks. When the grid goes dark, uncover those blocks without touching the mines. Three strikes end the attempt.</p></div>
+      <div class="jammer-stats"><span>INTEGRITY <strong id="memoryLives">♥ ♥ ♥</strong></span><span>SAFE BLOCKS <strong id="memoryProgress">0 / ${JAMMER_SAFE_COUNT}</strong></span><span>REVEAL <strong id="memoryClock">7.0s</strong></span></div>
+      <div id="memoryBoard" class="memory-board" role="group" aria-label="Four-by-four memory minefield">${cells}</div>
+      <div class="game-message" id="memoryMessage">OBSERVE // SAFE CELLS ILLUMINATED IN GREEN</div>
+      <div class="game-controls"><span class="game-rule">03 // MEMORY GRID / NO RECOVERY ATTEMPT USED</span><button class="ghost-button" id="abortMemory" type="button">CLOSE MODULE</button></div>`;
+    $('abortMemory').addEventListener('click', () => closeGame());
+    const board = $('memoryBoard');
+    const revealEnds = performance.now() + JAMMER_REVEAL_MS;
+    current.revealTicker = setInterval(() => {
+      if (game !== current) return;
+      $('memoryClock').textContent = `${Math.max(0,(revealEnds-performance.now())/1000).toFixed(1)}s`;
+    }, 100);
+    current.revealTimeout = setTimeout(() => {
+      if (game !== current || traceActive) return;
+      clearInterval(current.revealTicker);
+      current.active = true;
+      board.classList.add('memory-concealed');
+      for (const cell of board.querySelectorAll('[data-cell]')) {
+        cell.disabled = false; cell.textContent = '·';
+        cell.setAttribute('aria-label', `Hidden grid cell ${Number(cell.dataset.cell)+1}`);
+      }
+      $('memoryClock').textContent = 'HIDDEN';
+      $('memoryMessage').textContent = 'RECALL // SELECT ALL SIX SAFE BLOCKS';
+      window.ObservatoryAudio?.accent('scan');
+    }, JAMMER_REVEAL_MS);
+    board.addEventListener('click', evt => {
+      if (game !== current || !current.active) return;
+      const cell = evt.target.closest('button[data-cell]');
+      if (!cell || cell.disabled) return;
+      const index = Number(cell.dataset.cell);
+      cell.disabled = true;
+      if (current.safe.has(index)) {
+        current.found.add(index);
+        cell.classList.add('memory-revealed-safe'); cell.textContent = '◆';
+        $('memoryProgress').textContent = `${current.found.size} / ${JAMMER_SAFE_COUNT}`;
+        $('memoryMessage').textContent = 'SAFE NODE CONFIRMED // SIGNAL DESTABILISING';
+        window.ObservatoryAudio?.success();
+        if (current.found.size === JAMMER_SAFE_COUNT) {
+          current.active = false;
+          if (!disableSessionTrace()) return;
+          $('gameContent').innerHTML = `<div class="stage-pass jammer-success"><div class="success-icon">◈</div><div class="eyebrow">CORTEX // SIGNAL OVERRIDE CONFIRMED</div><h3>TRACE LINK SEVERED</h3><p>Locator beacon offline. Session expiry disabled. Recovery terminal shell remains accessible with no time limit for this session.</p><button class="primary-button" id="exitMemory" type="button">RETURN TO ARCHIVE ↵</button></div>`;
+          $('exitMemory').addEventListener('click', () => closeGame(false));
+        }
+      } else {
+        current.hit.add(index); current.lives--;
+        cell.classList.add('memory-revealed-mine'); cell.textContent = '×';
+        $('memoryLives').textContent = '♥ '.repeat(current.lives).trim() + ' ♡'.repeat(3-current.lives);
+        errorFlash('MINE TRIGGERED', `SIGNAL SPIKE // ${current.lives} LIVES LEFT`);
+        if (current.lives <= 0) {
+          current.active = false;
+          $('gameContent').innerHTML = `<div class="stage-pass"><div class="success-icon" style="color:#ec716d">×</div><div class="eyebrow">TRACE CONTROL // REJECTED</div><h3>MINEFIELD BREACHED</h3><p>Signal jamming failed. The five-minute trace is still active.</p><button class="primary-button" id="retryMemory" type="button">RETRY MEMORY GRID ↵</button></div>`;
+          $('retryMemory').addEventListener('click', startTraceJammer);
+        }
+      }
+    });
+  }
+
   function gameHeader() {
     if (!game) return '';
     const route = ROUTES[game.type];
@@ -555,7 +678,7 @@
     updateAttempts();
     let entry = null;
     try { entry = JSON.parse(sessionStorage.getItem(SESSION) || 'null'); } catch (_) { entry = null; }
-    if (entry?.alias && Number.isFinite(entry?.expiresAt) && entry.expiresAt > Date.now()) activateSession(entry);
+    if (entry?.alias && (entry.traceDisabled === true || (Number.isFinite(entry?.expiresAt) && entry.expiresAt > Date.now()))) activateSession(entry);
     else {
       if (entry) sessionStorage.removeItem(SESSION);
       if (state.overrideGranted) showView('accountView');
@@ -564,6 +687,7 @@
     $('loginForm').addEventListener('submit', login);
     $('openTerminal').addEventListener('click', openTerminal);
     $('closeTerminal').addEventListener('click', () => hideModal('terminalModal'));
+    $('launchTraceJammer').addEventListener('click', startTraceJammer);
     $('terminalOptions').addEventListener('click', evt => {
       const button = evt.target.closest('button[data-route]'); if (button) startGame(button.dataset.route);
     });
