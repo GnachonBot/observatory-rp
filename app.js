@@ -383,7 +383,7 @@
     const cells = Array.from({length:count}, (_, i) =>
       `<button type="button" class="memory-tile ${current.safe.has(i) ? 'is-safe' : 'is-mine'}" data-cell="${i}" disabled aria-label="Grid cell ${i+1}">${current.safe.has(i) ? '◆' : '×'}</button>`).join('');
     $('gameContent').innerHTML = `<div class="game-lead"><div class="eyebrow">CORTEX // TRACE-CONTROL MODULE / STAGE ${String(current.stage).padStart(2,'0')} OF 0${JAMMER_LEVELS.length}</div><h2>MEMORY MINEFIELD</h2><p>Memorise the illuminated safe blocks before the grid goes dark. All five stages must be cleared to disable the trace. Three strikes end the attempt.</p></div>
-      <div class="jammer-stats"><span>INTEGRITY <strong id="memoryLives">♥ ♥ ♥</strong></span><span>SAFE BLOCKS <strong id="memoryProgress">0 / ${level.safe}</strong></span><span>PREVIEW <strong id="memoryClock">${(level.reveal/1000).toFixed(1)}s</strong></span></div>
+      <div class="jammer-stats"><span>INTEGRITY <strong id="memoryLives">${'♥'.repeat(current.lives)}${'♡'.repeat(3-current.lives)}</strong></span><span>SAFE BLOCKS <strong id="memoryProgress">0 / ${level.safe}</strong></span><span>PREVIEW <strong id="memoryClock">${(level.reveal/1000).toFixed(1)}s</strong></span></div>
       <div id="memoryBoard" class="memory-board" style="--grid-columns:${level.cols}" role="group" aria-label="${level.cols}-by-${level.cols} memory minefield, level ${current.stage}">${cells}</div>
       <div class="game-message" id="memoryMessage">OBSERVE // SAFE CELLS ILLUMINATED IN GREEN</div>
       <div class="game-controls"><span class="game-rule">LEVEL ${current.stage}/${JAMMER_LEVELS.length} // ${level.cols}×${level.cols} GRID // ${level.safe} SAFE NODES // NO RECOVERY ATTEMPT USED</span><button class="ghost-button" id="abortMemory" type="button">CLOSE MODULE</button></div>`;
@@ -404,7 +404,7 @@
         cell.setAttribute('aria-label', `Hidden grid cell ${Number(cell.dataset.cell)+1}`);
       }
       $('memoryClock').textContent = 'HIDDEN';
-      $('memoryMessage').textContent = 'RECALL // SELECT ${level.safe} SAFE BLOCKS // ${current.lives} LIVES REMAIN';
+      $('memoryMessage').textContent = `RECALL // SELECT ${level.safe} SAFE BLOCKS // ${current.lives} LIVES REMAIN`;
       window.ObservatoryAudio?.accent('scan');
     }, level.reveal);
     board.addEventListener('click', evt => {
