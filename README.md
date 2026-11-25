@@ -1,8 +1,15 @@
-# The Observatory // Cortex Private Vault (V9)
+# The Observatory // Cortex Private Vault (V10)
 
 A fictional interactive archive website. V8 revises **the presentation of the V6 archive** so visitors see Cortex's own files, as though they have gained access to his private recovery system. The dossiers are not a player briefing or a set of missions.
 
-## What changed in V9
+## What changed in V10
+
+- Corrected the withdrawn file name to **The Sanctuary**.
+- Updated the dossier to **Delilah Grace**, formerly **Delilah Payne**, including linked references.
+- The Trace Jammer memory minefield has **5 increasingly difficult levels** with grids from 4×4 to 6×6, more safe blocks and shorter previews. Three lives carry across all five levels. Only clearing every level disables the archive timer.
+- The five-minute countdown continues during the challenge; failure lets the player restart without using a login attempt.
+
+## Previous version V9
 
 - The archive terminal has a new **03 // TRACE JAMMER** memory-minefield module (command: `mines`, `jammer` or `03`).
 - A 4 × 4 board displays six safe blocks for seven seconds, then hides them. Select all six from memory; three mine strikes fail the run. Retrying does not spend an access attempt.
