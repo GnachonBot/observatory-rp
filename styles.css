@@ -149,3 +149,28 @@ body:has(.trace-layer:not(.hidden)) .sound-toggle{border-color:#ad4b4b;backgroun
   .audio-controls{max-width:calc(100vw - 12px);flex-wrap:wrap;gap:5px}
   .audio-controls .sound-toggle{flex:none}
 }
+
+/* TRACE JAMMER // MEMORY MINEFIELD */
+.trace-jammer-entry{margin:14px 0 12px;padding:11px;border:1px solid rgba(165,226,190,.38);background:rgba(16,38,28,.48)}
+.trace-jammer-entry.hidden{display:none}
+.trace-jammer-entry button{display:flex;align-items:flex-start;flex-direction:column;gap:3px;width:100%;padding:13px 15px;color:#a5e2be;background:rgba(13,31,22,.58);border:1px solid rgba(165,226,190,.45);font:12px/1.5 var(--mono);text-align:left;letter-spacing:.08em;cursor:pointer;transition:background .2s,border-color .2s}
+.trace-jammer-entry button:hover:not(:disabled),.trace-jammer-entry button:focus-visible{background:rgba(26,68,43,.68);border-color:#c5ffdc}
+.trace-jammer-entry button:disabled{opacity:.62;cursor:default}
+.trace-jammer-entry button b{font-size:14px;letter-spacing:.13em}
+.trace-jammer-entry button span{font-size:10px;color:#96b6a2}
+.trace-jammer-entry p{margin:9px 4px 1px;font-size:10px;color:#9cc9b0;letter-spacing:.07em}
+.trace-indicator.trace-jammed{border-color:#a5e2be!important;color:#a5e2be!important;background:rgba(26,65,41,.25)!important}
+.jammer-stats{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0 12px}
+.jammer-stats span{display:flex;justify-content:space-between;gap:15px;min-width:145px;flex:1;padding:10px 12px;border:1px solid rgba(165,226,190,.23);font:11px/1.4 var(--mono);letter-spacing:.055em;color:#a0a9a1}
+.jammer-stats strong{color:#d3fce0;white-space:nowrap}
+.memory-board{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;max-width:376px;margin:14px auto 20px}
+.memory-tile{aspect-ratio:1;min-width:0;border:1px solid #576c5e;background:#0a100e;color:#9cddaf;border-radius:2px;font:26px var(--mono);cursor:pointer;transition:background .16s,transform .16s,box-shadow .16s}
+.memory-tile:disabled{cursor:default}
+.memory-tile.is-safe{background:#173626;color:#beffd8;box-shadow:inset 0 0 18px rgba(105,228,148,.2),0 0 14px rgba(105,228,148,.12);border-color:#80dca6}
+.memory-tile.is-mine{color:#db7772;background:rgba(67,23,24,.38);border-color:rgba(220,106,106,.44)}
+.memory-concealed .memory-tile:not(.memory-revealed-safe):not(.memory-revealed-mine){color:#778e7c;background:#101a15;border-color:#3c5847;box-shadow:none}
+.memory-concealed .memory-tile:hover:not(:disabled),.memory-concealed .memory-tile:focus-visible{transform:scale(1.04);background:#234332;border-color:#a5e2be}
+.memory-concealed .memory-tile.memory-revealed-safe{background:#24563b;border-color:#a5e2be;color:#d5ffe3;box-shadow:inset 0 0 16px rgba(134,240,167,.28)}
+.memory-concealed .memory-tile.memory-revealed-mine{background:#4d1b20;border-color:#ef827c;color:#ffaaaa;box-shadow:inset 0 0 16px rgba(239,110,110,.26)}
+.jammer-success .success-icon{color:#a5e2be}
+@media(max-width:420px){.memory-board{gap:6px;max-width:310px}.memory-tile{font-size:20px}.jammer-stats{gap:6px}.jammer-stats span{min-width:105px;padding:8px;font-size:9px}}
