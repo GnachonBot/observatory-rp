@@ -116,6 +116,10 @@
           <button type="button" data-route="wire"><b>01 // POWER OVERLOAD</b><span>Trace live circuits without releasing your connection.</span></button>
           <button type="button" data-route="brute"><b>02 // BRUTE FORCE</b><span>Re-enter changing encrypted strings before time expires.</span></button>
         </div>
+        <div id="traceJammerEntry" class="trace-jammer-entry hidden">
+          <button type="button" id="launchTraceJammer"><b>03 // TRACE JAMMER</b><span>MEMORY MINEFIELD / TRACE CONTROL MODULE</span></button>
+          <p id="traceJammerStatus">MEMORY GRID READY // TRACE LINK ACTIVE</p>
+        </div>
         <form id="terminalForm" class="terminal-prompt" autocomplete="off"><label for="terminalInput">guest@observatory:~$</label><input id="terminalInput" type="text" spellcheck="false" aria-label="Terminal command" placeholder="help / overload / bruteforce / status" maxlength="80"><button type="submit" aria-label="Run command">↵</button></form>
       </div>
       <div class="window-footer"><span id="terminalFooterLeft">EMERGENCY RECOVERY CHANNELS</span><span id="terminalTTL">SHELL TTL / 05:00</span></div>
