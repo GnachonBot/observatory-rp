@@ -17,9 +17,14 @@
   const CORTEX_PASS = 'element12';
   const TOTAL_ATTEMPTS = 5;
   const STAGES = 5;
-  const JAMMER_REVEAL_MS = 7000;
-  const JAMMER_SIZE = 16;
-  const JAMMER_SAFE_COUNT = 6;
+  // Five progressive memory grids; safer tiles become harder to remember.
+  const JAMMER_LEVELS = [
+    {cols: 4, safe: 5, reveal: 7200},
+    {cols: 4, safe: 6, reveal: 6000},
+    {cols: 5, safe: 7, reveal: 5000},
+    {cols: 5, safe: 8, reveal: 4200},
+    {cols: 6, safe: 9, reveal: 3500}
+  ];
   const $ = id => document.getElementById(id);
   const ROUTES = {
     wire: { name: 'POWER OVERLOAD', subtitle: 'Maintain a live connection from SOURCE to TARGET. Do not release.' },
@@ -302,7 +307,7 @@
     if (archive) {
       if (['mines', 'minefield', 'jam', 'jammer', '03', 'traceoff'].includes(command)) { startTraceJammer(); return; }
       if (command === 'status') terminalLine(`TRACE STATUS: ${sessionIdentity?.traceDisabled ? 'DISABLED' : 'LIVE // FIVE-MINUTE WINDOW'}`, sessionIdentity?.traceDisabled ? 'success' : 'muted');
-      if (command === 'help') terminalLine('MEMORY GRID: mines | jammer | 03 // Disable this session trace by clearing the safe blocks.');
+      if (command === 'help') terminalLine('MEMORY GRID: mines | jammer | 03 // Clear all five escalating stages to sever the session trace.');
       if (window.ObservatoryArchive?.terminalCommand(command, terminalLine)) return;
       if (command === 'clear') { terminalHistory.splice(0); $('terminalLog').textContent = ''; }
       else if (command === 'exit' || command === 'close') hideModal('terminalModal');
@@ -349,44 +354,49 @@
       terminalLine('TRACE JAMMER UNAVAILABLE // ARCHIVE SESSION REQUIRED', 'error'); return;
     }
     if (sessionIdentity.traceDisabled) { terminalLine('TRACE ALREADY DISABLED // NO SIGNAL EMITTED', 'success'); return; }
+    if (game?.type === 'jammer') { clearTimeout(game.revealTimeout); clearInterval(game.revealTicker); }
     hideModal('terminalModal');
-    const order = Array.from({length: JAMMER_SIZE}, (_, i) => i);
-    for (let i = order.length-1; i > 0; i--) {
-      const rand = new Uint32Array(1); crypto.getRandomValues(rand);
-      const j = rand[0] % (i + 1);
-      [order[i], order[j]] = [order[j], order[i]];
-    }
     game = {
-      type: 'jammer', safe: new Set(order.slice(0, JAMMER_SAFE_COUNT)),
-      found: new Set(), hit: new Set(), lives: 3, active: false,
-      interval: null, revealTimeout: null, revealTicker: null
+      type:'jammer', stage:1, lives:3, safe:new Set(), found:new Set(), hit:new Set(),
+      active:false, interval:null, revealTimeout:null, revealTicker:null
     };
     $('gameTitle').textContent = '03 // TRACE JAMMER / MEMORY MINEFIELD';
     window.ObservatoryAudio?.setMode('wire');
-    window.ObservatoryAudio?.setIntensity(2);
     showModal('gameModal');
     renderJammer();
   }
   function renderJammer() {
     if (!game || game.type !== 'jammer') return;
     const current = game;
-    const cells = Array.from({length: JAMMER_SIZE}, (_, i) =>
+    const level = JAMMER_LEVELS[current.stage - 1];
+    const count = level.cols * level.cols;
+    clearTimeout(current.revealTimeout); clearInterval(current.revealTicker);
+    current.active = false; current.found = new Set(); current.hit = new Set();
+    const order = Array.from({length:count},(_,i)=>i);
+    for (let i = order.length-1; i > 0; i--) {
+      const rand = new Uint32Array(1); crypto.getRandomValues(rand);
+      const j = rand[0] % (i + 1);
+      [order[i], order[j]] = [order[j], order[i]];
+    }
+    current.safe = new Set(order.slice(0,level.safe));
+    window.ObservatoryAudio?.setIntensity(current.stage);
+    const cells = Array.from({length:count}, (_, i) =>
       `<button type="button" class="memory-tile ${current.safe.has(i) ? 'is-safe' : 'is-mine'}" data-cell="${i}" disabled aria-label="Grid cell ${i+1}">${current.safe.has(i) ? '◆' : '×'}</button>`).join('');
-    $('gameContent').innerHTML = `<div class="game-lead"><div class="eyebrow">CORTEX // TRACE-CONTROL MODULE</div><h2>MEMORY MINEFIELD</h2><p>Memorise the six illuminated safe blocks. When the grid goes dark, uncover those blocks without touching the mines. Three strikes end the attempt.</p></div>
-      <div class="jammer-stats"><span>INTEGRITY <strong id="memoryLives">♥ ♥ ♥</strong></span><span>SAFE BLOCKS <strong id="memoryProgress">0 / ${JAMMER_SAFE_COUNT}</strong></span><span>REVEAL <strong id="memoryClock">7.0s</strong></span></div>
-      <div id="memoryBoard" class="memory-board" role="group" aria-label="Four-by-four memory minefield">${cells}</div>
+    $('gameContent').innerHTML = `<div class="game-lead"><div class="eyebrow">CORTEX // TRACE-CONTROL MODULE / STAGE ${String(current.stage).padStart(2,'0')} OF 0${JAMMER_LEVELS.length}</div><h2>MEMORY MINEFIELD</h2><p>Memorise the illuminated safe blocks before the grid goes dark. All five stages must be cleared to disable the trace. Three strikes end the attempt.</p></div>
+      <div class="jammer-stats"><span>INTEGRITY <strong id="memoryLives">♥ ♥ ♥</strong></span><span>SAFE BLOCKS <strong id="memoryProgress">0 / ${level.safe}</strong></span><span>PREVIEW <strong id="memoryClock">${(level.reveal/1000).toFixed(1)}s</strong></span></div>
+      <div id="memoryBoard" class="memory-board" style="--grid-columns:${level.cols}" role="group" aria-label="${level.cols}-by-${level.cols} memory minefield, level ${current.stage}">${cells}</div>
       <div class="game-message" id="memoryMessage">OBSERVE // SAFE CELLS ILLUMINATED IN GREEN</div>
-      <div class="game-controls"><span class="game-rule">03 // MEMORY GRID / NO RECOVERY ATTEMPT USED</span><button class="ghost-button" id="abortMemory" type="button">CLOSE MODULE</button></div>`;
+      <div class="game-controls"><span class="game-rule">LEVEL ${current.stage}/${JAMMER_LEVELS.length} // ${level.cols}×${level.cols} GRID // ${level.safe} SAFE NODES // NO RECOVERY ATTEMPT USED</span><button class="ghost-button" id="abortMemory" type="button">CLOSE MODULE</button></div>`;
     $('abortMemory').addEventListener('click', () => closeGame());
     const board = $('memoryBoard');
-    const revealEnds = performance.now() + JAMMER_REVEAL_MS;
+    const revealEnds = performance.now() + level.reveal;
     current.revealTicker = setInterval(() => {
-      if (game !== current) return;
+      if (game !== current || !document.getElementById('memoryClock')) return;
       $('memoryClock').textContent = `${Math.max(0,(revealEnds-performance.now())/1000).toFixed(1)}s`;
     }, 100);
     current.revealTimeout = setTimeout(() => {
       if (game !== current || traceActive) return;
-      clearInterval(current.revealTicker);
+      clearInterval(current.revealTicker); current.revealTicker=null;
       current.active = true;
       board.classList.add('memory-concealed');
       for (const cell of board.querySelectorAll('[data-cell]')) {
@@ -394,11 +404,11 @@
         cell.setAttribute('aria-label', `Hidden grid cell ${Number(cell.dataset.cell)+1}`);
       }
       $('memoryClock').textContent = 'HIDDEN';
-      $('memoryMessage').textContent = 'RECALL // SELECT ALL SIX SAFE BLOCKS';
+      $('memoryMessage').textContent = 'RECALL // SELECT ${level.safe} SAFE BLOCKS // ${current.lives} LIVES REMAIN';
       window.ObservatoryAudio?.accent('scan');
-    }, JAMMER_REVEAL_MS);
+    }, level.reveal);
     board.addEventListener('click', evt => {
-      if (game !== current || !current.active) return;
+      if (game !== current || !current.active || traceActive) return;
       const cell = evt.target.closest('button[data-cell]');
       if (!cell || cell.disabled) return;
       const index = Number(cell.dataset.cell);
@@ -406,23 +416,28 @@
       if (current.safe.has(index)) {
         current.found.add(index);
         cell.classList.add('memory-revealed-safe'); cell.textContent = '◆';
-        $('memoryProgress').textContent = `${current.found.size} / ${JAMMER_SAFE_COUNT}`;
+        $('memoryProgress').textContent = `${current.found.size} / ${level.safe}`;
         $('memoryMessage').textContent = 'SAFE NODE CONFIRMED // SIGNAL DESTABILISING';
         window.ObservatoryAudio?.success();
-        if (current.found.size === JAMMER_SAFE_COUNT) {
+        if (current.found.size === level.safe) {
           current.active = false;
-          if (!disableSessionTrace()) return;
-          $('gameContent').innerHTML = `<div class="stage-pass jammer-success"><div class="success-icon">◈</div><div class="eyebrow">CORTEX // SIGNAL OVERRIDE CONFIRMED</div><h3>TRACE LINK SEVERED</h3><p>Locator beacon offline. Session expiry disabled. Recovery terminal shell remains accessible with no time limit for this session.</p><button class="primary-button" id="exitMemory" type="button">RETURN TO ARCHIVE ↵</button></div>`;
-          $('exitMemory').addEventListener('click', () => closeGame(false));
+          if (current.stage === JAMMER_LEVELS.length) {
+            if (!disableSessionTrace()) return;
+            $('gameContent').innerHTML = `<div class="stage-pass jammer-success"><div class="success-icon">◈</div><div class="eyebrow">CORTEX // ALL ${JAMMER_LEVELS.length} STAGES VERIFIED</div><h3>TRACE LINK SEVERED</h3><p>Locator beacon offline. Session expiry disabled and archive shell unlocked for this session.</p><button class="primary-button" id="exitMemory" type="button">RETURN TO ARCHIVE ↵</button></div>`;
+            $('exitMemory').addEventListener('click', () => closeGame(false));
+          } else {
+            $('gameContent').innerHTML = `<div class="stage-pass jammer-success"><div class="success-icon">◈</div><div class="eyebrow">TRACE JAMMER // LEVEL ${current.stage} COMPLETE</div><h3>MEMORY BANK DECODED</h3><p>Proceed to level ${current.stage+1}. The grid grows larger and the preview gets shorter. ${current.lives} ${current.lives===1?'life':'lives'} remain.</p><button class="primary-button" id="nextMemory" type="button">NEXT LEVEL ↵</button></div>`;
+            $('nextMemory').addEventListener('click', () => { if (game !== current || traceActive) return; current.stage++; renderJammer(); });
+          }
         }
       } else {
         current.hit.add(index); current.lives--;
         cell.classList.add('memory-revealed-mine'); cell.textContent = '×';
-        $('memoryLives').textContent = '♥ '.repeat(current.lives).trim() + ' ♡'.repeat(3-current.lives);
+        $('memoryLives').textContent = '♥'.repeat(current.lives) + '♡'.repeat(3-current.lives);
         errorFlash('MINE TRIGGERED', `SIGNAL SPIKE // ${current.lives} LIVES LEFT`);
         if (current.lives <= 0) {
           current.active = false;
-          $('gameContent').innerHTML = `<div class="stage-pass"><div class="success-icon" style="color:#ec716d">×</div><div class="eyebrow">TRACE CONTROL // REJECTED</div><h3>MINEFIELD BREACHED</h3><p>Signal jamming failed. The five-minute trace is still active.</p><button class="primary-button" id="retryMemory" type="button">RETRY MEMORY GRID ↵</button></div>`;
+          $('gameContent').innerHTML = `<div class="stage-pass"><div class="success-icon" style="color:#ec716d">×</div><div class="eyebrow">TRACE CONTROL // REJECTED</div><h3>MINEFIELD BREACHED</h3><p>All three lives lost. The five-minute trace is still active; restart the entire five-stage sequence.</p><button class="primary-button" id="retryMemory" type="button">RESTART SEQUENCE ↵</button></div>`;
           $('retryMemory').addEventListener('click', startTraceJammer);
         }
       }
