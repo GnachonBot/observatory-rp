@@ -7,7 +7,7 @@
  */
 window.ARCHIVE_RECORDS = [
   {
-    id:'TFD-COMB',slug:'tiff-delilah',name:'TIFF // DELILAH',label:'Priority case',kind:'case',category:'LINKED CASE',status:'ACTIVE SURVEILLANCE',clearance:'CORTEX // EYES ONLY',completeness:'FRAGMENTED',accent:'green',source:'COMPILED CASE / MIB RECOVERY CACHE / FIELD OBSERVATIONS',
+    id:'TFD-COMB',slug:'tiff-delilah',name:'TIFF // DELILAH GRACE',label:'Priority case',kind:'case',category:'LINKED CASE',status:'ACTIVE SURVEILLANCE',clearance:'CORTEX // EYES ONLY',completeness:'FRAGMENTED',accent:'green',source:'COMPILED CASE / MIB RECOVERY CACHE / FIELD OBSERVATIONS',
     excerpt:'Two lives, one missing target. Delilah may be the only surviving route to Tiff.',
     lead:'The original case follows a friendship forged through retaliation, House of Havoc, serious injury and a disappearance that should not have been survivable. Current trace status: brief signal found near the Vinewood Sign; no sustained fix. Delilah remains the only viable passive signal.',
     facts:[['PRIMARY TARGET','TIFFY LOU // LAST SEEN VINEWOOD SIGN'],['SIGNAL SUBJECT','DELILAH // UNDER OBSERVATION'],['KNOWN RELATION','Best friends / past operational loyalty'],['LAST CONTACT','SIGNAL FOUND // VINEWOOD SIGN // TRACE LOST'],['ACTIVE CORRELATION','DELILAH → POSSIBLE TIFF RECONTACT'],['OPERATOR','CORTEX // FINAL MIB NODE']],
@@ -31,7 +31,7 @@ window.ARCHIVE_RECORDS = [
       ['L12','Unconfirmed colour signal','A recent surveillance pattern placed Delilah in yellow repeatedly. The colour no longer appears in newer sightings. No meaning has been established.', 'CORTEX: “Yellow was easy to follow. Now there is nothing consistent. Is it coincidence, or a warning?”'],
       ['L13','Signal intercept // Vinewood Sign','SUB-TIFF: SIGNAL FOUND. Last recorded marker: Vinewood Sign. Connection dropped before a sustained fix could be obtained; no meeting with Delilah confirmed.', 'CORTEX: “Vinewood Sign. The first trace in too long. And then nothing. Do not lose it again.”']
     ],
-    links:[['SUB-TIFF','TIFFY LOU','Missing primary target'],['SUB-DELILAH','DELILAH','Live surveillance signal'],['CASE-BLACKVEIN','BLACK VEIN','Unexplained survival'],['CASE-VEIL','VEIL','Possible rival tracking system'],['SUB-RICK','RICK GNORC','Tiff’s partner / location unconfirmed']],
+    links:[['SUB-TIFF','TIFFY LOU','Missing primary target'],['SUB-DELILAH','DELILAH GRACE','Live surveillance signal'],['CASE-BLACKVEIN','BLACK VEIN','Unexplained survival'],['CASE-VEIL','VEIL','Possible rival tracking system'],['SUB-RICK','RICK GNORC','Tiff’s partner / location unconfirmed']],
     questions:['Where did Tiff go after the Vinewood Sign signal dropped?','Probability of renewed Delilah–Tiff contact?','Did the repeated yellow clothing carry any meaning?','Why did Tiff survive the lethal Black Vein mismatch?','Who administered Black Vein to Tiff?','Who took Delilah after the manor raid?','What explains Delilah’s survival and memory loss?','Veil data unavailable: potential Tiff position?'],
     intercepts:[
       ['PERSONAL MEMO / UNSENT','CORTEX // PRIVATE', 'Vinewood Sign. One location marker, then silence. No sample. Delilah still moving. A trace is not a capture.'],
@@ -61,7 +61,7 @@ window.ARCHIVE_RECORDS = [
       ['T08','Black Vein mismatch','An incompatible / lethal Black Vein dose was reportedly administered. Against expected outcomes, Tiff survived.', 'CORTEX: “A lethal dose. A living patient. The blood holds the contradiction.”'],
       ['T09','Last signal // Vinewood Sign','RECENT INTERCEPT: SIGNAL FOUND // LAST SEEN VINEWOOD SIGN. Signal disconnected before a sustained fix. Tiff’s current address and Rick’s location remain unknown.', 'CORTEX: “A location. Finally. Not a person, not a sample. Just a moment before the trail went cold.”']
     ],
-    links:[['SUB-DELILAH','DELILAH','Best friend / live signal'],['SUB-RICK','RICK GNORC','Partner / whereabouts unclear'],['CASE-BLACKVEIN','BLACK VEIN','Survival anomaly'],['TFD-COMB','JOINT CASE','Cortex surveillance file'],['CASE-VEIL','PROJECT VEIL','Possible contact route']],
+    links:[['SUB-DELILAH','DELILAH GRACE','Best friend / live signal'],['SUB-RICK','RICK GNORC','Partner / whereabouts unclear'],['CASE-BLACKVEIN','BLACK VEIN','Survival anomaly'],['TFD-COMB','JOINT CASE','Cortex surveillance file'],['CASE-VEIL','PROJECT VEIL','Possible contact route']],
     questions:['What biological factor allowed Tiff to survive lethal Black Vein?','Where did Tiff go after the Vinewood Sign intercept?','Did she know which strain was used?','Has she had recent contact with Delilah?','What does Rick’s tracking program know about her?'],
     intercepts:[
       ['UNSENT MEMO','CORTEX // PRIVATE', 'Everyone else became a trail. She became a blank space.'],
@@ -71,10 +71,10 @@ window.ARCHIVE_RECORDS = [
     ]
   },
   {
-    id:'SUB-DELILAH',slug:'delilah',name:'DELILAH',label:'Signal subject',kind:'person',category:'PERSONNEL',status:'OBSERVED / UNRESOLVED',clearance:'SURVEILLANCE // 02',completeness:'MONITORED',accent:'green',source:'CASE HISTORY / RECENT FIELD OBSERVATIONS',
+    id:'SUB-DELILAH',slug:'delilah',name:'DELILAH GRACE',label:'Signal subject',kind:'person',category:'PERSONNEL',status:'OBSERVED / UNRESOLVED',clearance:'SURVEILLANCE // 02',completeness:'MONITORED',accent:'green',source:'CASE HISTORY / RECENT FIELD OBSERVATIONS',
     excerpt:'Once presumed dead; later seen with memory loss. A visible subject whose closest friend has vanished.',
-    lead:'Delilah led House of Havoc and shared a powerful friendship with Tiff. Following a shooting at the manor, she was presumed dead. She later appeared alive but without memories of Tiff. The disappearance interval remains unaccounted for. Surveillance yields a visible Delilah. A separate transient trace now points to the Vinewood Sign, but no contact between them has been verified.',
-    facts:[['STATUS','OBSERVED // MEMORY CONDITION UNKNOWN'],['HISTORY','HOH LEADER'],['KNOWN CLOSE FRIEND','TIFFY LOU'],['PAST STATUS','PRESUMED DEAD'],['RECENT OBSERVATION','YELLOW CLOTHING PATTERN CEASED'],['KNOWN LOCATION','NOT LOGGED // MOVING SIGNAL']],
+    lead:'Delilah Grace (formerly Payne) led House of Havoc and shared a powerful friendship with Tiff. Following a shooting at the manor, she was presumed dead. She later appeared alive but without memories of Tiff. The disappearance interval remains unaccounted for. Surveillance yields a visible Delilah. A separate transient trace now points to the Vinewood Sign, but no contact between them has been verified.',
+    facts:[['CURRENT IDENTITY','DELILAH GRACE'],['FORMER IDENTITY','DELILAH PAYNE'],['STATUS','OBSERVED // MEMORY CONDITION UNKNOWN'],['HISTORY','HOH LEADER'],['KNOWN CLOSE FRIEND','TIFFY LOU'],['PAST STATUS','PRESUMED DEAD'],['RECENT OBSERVATION','YELLOW CLOTHING PATTERN CEASED'],['KNOWN LOCATION','NOT LOGGED // MOVING SIGNAL']],
     paragraphs:[
       {title:'THE IMPOSSIBLE RETURN',body:'Delilah was seriously injured during FIB Tower and then the later HOH Manor raid, after which she was believed dead. She subsequently appeared alive, with gaps in her memory. Custody chain missing. Responsible parties unidentified. Return unexplained.'},
       {title:'PASSIVE SURVEILLANCE RATIONALE',body:'Delilah and Tiff were best friends. Earlier direct Tiff traces failed; the latest Vinewood Sign marker also expired before a live position could be established. Delilah remains under passive observation because of their earlier bond. No recent encounter is confirmed.'},
@@ -181,7 +181,7 @@ window.ARCHIVE_RECORDS = [
     facts:[['NAME','BLACK VEIN'],['REPORTED EFFECT','MEMORY ERASURE'],['WRONG VARIANT','FATAL RISK'],['EXCEPTION','TIFFY LOU SURVIVED'],['LAB SAMPLE','NONE ACQUIRED'],['OPERATOR INTEREST','CORTEX']],
     paragraphs:[{title:'ANOMALOUS OUTCOME',body:'The fatality profile and the survival report do not agree. No lab confirmation, no blood sample, no explanation. Missing evidence: Tiff blood specimen.'},{title:'DELILAH CROSS-REFERENCE',body:'Delilah was presumed dead and later emerged with missing memories. That makes Black Vein a possible explanation — unverified, not a confirmed cause. The agent involved in Delilah’s memory loss remains unidentified.'}],
     events:[['B01','Memory suppression','Recovered material describes a substance that can erase memories.'],['B02','Variant warning','An incompatible version is reportedly lethal. The details of formulation remain deleted.'],['B03','Unexpected survivor','Tiff is recorded as having survived the lethal mismatch. No test results survive.'],['B04','Unproven parallel','Delilah’s memory-loss case may be related, but the supporting link is absent.']],
-    links:[['SUB-TIFF','TIFFY LOU','Survived reported lethal variant'],['SUB-DELILAH','DELILAH','Separate memory-loss mystery'],['SUB-VEIL','BLACK VEIL','Unverified alias collision']],
+    links:[['SUB-TIFF','TIFFY LOU','Survived reported lethal variant'],['SUB-DELILAH','DELILAH GRACE','Separate memory-loss mystery'],['SUB-VEIL','BLACK VEIL','Unverified alias collision']],
     questions:['Why did Tiff survive?','Who administered the dose and why?','Was Delilah exposed to this same agent?','Correct formulation or batch identifier retained?'],
     intercepts:[['BIOLOGY REQUEST','CORTEX // PRIORITY','Need blood. Not tissue. Not witness testimony. Blood.'],['REDACTED LAB EXCERPT','B-VN / ███','incompatible strain / expected outcome: TERMINAL / patient: ████ / result: SURVIVED'],['LAB INDEX ALERT','SYSTEM','COMPOSITION FILE MISSING // DOSAGE FIELDS PURGED // NO USABLE LAB SPECIFICATION'],['FIELD UPDATE','CORTEX // PERSONAL','TIFF: SIGNAL FOUND // LAST SEEN VINEWOOD SIGN // TRACE LOST // BIOLOGICAL SAMPLE STILL UNACQUIRED']]
   },
@@ -192,7 +192,7 @@ window.ARCHIVE_RECORDS = [
     facts:[['DESIGNATION','VEIL'],['SUSPECTED PURPOSE','PERSON SEARCH / TRACKING'],['LINKED OPERATOR','RICK GNORC // UNVERIFIED'],['NETWORK LOCATION','NOT FOUND'],['REFERENCE PERSON','TIFFY LOU'],['CORTEX ACCESS','DENIED / NONE']],
     paragraphs:[{title:'ACCESS ATTEMPTS',body:'Veil name recovered. Endpoint query returns null. An independent Tiff-related signal surfaced at the Vinewood Sign, but the position is no longer live. No evidence connects it to Veil. Delilah surveillance remains the active fallback while endpoint recovery fails.'},{title:'RELATION TO BLACK VEIN',body:'VEIL is a possible tracking program. BLACK VEIN is a memory-erasing substance. BLACK VEIL is an unresolved legacy label. Their names overlap; their purposes should not be conflated.'}],
     events:[['V01','Possible origin','Fragments suggest Rick Gnorc has established a people-tracking program.'],['V02','Farm rumour','Unverified reports connect Rick with a small farm, but no confirmed coordinates or occupant list is present.'],['V03','Cortex search','Repeated queries produce no verified source or destination.'],['V04','Delilah as beacon','Unable to locate the Veil system, Delilah retained as an indirect lead. Tiff’s Vinewood Sign marker is not a Veil endpoint.']],
-    links:[['SUB-RICK','RICK GNORC','Suspected creator'],['SUB-TIFF','TIFFY LOU','Target of search'],['SUB-DELILAH','DELILAH','Alternative signal'],['SUB-VEIL','BLACK VEIL','Unresolved index label']],
+    links:[['SUB-RICK','RICK GNORC','Suspected creator'],['SUB-TIFF','TIFFY LOU','Target of search'],['SUB-DELILAH','DELILAH GRACE','Alternative signal'],['SUB-VEIL','BLACK VEIL','Unresolved index label']],
     questions:['Where is the Veil system hosted?','Who has access?','Can it find Tiff?','How did Rick keep it operational after the fractures?'],
     intercepts:[['QUERY LOG','VEIL://?','PING -> NO ROUTE / SEARCH -> NO RESPONSE / HOST -> █████'],['CORTEX // PRIVATE','PERSONAL','Vinewood Sign came from a separate trace. I know the name of the Veil tool. I still cannot find the hand holding it.']]
   },
@@ -257,10 +257,10 @@ window.ARCHIVE_RECORDS = [
     intercepts:[['REMOVED PERSONNEL NOTE','██-██','DAISY ANDREWS // contacted after VIDEO_██ / outcome: █████'],['CORTEX // NOTE','PRIVATE','The name stayed. Everything useful did not.']]
   },
   {
-    id:'X-003',slug:'the-sanctary',name:'THE SANCTARY',label:'Withdrawn file',kind:'redacted',category:'REDACTED',status:'DELETED / NO CORRELATION',clearance:'████████',completeness:'REDACTED',accent:'red',source:'OLD INDEX / PAYLOAD REMOVED',
+    id:'X-003',slug:'the-sanctuary',name:'THE SANCTUARY',label:'Withdrawn file',kind:'redacted',category:'REDACTED',status:'DELETED / NO CORRELATION',clearance:'████████',completeness:'REDACTED',accent:'red',source:'OLD INDEX / PAYLOAD REMOVED',
     excerpt:'[ INDEX SURVIVED ] An older record with its body deliberately stripped.',
-    lead:'The Sanctary is preserved exactly as titled in the old archive. No verified link to Echo, MIB, Black Vein or Tiff survives in the available material.',
-    facts:[['INDEX','THE SANCTARY'],['FILE BODY','███████'],['CONNECTION','UNVERIFIED'],['STATUS','WITHDRAWN']],
+    lead:'The Sanctuary is indexed in the withdrawn archive. No verified link to Echo, MIB, Black Vein or Tiff survives in the available material.',
+    facts:[['INDEX','THE SANCTUARY'],['FILE BODY','███████'],['CONNECTION','UNVERIFIED'],['STATUS','WITHDRAWN']],
     links:[],
     intercepts:[['EMPTY FILE','UNKNOWN','ENTRY ID REMAINS // BODY DELETED'],['CORTEX // NOTE','UNSORTED','No connection established. Leave it in the vault.']]
   }
