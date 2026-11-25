@@ -164,7 +164,7 @@ body:has(.trace-layer:not(.hidden)) .sound-toggle{border-color:#ad4b4b;backgroun
 .jammer-stats{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0 12px}
 .jammer-stats span{display:flex;justify-content:space-between;gap:15px;min-width:145px;flex:1;padding:10px 12px;border:1px solid rgba(165,226,190,.23);font:11px/1.4 var(--mono);letter-spacing:.055em;color:#a0a9a1}
 .jammer-stats strong{color:#d3fce0;white-space:nowrap}
-.memory-board{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;max-width:376px;margin:14px auto 20px}
+.memory-board{display:grid;grid-template-columns:repeat(var(--grid-columns,4),minmax(0,1fr));gap:7px;max-width:420px;margin:14px auto 20px}
 .memory-tile{aspect-ratio:1;min-width:0;border:1px solid #576c5e;background:#0a100e;color:#9cddaf;border-radius:2px;font:26px var(--mono);cursor:pointer;transition:background .16s,transform .16s,box-shadow .16s}
 .memory-tile:disabled{cursor:default}
 .memory-tile.is-safe{background:#173626;color:#beffd8;box-shadow:inset 0 0 18px rgba(105,228,148,.2),0 0 14px rgba(105,228,148,.12);border-color:#80dca6}
