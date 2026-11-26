@@ -209,3 +209,49 @@ body:has(.trace-layer:not(.hidden)) .sound-toggle{border-color:#ad4b4b;backgroun
 @media(max-width:1000px){.city-feed-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.city-feed-visual{height:165px}}
 @media(max-width:620px){.archive-hero h2{font-size:34px}.city-sweep-head{padding:14px;display:block}.city-sweep-head h3{font-size:23px}.sweep-head-tools{justify-content:space-between;margin-top:13px}.city-feed-grid{gap:7px;padding:8px}.city-feed-visual{height:117px}.feed-topline{font-size:7px}.feed-meta{padding:9px 7px;min-height:65px}.feed-meta strong{font-size:8px}.face-result{font-size:8px}.city-sweep-bottom{padding:12px;gap:6px}.city-sweep-console{padding:11px 12px}}
 @media(prefers-reduced-motion:reduce){.camera-scanline,.face-target,.feed-live,.city-surveillance.is-pulsing{animation:none!important}}
+
+
+/* V12 CINEMATIC BREACH — simulated automatic intrusion sequence */
+.intrusion-options{grid-template-columns:1fr!important;margin-block:22px}.intrusion-options button{border:1px solid #6c9875;background:linear-gradient(120deg,#0e1b12,#111510);padding:22px 25px;box-shadow:inset 3px 0 0 #7cc493,0 0 24px #5ce0970e;cursor:pointer}
+.intrusion-options button:hover{background:#152b1c;border-color:#b0e4bd;box-shadow:inset 3px 0 0 #ade8bd,0 0 24px #5ce09725}
+.intrusion-options button b{color:#d6f6de;font-size:15px;letter-spacing:.12em}.intrusion-options button span{color:#9cb9a4}.intrusion-options .intrusion-option-led{font:9px var(--mono);letter-spacing:.08em;color:#8ed7a8;margin-top:11px;display:block;font-style:normal}
+.breach-layer{position:fixed;z-index:28;inset:0;background:radial-gradient(ellipse at 50% 42%,#0d2015 0,#040e09 49%,#010503 100%);display:grid;place-items:center;color:#d7f3dd;padding:24px;overflow:auto;isolation:isolate}
+.breach-layer:before{content:'';position:absolute;inset:0;pointer-events:none;z-index:0;background:repeating-linear-gradient(0deg,transparent 0px,transparent 3px,#74c58a12 4px,#11281a19 5px);animation:breachScanline 9s linear infinite}
+.breach-layer:after{content:'';position:absolute;inset:0;z-index:0;pointer-events:none;background:radial-gradient(circle,transparent 28%,#000c 83%);animation:breachVignette 4s ease-in-out infinite}
+.breach-matrix{position:absolute;inset:-2% -3%;z-index:0;overflow:hidden;white-space:pre;font:12px/1.75 var(--mono);letter-spacing:.3em;color:#9addad;opacity:.055;word-break:break-all;user-select:none;pointer-events:none;text-align:left;transform:skewY(-6deg);animation:breachMatrix 11s linear infinite}
+.breach-frame{position:relative;z-index:1;width:min(990px,100%);border:1px solid #588867;background:linear-gradient(145deg,#0a1a10e6,#030b07ed 60%,#081c10ed);box-shadow:0 0 0 1px #0b160c,0 0 100px #68dc8324,inset 0 0 70px #0008;padding:0;overflow:hidden}
+.breach-frame:after{content:'';pointer-events:none;position:absolute;inset:0;border:1px solid #c6ecc112;mix-blend-mode:screen}
+.breach-frame-top{padding:12px 19px;background:#14261b;border-bottom:1px solid #547361;display:flex;gap:16px;justify-content:space-between;flex-wrap:wrap;color:#99caab;font:10px var(--mono);letter-spacing:.11em}
+.breach-core{display:flex;align-items:center;gap:32px;padding:25px 30px 20px;min-height:225px}
+.breach-mark{position:relative;flex:0 0 clamp(135px,24vw,250px);width:clamp(135px,24vw,250px);height:clamp(135px,24vw,250px);display:grid;place-items:center;filter:drop-shadow(0 0 25px #72ff9c25)}
+.breach-ring{position:absolute;inset:4%;border:1px dashed #77bf8d88;border-radius:50%;animation:breachOrbit 12s linear infinite}.breach-ring:before{content:'';position:absolute;top:4%;left:22%;width:8px;height:8px;border-radius:50%;background:#b1f0c3;box-shadow:0 0 14px #a3efc8}
+.breach-ring.ring-b{inset:20%;border-style:solid;border-color:#567c647c;animation-duration:8s;animation-direction:reverse}
+.breach-ring.ring-c{inset:34%;border:2px dashed #8cf4ad;animation-duration:4.3s}
+.breach-eye{z-index:1;font-size:clamp(32px,7vw,65px);color:#e8f6ea;text-shadow:0 0 26px #a4ebc0;animation:breachHeart 1.9s ease-in-out infinite}
+.breach-detail{min-width:0;flex:1}
+.breach-eyebrow{display:block;color:#84ba91;letter-spacing:.17em;font:10px var(--mono);margin-bottom:8px}
+.breach-detail h2{margin:0;font:normal clamp(30px,5.4vw,61px)/1.07 var(--display);letter-spacing:.05em;color:#eef8ee;white-space:pre-line;text-shadow:0 0 22px #c7eacf1b}
+.breach-cursor{color:#a4ecc2;animation:breachBlink .6s step-end infinite}
+.breach-detail p{margin:12px 0 15px;font:11px/1.8 var(--mono);color:#a2bba7}
+.breach-tags{display:flex;gap:8px;flex-wrap:wrap}.breach-tags span{border:1px solid #55765c;background:#112418;color:#a4e3b9;padding:6px 10px;font:10px var(--mono);letter-spacing:.06em}
+.breach-glitch-display{margin:0 26px;background:#030c07;border:1px solid #35533d;box-shadow:inset 0 0 26px #061e0b;overflow:hidden}
+.breach-console-top{background:#102418;display:flex;justify-content:space-between;gap:12px;padding:8px 13px;color:#76bc88;border-bottom:1px solid #2e4933;font:10px var(--mono);letter-spacing:.08em}
+#breachConsole{font:11px/1.8 var(--mono);color:#bde0c4;white-space:pre-wrap;overflow-y:auto;overflow-wrap:anywhere;min-height:172px;max-height:172px;padding:15px 16px;margin:0}
+.breach-progress-label{display:flex;justify-content:space-between;gap:10px;margin:17px 26px 8px;color:#95b8a0;font:10px var(--mono);letter-spacing:.09em}
+.breach-progress-label b{font-size:14px;color:#e9ffea}
+.breach-progress-track{margin:0 26px;height:15px;border:1px solid #4b7658;padding:3px;background:#061109;overflow:hidden}
+#breachProgressFill{height:100%;width:0;background:linear-gradient(90deg,#356448,#91dba1,#c1f5b8);box-shadow:0 0 15px #a4f4b688;transition:width .42s ease}
+.breach-footer{margin:18px 26px 23px;display:flex;gap:12px;align-items:center;justify-content:space-between;color:#638e70;font:10px var(--mono);letter-spacing:.06em;flex-wrap:wrap}
+.breach-abort{border:1px solid #805747;background:#241510;color:#d9a496;padding:9px 14px;min-height:36px;font:10px var(--mono);cursor:pointer}.breach-abort:hover{background:#3c1a18;color:#f7c4b9}.breach-abort:disabled{opacity:.45;cursor:not-allowed}
+.breach-alert .breach-frame{animation:breachShake .33s steps(2,end);border-color:#df7c70;box-shadow:0 0 90px #ec6b583b}.breach-alert .breach-detail h2{color:#ffb7af}
+.breach-success .breach-frame{border-color:#e1ffc6;box-shadow:0 0 130px #8bf5ae6b}.breach-success .breach-eye{color:#fff}
+@keyframes breachOrbit{to{transform:rotate(360deg)}}
+@keyframes breachBlink{50%{opacity:0}}
+@keyframes breachHeart{50%{opacity:.65;transform:scale(.91)}}
+@keyframes breachMatrix{to{transform:translateY(-110px) skewY(-6deg)}}
+@keyframes breachVignette{50%{opacity:.75}}
+@keyframes breachScanline{to{background-position:0 210px}}
+@keyframes breachShake{0%,100%{transform:translate(0)}25%{transform:translate(-5px,3px)}50%{transform:translate(5px,-2px)}75%{transform:translate(-3px,-3px)}}
+@media(max-width:680px){.breach-layer{padding:10px}.breach-core{gap:7px;padding:18px 14px;min-height:185px}.breach-mark{flex-basis:105px;width:105px;height:105px}.breach-detail h2{font-size:clamp(26px,6.2vw,39px)}.breach-detail p{font-size:10px}.breach-frame-top{font-size:8px;padding:10px}.breach-glitch-display{margin:0 12px}#breachConsole{font-size:10px;min-height:200px;max-height:200px;padding:10px}.breach-console-top{font-size:8px}.breach-progress-label{margin:14px 12px 7px}.breach-progress-track{margin:0 12px}.breach-footer{margin:13px 12px 17px}.breach-tags span{font-size:9px}}
+@media(max-width:390px){.breach-core{flex-direction:column;align-items:flex-start}.breach-mark{position:absolute;right:2px;top:23px;opacity:.25}.breach-detail{z-index:2}}
+@media(prefers-reduced-motion:reduce){.breach-matrix,.breach-ring,.breach-eye,.breach-layer:before,.breach-layer:after,.breach-cursor,.breach-alert .breach-frame{animation:none!important}}
