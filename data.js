@@ -29,7 +29,7 @@ window.ARCHIVE_RECORDS = [
       ['L10','Missing interval','Unknown parties were later connected to Delilah’s disappearance and induced memory loss. The full sequence remains missing.'],
       ['L11','Unrecognised connection','Delilah later appeared in the same motorcycle club as Tiff but did not remember her. Tiff withdrew from the relationship for a period.'],
       ['L12','Unconfirmed colour signal','A recent surveillance pattern placed Delilah in yellow repeatedly. The colour no longer appears in newer sightings. No meaning has been established.', 'CORTEX: “Yellow was easy to follow. Now there is nothing consistent. Is it coincidence, or a warning?”'],
-      ['L13','Signal intercept // Vinewood Sign','SUB-TIFF: SIGNAL FOUND. Last recorded marker: Vinewood Sign. Connection dropped before a sustained fix could be obtained; no meeting with Delilah confirmed.', 'CORTEX: “Vinewood Sign. The first trace in too long. And then nothing. Do not lose it again.”'],
+      ['L13','Earlier signal // Vinewood Sign','SUB-TIFF: PRIOR SIGNAL RECORDED. Earlier marker: Vinewood Sign. Connection dropped before a sustained fix could be obtained; no meeting with Delilah confirmed.', 'CORTEX: “Vinewood Sign. The first trace in too long. And then nothing. Do not lose it again.”'],
       ['L14','Harmony Radio Tower / new signal','Tiff-associated signal registered near Harmony Radio Tower. Camera scans broadened across the city; facial correlation has no confirmed match.', 'CORTEX: “Vinewood, then Harmony. Double the scans. I need a face, not another dead signal.”']
     ],
     links:[['SUB-TIFF','TIFFY LOU','Missing primary target'],['SUB-DELILAH','DELILAH GRACE','Live surveillance signal'],['CASE-BLACKVEIN','BLACK VEIN','Unexplained survival'],['CASE-VEIL','VEIL','Possible rival tracking system'],['SUB-RICK','RICK GNORC','Tiff’s partner / location unconfirmed']],
@@ -61,7 +61,7 @@ window.ARCHIVE_RECORDS = [
       ['T06','Tokyo Customs','Tiff stabbed Hazel Lee in an alley after an argument; RDMC’s retaliation escalated the dispute.'],
       ['T07','Abduction injuries','A figure linked to Delilah’s past abducted Tiff to hurt Delilah. Violence during captivity caused injuries requiring extensive treatment.'],
       ['T08','Black Vein mismatch','An incompatible / lethal Black Vein dose was reportedly administered. Against expected outcomes, Tiff survived.', 'CORTEX: “A lethal dose. A living patient. The blood holds the contradiction.”'],
-      ['T09','Last signal // Vinewood Sign','RECENT INTERCEPT: SIGNAL FOUND // LAST SEEN VINEWOOD SIGN. Signal disconnected before a sustained fix. Tiff’s current address and Rick’s location remain unknown.', 'CORTEX: “A location. Finally. Not a person, not a sample. Just a moment before the trail went cold.”'],
+      ['T09','Earlier signal // Vinewood Sign','ARCHIVED INTERCEPT: SIGNAL FOUND // PRIOR MARKER VINEWOOD SIGN. Signal disconnected before a sustained fix. Tiff’s current address and Rick’s location remain unknown.', 'CORTEX: “A location. Finally. Not a person, not a sample. Just a moment before the trail went cold.”'],
       ['T10','Harmony Radio Tower / signal reacquired','Latest trace: Tiff-associated signal at Harmony Radio Tower. Optical scans expanded across Los Santos and Blaine County. No current location or verified facial ID.', 'CORTEX: “Harmony. Second trace. Search every camera in the city.”']
     ],
     links:[['SUB-DELILAH','DELILAH GRACE','Best friend / live signal'],['SUB-RICK','RICK GNORC','Partner / whereabouts unclear'],['CASE-BLACKVEIN','BLACK VEIN','Survival anomaly'],['TFD-COMB','JOINT CASE','Cortex surveillance file'],['CASE-VEIL','PROJECT VEIL','Possible contact route']],
@@ -70,7 +70,7 @@ window.ARCHIVE_RECORDS = [
       ['HARMONY TOWER / INTERCEPT 002','CORTEX // SIGNAL REGISTER','NEW SIGNAL DETECTED / LAST SCAN: HARMONY RADIO TOWER / FACE SEARCH ACTIVE / POSITIVE MATCH: NONE'],
       ['UNSENT MEMO','CORTEX // PRIVATE', 'Everyone else became a trail. She became a blank space.'],
       ['SAMPLE REQUEST','LAB / PRIORITY RED', 'TIFFY LOU // BLOOD SAMPLE REQUIRED // NO SAMPLE SECURED'],
-      ['SIGNAL INTERCEPT / VINEWOOD SIGN','CORTEX // PERSONAL', 'Signal found. Last seen: Vinewood Sign. Position lost. Do not mark target acquired.'],
+      ['EARLIER INTERCEPT / VINEWOOD SIGN','CORTEX // PERSONAL', 'Signal found at Vinewood Sign. Historical marker only. Position lost. Do not mark target acquired.'],
       ['DELETED ITEM','CORRUPT MEDICAL INDEX', 'patient T███ / variant B-VN-██ / outcome: ALIVE / mechanism: █████']
     ]
   },
