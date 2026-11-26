@@ -1,6 +1,6 @@
 /*
   THE OBSERVATORY — client-side archive interface.
-  The terminal games, location scan and credential gate are theatrical UI effects.
+  The cinematic intrusion, trace jammer, location scan and credential gate are theatrical UI effects.
   Everything inside this static site (including the archive) is public.
 */
 (() => {
@@ -78,6 +78,7 @@
     let mode = 'login';
     if (traceActive) mode = 'trace';
     else if (!$('rebootLayer').classList.contains('hidden')) mode = 'reboot';
+    else if (!$('breachLayer').classList.contains('hidden')) mode = 'breach';
     else if (!$('gameModal').classList.contains('hidden') && game) mode = game.type;
     else if (!$('terminalModal').classList.contains('hidden')) mode = 'terminal';
     else if (!$('wikiView').classList.contains('hidden')) mode = 'archive';
@@ -141,7 +142,7 @@
     $('attemptWarning').classList.toggle('danger', state.attempts <= 2);
     $('loginForm').querySelector('button[type="submit"]').disabled = state.attempts === 0;
     const button = $('openTerminal');
-    button.textContent = state.attempts === 0 ? '[ >_ ] OPEN TERMINAL // RESET AVAILABLE' : '[ >_ ] OPEN EMERGENCY TERMINAL';
+    button.textContent = state.attempts === 0 ? '[ >_ ] OPEN EMERGENCY BREACH / FALLBACK' : '[ >_ ] OPEN EMERGENCY TERMINAL';
   }
   function consumeAttempt() {
     if (state.attempts <= 0) { toast('SESSION LOCKED. Open terminal and type reset to restore the gateway.'); return false; }
@@ -263,8 +264,8 @@
       terminalHasBooted = false; lastTerminalMode = mode;
     }
     $('terminalTitle').textContent = isArchive ? '● OBSERVATORY // ARCHIVE_SHELL' : '● OBSERVATORY_SHELL.exe';
-    $('terminalFooterLeft').textContent = isArchive ? 'FILE DIRECTORY // RECORD INDEX' : 'EMERGENCY RECOVERY CHANNELS';
-    $('terminalInput').placeholder = isArchive ? 'help / list / mines / search Hazel' : 'help / overload / bruteforce / status';
+    $('terminalFooterLeft').textContent = isArchive ? 'FILE DIRECTORY // RECORD INDEX' : 'INTRUSION PROTOCOL // READY';
+    $('terminalInput').placeholder = isArchive ? 'help / list / mines / search Hazel' : 'breach / help / status';
     showModal('terminalModal');
     startTerminalClock();
     if (!terminalHasBooted) {
@@ -276,14 +277,13 @@
         terminalLine(':: TRACE JAMMER MODULE ONLINE // MEMORY MINEFIELD');
         terminalLine(':: Type HELP for available commands.', 'muted');
       } else {
-        terminalLine('OBSERVATORY RECOVERY SHELL // VERSION 0.5', 'success');
-        terminalLine(':: Emergency recovery channels available.');
-        terminalLine(':: Five global attempts; each recovery run spends ONE attempt.');
-        terminalLine(':: Each route has THREE lives across FIVE escalating stages.');
-        terminalLine(':: Select a protocol or type help to view commands.', 'muted');
+        terminalLine('OBSERVATORY FALLBACK SHELL // NODE ACCESS UNVERIFIED', 'success');
+        terminalLine(':: Trusted identity not detected. Security services still active.');
+        terminalLine(':: Automated injection payload is staged. No manual circuit challenges required.');
+        terminalLine(':: Type BREACH or execute the injection sequence.', 'muted');
       }
     }
-    if (!isArchive) terminalLine(`> AUTH BUDGET: ${state.attempts}/5 attempts remaining${state.attempts === 0 ? ' // LOCKED' : ''}`, state.attempts === 0 ? 'error' : 'muted');
+    if (!isArchive) terminalLine(`> CREDENTIAL GATE: ${state.attempts}/5 attempts // FALLBACK INJECTION: AVAILABLE`, 'muted');
     updateTerminalOptions();
     setTimeout(() => $('terminalInput').focus(), 40);
   }
@@ -297,8 +297,7 @@
       $('traceJammerStatus').textContent = jammed ? 'TRACE SIGNAL / OFFLINE // SESSION EXEMPT' : 'MEMORY GRID READY // TRACE LINK ACTIVE';
       return;
     }
-    for (const btn of $('terminalOptions').querySelectorAll('[data-route]')) btn.disabled = state.attempts === 0;
-    if (state.attempts === 0) terminalLine(':: SYSTEM LOCKED. Type reset to restore terminal settings.', 'error');
+    if (state.attempts === 0) terminalLine(':: PRIMARY LOGIN LOCKED // BREACH CHANNEL REMAINS AVAILABLE', 'muted');
   }
   function runCommand(raw) {
     const command = raw.trim().toLowerCase(); if (!command) return;
@@ -315,12 +314,11 @@
       return;
     }
     if (command === 'help') {
-      terminalLine('COMMANDS: help | status | overload | bruteforce | clear | exit | reset');
-      terminalLine('overload = hold and trace 5 circuits // bruteforce = type 5 codes against the clock');
+      terminalLine('COMMANDS: breach | status | clear | exit | reset');
+      terminalLine('breach = execute automatic intrusion / forged keys / kernel override / reboot');
     } else if (command === 'status') {
       terminalLine(`SECURITY: ${state.attempts}/5 attempts | session: ${sessionIdentity?.alias || 'NONE'} | override: ${state.overrideGranted ? 'GRANTED' : 'DENIED'}`);
-    } else if (['overload','power','wire','01'].includes(command)) startGame('wire');
-    else if (['bruteforce','brute','02'].includes(command)) startGame('brute');
+    } else if (['breach','hack','intrude','inject','override','01'].includes(command)) beginIntrusion();
     else if (command === 'clear') { terminalHistory.splice(0); $('terminalLog').textContent = ''; }
     else if (command === 'exit' || command === 'close') hideModal('terminalModal');
     else if (command === 'reset') resetLocalDemo();
@@ -704,7 +702,7 @@
     $('closeTerminal').addEventListener('click', () => hideModal('terminalModal'));
     $('launchTraceJammer').addEventListener('click', startTraceJammer);
     $('terminalOptions').addEventListener('click', evt => {
-      const button = evt.target.closest('button[data-route]'); if (button) startGame(button.dataset.route);
+      if (evt.target.closest('#beginIntrusion')) beginIntrusion();
     });
     $('terminalForm').addEventListener('submit', evt => { evt.preventDefault(); runCommand($('terminalInput').value); $('terminalInput').value = ''; });
     $('closeGame').addEventListener('click', () => closeGame());
@@ -729,5 +727,19 @@
       }
     });
   }
+  function beginIntrusion() {
+    if (traceActive || $('accessView').classList.contains('hidden')) return;
+    if (!$('breachLayer').classList.contains('hidden')) return;
+    hideModal('terminalModal');
+    if (!window.ObservatoryBreach?.start()) toast('INTRUSION MODULE UNAVAILABLE // RELOAD GATEWAY');
+  }
+  window.ObservatoryBridge = {
+    breachComplete() {
+      if (traceActive || $('accessView').classList.contains('hidden')) return false;
+      startReboot();
+      return true;
+    },
+    syncSoundtrack
+  };
   initialize();
 })();
