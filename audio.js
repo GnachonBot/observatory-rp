@@ -6,30 +6,36 @@
 (() => {
   'use strict';
   const PREF = 'observatory-audio-muted-v3';
-  const LABELS = {login:'GATEWAY', terminal:'TERMINAL', wire:'OVERLOAD', brute:'BRUTE FORCE',
-    archive:'ARCHIVE', temp:'RECOVERY', reboot:'REBOOT', trace:'SIGNAL TRACE'};
+  const LABELS = {login:'GATEWAY', terminal:'TERMINAL', breach:'INTRUSION', wire:'OVERLOAD', brute:'BRUTE FORCE',
+    jammer:'TRACE JAMMER', archive:'ARCHIVE', temp:'RECOVERY', reboot:'REBOOT', trace:'SIGNAL TRACE'};
+  // Low, detuned original horror score. Frequencies intentionally sit below the
+  // previous high synth arpeggios, with audible upper harmonics on small speakers.
   const SCENES = {
-    login:    {bpm:66, root:110.0, pad:.115, tone:410, rhythm:.38},
-    terminal: {bpm:83, root:110.0, pad:.137, tone:610, rhythm:.59},
-    wire:     {bpm:96, root:116.54,pad:.145, tone:930, rhythm:.76},
-    brute:    {bpm:112,root:110.0, pad:.147, tone:970, rhythm:.85},
-    archive:  {bpm:71, root:110.0, pad:.142, tone:510, rhythm:.50},
-    temp:     {bpm:61, root:130.82,pad:.092, tone:770, rhythm:.29},
-    reboot:   {bpm:91, root:130.82,pad:.124,tone:1150,rhythm:.68},
-    trace:    {bpm:146,root:103.82,pad:.17,tone:1400,rhythm:1.00}
+    login:    {bpm:46, root:73.42, pad:.205, rhythm:.24},
+    terminal: {bpm:54, root:65.41, pad:.245, rhythm:.40},
+    breach:   {bpm:82, root:61.74, pad:.290, rhythm:.90},
+    wire:     {bpm:68, root:69.30, pad:.235, rhythm:.70},
+    brute:    {bpm:74, root:73.42, pad:.235, rhythm:.73},
+    jammer:   {bpm:65, root:69.30, pad:.255, rhythm:.73},
+    archive:  {bpm:42, root:69.30, pad:.250, rhythm:.32},
+    temp:     {bpm:40, root:77.78, pad:.210, rhythm:.22},
+    reboot:   {bpm:78, root:65.41, pad:.280, rhythm:.80},
+    trace:    {bpm:100,root:58.27, pad:.335, rhythm:1.00}
   };
   const MELODY = {
-    login:   [0,null,null,1,null,null,3,null,0,null,2,null,1,null,null,null],
-    terminal:[0,null,1,null,3,2,1,null,0,1,null,4,3,null,1,null],
-    wire:    [0,1,3,1,4,3,1,5,0,1,3,4,6,5,3,1],
-    brute:   [0,3,1,4,0,5,3,1,6,4,1,3,0,5,4,1],
-    archive: [0,null,null,3,null,null,1,null,0,null,4,null,2,null,null,1],
-    temp:    [0,null,null,null,3,null,null,null,2,null,null,null,1,null,null,null],
-    reboot:  [0,1,2,3,4,5,6,7,1,2,3,4,5,6,7,8],
-    trace:   [0,1,6,1,7,5,2,6,0,8,6,2,7,5,1,8]
+    login:   [null,null,0,null,null,null,1,null,null,null,3,null,null,null,1,null],
+    terminal:[0,null,null,1,null,null,3,null,1,null,4,null,null,2,null,null],
+    breach:  [0,null,1,3,0,4,1,3,0,5,2,4,1,3,0,6],
+    wire:    [0,null,1,3,0,2,4,1,0,5,3,1,0,4,2,3],
+    brute:   [0,3,1,4,0,3,5,2,0,6,3,1,0,4,2,5],
+    jammer:  [0,null,1,3,0,2,4,1,0,5,3,1,0,4,2,3],
+    archive: [null,null,0,null,null,3,null,null,1,null,null,null,4,null,null,2],
+    temp:    [null,null,0,null,null,null,null,null,3,null,null,null,null,null,1,null],
+    reboot:  [0,1,3,2,4,3,5,1,0,3,2,5,4,1,6,3],
+    trace:   [0,3,6,2,5,1,6,3,0,5,2,6,3,1,6,4]
   };
-  // Dorian and neighbouring half steps: a deliberately uneasy original motif.
-  const STEPS = [1, 1.059463, 1.189207, 1.334840, 1.414214, 1.498307, 1.781797, 1.887749, 2.118926];
+  // Chromatic seconds, tritones and uneven low intervals: intentionally unresolved.
+  const STEPS = [1, 1.059463, 1.122462, 1.414214, 1.498307, 1.587401, 1.781797];
   const AudioContextImpl = window.AudioContext || window.webkitAudioContext;
   const MUSIC_PREF = 'observatory-background-music-volume-v5';
   let musicVolume = 82;
@@ -37,7 +43,7 @@
   let enabled = true;
   try { enabled = localStorage.getItem(PREF) !== '1'; } catch (_) {}
   let unlocked = false, ctx = null, master = null, sfxBus = null, musicBus = null;
-  let padBus = null, lowOsc = null, highOsc = null, air = null, noiseBuffer = null;
+  let padBus = null, lowOsc = null, highOsc = null, subOsc = null, dreadOsc = null, air = null, noiseBuffer = null;
   let tickHandle = null, nextStepAt = 0, stepCount = 0;
   let scene = 'login', level = 1, lastClick = 0;
   let riserAt = 0, lastSceneChange = 0;
@@ -82,13 +88,19 @@
       padBus = gainNode(0,musicBus);
 
       const lowFilter = ctx.createBiquadFilter(); lowFilter.type='lowpass';
-      lowFilter.frequency.value=1100; lowFilter.Q.value=.5; lowFilter.connect(padBus);
-      lowOsc=makeOsc('sine', SCENES[scene].root,lowFilter);
-      const upperGain = gainNode(.55,lowFilter);
-      highOsc=makeOsc('triangle',SCENES[scene].root*1.5,upperGain);
+      lowFilter.frequency.value=620; lowFilter.Q.value=.55; lowFilter.connect(padBus);
+      lowOsc=makeOsc('triangle', SCENES[scene].root,lowFilter);
+      // A near-sub octave and two slightly dissonant upper drones create
+      // an ominous moving texture while retaining audible harmonics.
+      const upperGain = gainNode(.46,lowFilter);
+      highOsc=makeOsc('triangle',SCENES[scene].root*1.4983,upperGain);
+      const subGain = gainNode(.60,lowFilter);
+      subOsc=makeOsc('sine',SCENES[scene].root*.5,subGain);
+      const dreadGain = gainNode(.14,lowFilter);
+      dreadOsc=makeOsc('sawtooth',SCENES[scene].root*1.061,dreadGain);
       const shimmer = ctx.createBiquadFilter(); shimmer.type='bandpass';
-      shimmer.frequency.value=2100; shimmer.Q.value=.4;
-      const textureGain=gainNode(.009,musicBus);
+      shimmer.frequency.value=710; shimmer.Q.value=.55;
+      const textureGain=gainNode(.019,musicBus);
       shimmer.connect(textureGain);
       noiseBuffer = makeNoiseBuffer();
       air=ctx.createBufferSource(); air.buffer=noiseBuffer; air.loop=true;
@@ -137,52 +149,65 @@
     if (!ctx) return;
     const settings=SCENES[scene];
     const root=settings.root;
-    smooth(lowOsc.frequency,root,.5);
+    smooth(lowOsc.frequency,root,.7);
     smooth(highOsc.frequency,scene==='trace'?root*1.4142:root*1.4983,.6);
-    smooth(padBus.gain,settings.pad,scene==='trace'?.08:.8);
+    smooth(subOsc.frequency,root*.5,.9);
+    smooth(dreadOsc.frequency,root*1.061,.75);
+    smooth(padBus.gain,settings.pad,scene==='trace'?.08:.75);
     if (scene==='trace') {riserAt=ctx.currentTime;}
     if (enabled) smooth(master.gain,.81,.12);
   }
   function scheduleStep(when, i) {
-    const conf=SCENES[scene], active=scene;
-    const intensity= (active==='wire'||active==='brute') ? (level-1)/4 : 0;
-    const melody=MELODY[active], pitch=melody[i%16];
-    const halfbar=i%8, root=conf.root;
-    const boost=1 + .30*intensity;
+    const conf = SCENES[scene], active = scene;
+    const tension = (active==='breach'||active==='trace') ? 1 : (active==='jammer' ? .6 : .3);
+    const pulse = conf.rhythm;
+    const pitch = MELODY[active][i % 16];
+    const root = conf.root;
+    // Sparse, low-register, dissonant melody rather than bright arcade notes.
     if (pitch!==null) {
-      const hz=root*4*STEPS[pitch];
-      const bright=active==='trace' || active==='brute';
-      voice(hz,when,active==='archive'?.47:.19,{wave:bright?'square':'triangle',vol:(active==='archive'?.033:.029)*boost,
-        end:hz*(active==='trace'?.985:1),filter:bright?1700:2600});
-      if ((i%16)===0 && (active==='archive'||active==='login'))
-        voice(hz/2,when,.7,{wave:'sine',vol:.033});
+      const hz = root * 1.85 * STEPS[pitch];
+      voice(hz,when,active==='archive'?1.9:.85,{
+        wave:(i%4===0?'triangle':'sine'),vol:active==='archive'?.025:.029,
+        end:hz*.97,attack:.07,filter:800
+      });
+      if (i%8===0) voice(hz*.5,when,1.6,{wave:'sine',vol:.046,attack:.11,filter:250});
     }
-    if (halfbar===0 || (active==='trace'&&i%4===0) || (active==='brute'&&i%8===4)) {
-      const bassFreq = root*((Math.floor(i/16)%4)===1 ? 1.05946:1);
-      voice(bassFreq,when,active==='trace'?.39:.45,{wave:'sine',vol:active==='trace'?.13:.075*boost,end:bassFreq*.91,attack:.018});
-      if (conf.rhythm>.45) voice(97,when,.17,{wave:'sine',vol:.066*conf.rhythm,end:36,attack:.009});
+    // A deep double heartbeat and speaker-friendly harmonics.
+    if (i%8===0 || (pulse>.7 && i%4===0)) {
+      voice(root*.82,when,.84,{wave:'sine',vol:.16+.035*tension,end:root*.48,attack:.021,filter:260});
+      voice(root*1.64,when,.65,{wave:'triangle',vol:.039+.012*tension,end:root*1.10,attack:.018,filter:390});
     }
-    const rhythm=conf.rhythm;
-    if ((i%2===1 && rhythm>.40) || (i%4===2 && rhythm>.27))
-      noiseClick(when,.007+(rhythm*.012),.018+intensity*.008,2700);
-    if (active==='terminal' && i%4===3) voice(988,when,.055,{wave:'sine',vol:.008,end:840});
-    if (active==='wire' && i%4===1) voice(230+intensity*110,when,.095,{wave:'sawtooth',vol:.006,end:170,filter:590});
-    if (active==='brute' && i%2===0) voice(430+i%8*35,when,.048,{wave:'square',vol:.004,end:380,filter:780});
-    if (active==='reboot' && i%4===0) voice(170+i*25,when,.45,{wave:'sawtooth',vol:.014,end:300+i*27,filter:900});
+    if (i%16===2) voice(root*.92,when,.30,{wave:'sine',vol:.080,end:root*.7,attack:.014,filter:230});
+    // Slow metallic groans and a minor-second harmonic swell.
+    if (i%16===6 || (tension && i%16===14)) {
+      voice(root*2.07,when,1.4,{wave:'sawtooth',vol:.014+.008*tension,end:root*1.65,attack:.22,filter:370});
+      voice(root*2.19,when,1.1,{wave:'triangle',vol:.017,end:root*1.9,attack:.18,filter:470});
+    }
+    if ((i%2===1&&pulse>.45)||(i%4===2&&pulse>.3))
+      noiseClick(when,.004+.007*pulse,.033,1100);
+    if (active==='terminal'&&i%4===3)
+      voice(246,when,.18,{wave:'square',vol:.009,end:124,filter:420});
+    if (active==='breach') {
+      if (i%2===0) voice(175+(i%8)*16,when,.11,{wave:'square',vol:.013,end:108,filter:570});
+      if (i%8===5) voice(137,when,.75,{wave:'sawtooth',vol:.026,end:65,filter:360});
+      if (i%4===3) noiseClick(when,.012,.063,650);
+    }
+    if (active==='jammer'&&i%4===1) voice(205,when,.16,{wave:'triangle',vol:.015,end:102,filter:480});
+    if (active==='reboot'&&i%4===0) voice(116,when,.65,{wave:'sawtooth',vol:.019,end:62,filter:380});
     if (active==='trace') {
+      // Pulsed low siren and distorted descent. No high-pitched shrieking.
       if (i%4===0) {
-        // Alternating alarm harmonics, intentionally unsettling without max volume.
-        voice(735,when,.51,{wave:'sawtooth',vol:.035,end:390,filter:1800});
-        voice(386,when,.63,{wave:'square',vol:.014,end:510,filter:1000});
+        voice(310,when,.72,{wave:'sawtooth',vol:.057,end:144,filter:920});
+        voice(104,when,.83,{wave:'square',vol:.036,end:53,filter:400});
       }
-      if (i%8===6) voice(70,when,.62,{wave:'sawtooth',vol:.029,end:42,filter:430});
-      if (i%2===0) noiseClick(when,.018,.047,1200);
+      if (i%8===6) voice(74,when,.9,{wave:'sawtooth',vol:.040,end:38,filter:240});
+      if (i%2===0) noiseClick(when,.018,.055,710);
     }
   }
   function schedule() {
     if (!ctx || !enabled || document.hidden || ctx.state!=='running') return;
     const conf=SCENES[scene];
-    const intensity=(scene==='wire'||scene==='brute') ? (level-1)/4:0;
+    const intensity=(scene==='wire'||scene==='brute'||scene==='jammer') ? (level-1)/4:0;
     const eighth=30/(conf.bpm*(1+intensity*.22));
     const at=ctx.currentTime;
     if (nextStepAt<at-.30) nextStepAt=at+.03;
@@ -199,36 +224,36 @@
   }
   function click() {
     const now=Date.now(); if (now-lastClick<35) return;lastClick=now;
-    note(570,.041,'square',.012,0,410); note(890,.031,'triangle',.01,.019);
+    note(185,.054,'square',.012,0,111); note(308,.046,'triangle',.009,.018,162);
   }
   function page() {
-    note(175,.24,'triangle',.021,0,260);
-    note(340,.21,'sine',.019,.08,510);
-    note(690,.20,'sine',.011,.23);
+    note(118,.48,'triangle',.028,0,67);
+    note(184,.41,'sine',.026,.09,96);
+    note(208,.24,'sine',.011,.22,151);
   }
   function error() {
-    note(197,.31,'sawtooth',.034,0,98);
-    note(143,.35,'square',.019,.13,76);
+    note(127,.49,'sawtooth',.038,0,43);
+    note(83,.51,'square',.021,.13,36);
   }
-  function success() { [294,349.23,440,587.33].forEach((hz,i)=>note(hz,.22,'triangle',.025,i*.10)); }
+  function success() { [98,116.54,174.61,146.83].forEach((hz,i)=>note(hz,.39,'triangle',.025,i*.09)); }
   function reboot() {
-    note(102,.9,'sawtooth',.020,0,48);
-    [174,233,311,466,622].forEach((hz,i)=>note(hz,.28,'triangle',.016,.48+i*.19));
+    note(65,.99,'sawtooth',.035,0,36);
+    [104,131,156,174,117].forEach((hz,i)=>note(hz,.36,'triangle',.024,.4+i*.16));
   }
   function alarm() {
-    note(960,.6,'sawtooth',.032,0,440);
-    note(77,.9,'triangle',.059,.11,37);
-    note(655,.52,'sawtooth',.026,.78,305);
+    note(350,.7,'sawtooth',.055,0,129);
+    note(69,.95,'triangle',.085,.08,34);
+    note(290,.72,'sawtooth',.041,.72,117);
   }
   function accent(kind='tab') {
     if (kind==='redacted') {
-      note(415,.54,'sawtooth',.022,0,210);note(292,.62,'triangle',.018,.16,141);
+      note(154,.66,'sawtooth',.024,0,71);note(195,.81,'triangle',.016,.14,83);
     } else if (kind==='scan') {
-      [256,323,422,566].forEach((hz,i)=>note(hz,.12,'triangle',.014,i*.085));
+      [104,123,166,148].forEach((hz,i)=>note(hz,.17,'triangle',.017,i*.085));
     } else if (kind==='dossier') {
-      note(220,.19,'triangle',.018);note(329.6,.27,'sine',.011,.13);
+      note(110,.33,'triangle',.018);note(164.8,.41,'sine',.015,.13);
     } else if (kind==='tab') {
-      note(450,.065,'sine',.009,0,620);
+      note(178,.10,'sine',.011,0,113);
     }
   }
   function setMode(next) {
@@ -259,7 +284,7 @@
     smooth(master.gain,.81,.05);
     nextStepAt=ctx.currentTime+.08;
     const t=ctx.currentTime+.035;
-    [330,392,440,587.33].forEach((hz,i)=>voice(hz,t+i*.13,.7,{wave:i%2?'sine':'triangle',vol:.115,attack:.025,filter:2100}));
+    [73.42,77.78,138.59,146.83].forEach((hz,i)=>voice(hz,t+i*.18,1.15,{wave:i%2?'sine':'triangle',vol:.094,attack:.065,filter:580}));
   }
   function bindControls() {
     const slider=document.getElementById('musicVolume');
