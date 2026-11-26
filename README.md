@@ -1,6 +1,16 @@
-# The Observatory // Cortex Private Vault (V12)
+# The Observatory // Cortex Private Vault (V13)
 
 A fictional interactive archive website. V8 revises **the presentation of the V6 archive** so visitors see Cortex's own files, as though they have gained access to his private recovery system. The dossiers are not a player briefing or a set of missions.
+
+## V13 — Live update notifications
+
+- The website now checks the publicly deployed `index.html` for a newer release roughly every **60 seconds** while the page is visible. It also checks after returning to the tab or reconnecting to the internet.
+- When it detects a different published version, a **NEW VERSION AVAILABLE** alert appears, with **REFRESH NOW** (reload the site with a fresh URL) and **LATER** (dismiss until another release) controls. There is **no automatic reload**, so someone reading Cortex's files or playing a game is never forcibly interrupted.
+- The alert is hidden during active terminal, minigame, cinematic breach, reboot, and location-cutoff screens.
+- For each subsequent website release, **increment `<meta name="observatory-release" content="v13">` inside `index.html`** to the new release number. Without changing this marker, the update detector cannot distinguish a new release from the current one. Version query strings on changed assets (e.g. `styles.css?v=13`) should also be incremented to avoid stale browser caches.
+- New file `release-check.js` is required at the repository root. There are now **ten** main root files: `index.html`, `styles.css`, `data.js`, `archive.js`, `audio.js`, `app.js`, `surveillance.js`, `breach.js`, `release-check.js`, `README.md`.
+- Already-open older browser tabs that have **not yet loaded the V13 detector** cannot display this notice until refreshed once. Future releases will be detected by those tabs.
+- The check is same-origin and entirely browser-side. It sends no usage data and requires no server or third-party service.
 
 ## V12 — Cinematic intrusion and darker horror soundtrack
 
@@ -64,7 +74,7 @@ A fictional interactive archive website. V8 revises **the presentation of the V6
 ## Publish on GitHub Pages
 
 1. Extract this ZIP.
-2. Upload all **nine files** to the root of your existing `observatory-rp` GitHub repository, replacing the old versions.
+2. Upload all **ten files** to the root of your existing `observatory-rp` GitHub repository, replacing the old versions.
 3. Commit. GitHub Pages updates the published site automatically when configured to deploy from `main` / `/(root)`.
 4. If you still see the previous version, hard-refresh the page or reopen it in a private browser tab to avoid cached JavaScript.
 
