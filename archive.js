@@ -84,7 +84,7 @@
         <div class="intercept-top"><span>◈ ENTRY_${stripCount(i+1)} / ${esc(head)}</span><em>${esc(origin)}</em></div>
         <p>${fragmentLine(line)}</p><div class="intercept-foot">[ END EXCERPT ] <span>${i%2===0?'INTEGRITY: PARTIAL':'RECOVERED / UNVERIFIED'}</span></div>
       </article>`).join('')}</div>`:'<div class="empty-relations">RECOVERED FRAGMENT REGISTER EMPTY.</div>'}
-      <div class="intel-stamp">CORTEX // TIFF LAST SEEN: VINEWOOD SIGN // CURRENT POSITION UNKNOWN</div>`;
+      <div class="intel-stamp">CORTEX // TIFF LAST SIGNAL: HARMONY RADIO TOWER // FACE ID UNCONFIRMED</div>`;
   }
   function renderOverview(r) {
     if (r.completeness === 'EMPTY') return `
@@ -119,7 +119,7 @@
     const issues = r.questions || [];
     return `${sectionTitle('04','UNRESOLVED INTELLIGENCE',`${stripCount(issues.length)} OPEN`)}
       ${issues.length?`<div class="question-list">${issues.map((q,i)=>`<article class="question-row"><span>Q-${stripCount(i+1)}</span><p>${esc(q)}</p><em>OPEN</em></article>`).join('')}</div>`:`<div class="empty-relations">NO UNRESOLVED QUERY FLAGS. RECORD BODY ${r.kind==='redacted'?'WITHDRAWN':'AWAITING INPUT'}.</div>`}
-      <div class="archive-notice">LAST SIGNAL: VINEWOOD SIGN // NO VERIFIED LIVE COORDINATES // CORRELATION UNRESOLVED.</div>`;
+      <div class="archive-notice">LATEST SIGNAL: HARMONY RADIO TOWER // PRIOR: VINEWOOD SIGN // FACIAL CORRELATION ACTIVE // NO VERIFIED LIVE POSITION.</div>`;
   }
   function renderNotes(r) {
     const notes = getNotes();
@@ -147,7 +147,7 @@
     $('recordPanel').classList.toggle('is-redacted',redacted);
     $('recordPanel').innerHTML = `
       <div class="record-topline"><span><i class="signal-dot"></i> ${redacted?'SIGNAL REJECTED':'DECRYPTION PARTIAL'} / ${esc(r.id)}</span><span>OBSERVATORY // ${esc(r.category)}</span></div>
-      <div class="vault-intercept"><span>◉ CROSS-INDEX UPDATE // SUB-TIFF</span><strong>SIGNAL FOUND // LAST SEEN: VINEWOOD SIGN</strong><small>TRACE LOST // CURRENT POSITION UNVERIFIED</small></div>
+      <div class="vault-intercept"><span>◉ CROSS-INDEX UPDATE // SUB-TIFF</span><strong>NEW SIGNAL DETECTED // HARMONY RADIO TOWER</strong><small>PRIOR: VINEWOOD SIGN // FACE SCANS ACTIVE // CURRENT POSITION UNKNOWN</small></div>
       <div class="record-banner ${redacted?'withdrawn-banner':''}">
         <div class="banner-copy"><span class="banner-eyebrow">${redacted?'[ REMOVED FROM ACTIVE RECORDS ]':`ARCHIVE / ${esc(r.label).toUpperCase()} / ${esc(r.id)}`}</span><div class="banner-title-row"><h2 class="${redacted?'crossed-title':''}">${esc(r.name)}</h2><span class="archive-seal ${redacted?'red-seal':''}">${redacted?'VOID':r.completeness==='EMPTY'?'PENDING':'RECOVERED'}</span></div><p>${esc(r.excerpt)}</p><div class="banner-tags"><span>${esc(r.status)}</span><span>${esc(r.clearance)}</span><span>${esc(r.completeness)}</span></div></div>
         <div class="banner-art" aria-hidden="true"><div class="art-circle"></div><div class="art-cross"></div><div class="art-character">${redacted?'✕':r.kind==='case'?'◈':r.completeness==='EMPTY'?'?':'⌁'}</div><span>${esc(r.id)}</span></div>
