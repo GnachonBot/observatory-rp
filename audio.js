@@ -92,8 +92,9 @@
       lowOsc=makeOsc('triangle', SCENES[scene].root,lowFilter);
       // A near-sub octave and two slightly dissonant upper drones create
       // an ominous moving texture while retaining audible harmonics.
-      const upperGain = gainNode(.46,lowFilter);
-      highOsc=makeOsc('triangle',SCENES[scene].root*1.4983,upperGain);
+      // 200–250 Hz harmonic makes the low drone audible on phone speakers.
+      const upperGain = gainNode(.35,lowFilter);
+      highOsc=makeOsc('triangle',SCENES[scene].root*2.9966,upperGain);
       const subGain = gainNode(.60,lowFilter);
       subOsc=makeOsc('sine',SCENES[scene].root*.5,subGain);
       const dreadGain = gainNode(.14,lowFilter);
@@ -150,7 +151,7 @@
     const settings=SCENES[scene];
     const root=settings.root;
     smooth(lowOsc.frequency,root,.7);
-    smooth(highOsc.frequency,scene==='trace'?root*1.4142:root*1.4983,.6);
+    smooth(highOsc.frequency,scene==='trace'?root*2.8284:root*2.9966,.6);
     smooth(subOsc.frequency,root*.5,.9);
     smooth(dreadOsc.frequency,root*1.061,.75);
     smooth(padBus.gain,settings.pad,scene==='trace'?.08:.75);
