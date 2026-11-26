@@ -11,6 +11,7 @@
   <script defer src="archive.js"></script>
   <script defer src="audio.js"></script>
   <script defer src="app.js"></script>
+  <script defer src="surveillance.js"></script>
 </head>
 <body>
   <div class="screen-grain" aria-hidden="true"></div>
@@ -87,10 +88,36 @@
       </header>
       <section class="mission-banner" aria-label="Recovered private memorandum">
         <span class="mission-dot" aria-hidden="true"></span>
-        <div class="mission-objective"><small>PERSONAL MEMO 001 // UNSENT // CORTEX</small><strong>TIFFY LOU // SIGNAL FOUND</strong><span>Last seen: Vinewood Sign. Signal lost again. No reunion confirmed. No blood sample.</span></div>
+        <div class="mission-objective"><small>INTERCEPT ALERT 002 // PRIVATE // CORTEX</small><strong>SUB-TIFF // NEW SIGNAL DETECTED</strong><span>Last scan: Harmony Radio Tower. Previous marker: Vinewood Sign. No confirmed visual identification.</span></div>
         <div class="mission-buttons" id="directiveActions"><button type="button" data-mission-file="SUB-TIFF">SUB-TIFF ↗</button><button type="button" data-mission-file="SUB-DELILAH">SUB-DELILAH ↗</button><button type="button" data-mission-file="CASE-BLACKVEIN">BV-INDEX ↗</button></div>
       </section>
-      <section class="archive-hero" aria-label="Archive system overview"><div class="archive-hero-left"><div class="archive-overline">◈ NODE_001 / DATABASE ONLINE <span class="archive-led"></span></div><h2>SIGNAL<br><span>FOUND.</span></h2><p>TIFFY LOU // LAST SEEN: VINEWOOD SIGN. A location marker surfaced during the latest sweep. No sustained signal or confirmed current address. Delilah Grace remains under observation; no reunion verified.</p><span class="archive-micro">LAST INTERCEPT: VINEWOOD SIGN // LIVE POSITION UNKNOWN</span></div><div class="archive-hero-right"><div class="signal-radar" aria-hidden="true"><div class="radar-circle r1"></div><div class="radar-circle r2"></div><div class="radar-circle r3"></div><div class="radar-scan"></div><span class="radar-eye">◈</span></div><div class="radar-caption">SUB-TIFF // LAST SEEN: VINEWOOD SIGN</div></div></section>
+      <section class="archive-hero" aria-label="Archive system overview"><div class="archive-hero-left"><div class="archive-overline">◈ NODE_001 / DATABASE ONLINE <span class="archive-led"></span></div><h2>NEW SIGNAL<br><span>DETECTED.</span></h2><p>TIFFY LOU // LAST SCAN: HARMONY RADIO TOWER. The newer signal supersedes the Vinewood Sign intercept. Extra cameras are being swept across Los Santos and Blaine County. Facial correlation is active; no confirmed match or current position.</p><span class="archive-micro">LATEST INTERCEPT: HARMONY RADIO TOWER // VISUAL ID UNCONFIRMED</span></div><div class="archive-hero-right"><div class="signal-radar" aria-hidden="true"><div class="radar-circle r1"></div><div class="radar-circle r2"></div><div class="radar-circle r3"></div><div class="radar-scan"></div><span class="radar-eye">◈</span></div><div class="radar-caption">SUB-TIFF // LAST SCAN: HARMONY RADIO TOWER</div></div></section>
+      <section id="citySurveillance" class="city-surveillance" aria-label="City camera sweep and facial correlation">
+        <div class="city-sweep-head">
+          <div><div class="sweep-kicker">◉ CORTEX / SECONDARY SURVEILLANCE ARRAY</div><h3>CITYWIDE SCAN <span>ACTIVE</span></h3><p>Latest signal: <strong>Harmony Radio Tower</strong>. Camera sweeps expanded after the Vinewood Sign intercept. Target visual identification still unconfirmed.</p></div>
+          <div class="sweep-head-tools"><span class="sweep-pass-label">SCAN CYCLE <b id="sweepPass">001</b></span><button id="rerunCityScan" type="button" class="sweep-rerun">↻ FORCE NEW SCAN</button></div>
+        </div>
+        <div class="city-feed-grid">
+          <article class="city-feed feed-priority" data-sweep-sector="HARMONY">
+            <div class="city-feed-visual scenery-tower"><div class="scene-structures" aria-hidden="true"></div><div class="camera-scanline" aria-hidden="true"></div><div class="face-target" aria-hidden="true"><span>?</span></div><div class="feed-topline"><span>CH-01 // HARMONY</span><span class="feed-live">● SIGNAL</span></div><span class="feed-visual-label">RADIO TOWER // LAST INTERCEPT</span></div>
+            <div class="feed-meta"><strong>HARMONY / TOWER</strong><span class="face-result" data-sweep-result="HARMONY">SIGNAL RECORDED / FACE UNKNOWN</span></div>
+          </article>
+          <article class="city-feed" data-sweep-sector="VINEWOOD">
+            <div class="city-feed-visual scenery-vinewood"><div class="scene-structures" aria-hidden="true"></div><div class="camera-scanline" aria-hidden="true"></div><div class="face-target" aria-hidden="true"><span>?</span></div><div class="feed-topline"><span>CH-07 // VINEWOOD</span><span class="feed-live">● SCANNING</span></div><span class="feed-visual-label">PREVIOUS SIGNAL // CAM GRID</span></div>
+            <div class="feed-meta"><strong>VINEWOOD / WEST</strong><span class="face-result" data-sweep-result="VINEWOOD">FACIAL SWEEP / NO MATCH</span></div>
+          </article>
+          <article class="city-feed" data-sweep-sector="DOWNTOWN">
+            <div class="city-feed-visual scenery-downtown"><div class="scene-structures" aria-hidden="true"></div><div class="camera-scanline" aria-hidden="true"></div><div class="face-target" aria-hidden="true"><span>?</span></div><div class="feed-topline"><span>CH-12 // DOWNTOWN</span><span class="feed-live">● SCANNING</span></div><span class="feed-visual-label">LOS SANTOS // CITY CAMS</span></div>
+            <div class="feed-meta"><strong>DOWNTOWN / L.S.</strong><span class="face-result" data-sweep-result="DOWNTOWN">FACIAL SWEEP / NO MATCH</span></div>
+          </article>
+          <article class="city-feed" data-sweep-sector="SANDY">
+            <div class="city-feed-visual scenery-sandy"><div class="scene-structures" aria-hidden="true"></div><div class="camera-scanline" aria-hidden="true"></div><div class="face-target" aria-hidden="true"><span>?</span></div><div class="feed-topline"><span>CH-18 // SANDY</span><span class="feed-live">● SCANNING</span></div><span class="feed-visual-label">BLAINE COUNTY // ROAD NETWORK</span></div>
+            <div class="feed-meta"><strong>SANDY SHORES</strong><span class="face-result" data-sweep-result="SANDY">FACIAL SWEEP / NO MATCH</span></div>
+          </article>
+        </div>
+        <div class="city-sweep-bottom"><span>FACE DETECTION <b id="faceScanState">CORRELATING...</b></span><span>SEARCH ZONE <b>LOS SANTOS / BLAINE COUNTY</b></span><span>VERIFIED MATCHES <b id="faceMatchTotal">00</b></span></div>
+        <div class="city-sweep-console"><div class="sweep-console-caption">◈ AUTOMATED CAMERA QUERY // LAST RESULTS</div><div id="cityScanLog" class="city-scan-log" aria-live="off"><p>&gt; [HARMONY-R02] SUB-TIFF SIGNAL REGISTERED. SIGNAL LOST. EXPANDING CAMERA INDEX...</p></div></div>
+      </section>
       <div class="archive-metrics" aria-label="Archive counts"><div><span>ARCHIVE ENTRIES</span><strong id="metricTotal">16</strong></div><div><span>LINKED CASES</span><strong id="metricCases">07</strong></div><div><span>WITHDRAWN FILES</span><strong id="metricRedacted">03</strong></div><div><span>CONNECTION STATUS</span><strong class="live-text">● LIVE</strong></div></div>
       <div class="archive-body">
         <aside class="archive-sidebar" aria-label="Dossier directory">
@@ -99,11 +126,11 @@
           <div class="archive-filters" id="archiveFilters" aria-label="Filter archive files"><button type="button" class="active" data-filter="ALL">ALL FILES</button><button type="button" data-filter="PERSONNEL">SUBJECTS</button><button type="button" data-filter="LINKED CASE">CASES</button><button type="button" data-filter="REDACTED">REDACTED</button></div>
           <div class="file-count"><span id="wikiCount">16 / 16 FILES</span><span>INDEX / UNSYNCED</span></div>
           <nav id="wikiCards" class="archive-file-list" aria-label="Available records"></nav>
-          <div class="sidebar-terminal"><div><span class="status-pulse"></span> CORTEX // PERSONAL SIGNAL LOG</div><p>TIFFY LOU <span class="missing-red">[ VINEWOOD SIGN ]</span><br>DELILAH GRACE <span>[ SIGNAL ACTIVE ]</span><br>VEIL HOST <span>[ NOT RESOLVED ]</span></p><button id="sidebarConsole" type="button">&gt;_ OPEN ARCHIVE TERMINAL ↵</button></div>
+          <div class="sidebar-terminal"><div><span class="status-pulse"></span> CORTEX // PERSONAL SIGNAL LOG</div><p>TIFFY LOU <span class="missing-red">[ HARMONY TOWER ]</span><br>DELILAH GRACE <span>[ SIGNAL ACTIVE ]</span><br>VEIL HOST <span>[ NOT RESOLVED ]</span></p><button id="sidebarConsole" type="button">&gt;_ OPEN ARCHIVE TERMINAL ↵</button></div>
         </aside>
         <section id="recordPanel" class="record-panel" aria-label="Selected dossier" aria-live="polite"></section>
       </div>
-      <footer class="wiki-foot"><p>LAST BACKUP: INCOMPLETE // TIFF: LAST SEEN VINEWOOD SIGN // MIB NODE: CORTEX</p><button id="resetDemo" type="button" class="text-button">ERASE LOCAL CACHE + RESET</button></footer>
+      <footer class="wiki-foot"><p>LAST BACKUP: INCOMPLETE // TIFF: HARMONY RADIO TOWER // CITY SCAN ACTIVE // MIB NODE: CORTEX</p><button id="resetDemo" type="button" class="text-button">ERASE LOCAL CACHE + RESET</button></footer>
     </section>
   </main>
 
