@@ -11,6 +11,7 @@
   <script defer src="archive.js"></script>
   <script defer src="audio.js"></script>
   <script defer src="app.js"></script>
+  <script defer src="breach.js"></script>
   <script defer src="surveillance.js"></script>
 </head>
 <body>
@@ -139,17 +140,16 @@
       <header class="window-title"><span id="terminalTitle"><span class="terminal-dot">●</span> OBSERVATORY_SHELL.exe</span><button id="closeTerminal" class="icon-button" aria-label="Close terminal">×</button></header>
       <div class="terminal-scroll" id="terminalScroll">
         <div class="terminal-log" id="terminalLog" aria-live="polite"></div>
-        <div class="terminal-options" id="terminalOptions">
-          <button type="button" data-route="wire"><b>01 // POWER OVERLOAD</b><span>Trace live circuits without releasing your connection.</span></button>
-          <button type="button" data-route="brute"><b>02 // BRUTE FORCE</b><span>Re-enter changing encrypted strings before time expires.</span></button>
+        <div class="terminal-options intrusion-options" id="terminalOptions">
+          <button type="button" id="beginIntrusion"><b>◈ EXECUTE ARCHIVE BREACH</b><span>INJECT PAYLOAD / SPOOF INTERNAL ACCESS / FORCE SYSTEM REBOOT</span><i class="intrusion-option-led" aria-hidden="true">● AUTOMATED SEQUENCE READY</i></button>
         </div>
         <div id="traceJammerEntry" class="trace-jammer-entry hidden">
           <button type="button" id="launchTraceJammer"><b>03 // TRACE JAMMER</b><span>FIVE MEMORY LEVELS / PROGRESSIVE TRACE CONTROL</span></button>
           <p id="traceJammerStatus">MEMORY GRID READY // TRACE LINK ACTIVE</p>
         </div>
-        <form id="terminalForm" class="terminal-prompt" autocomplete="off"><label for="terminalInput">guest@observatory:~$</label><input id="terminalInput" type="text" spellcheck="false" aria-label="Terminal command" placeholder="help / overload / bruteforce / status" maxlength="80"><button type="submit" aria-label="Run command">↵</button></form>
+        <form id="terminalForm" class="terminal-prompt" autocomplete="off"><label for="terminalInput">guest@observatory:~$</label><input id="terminalInput" type="text" spellcheck="false" aria-label="Terminal command" placeholder="breach / status / help" maxlength="80"><button type="submit" aria-label="Run command">↵</button></form>
       </div>
-      <div class="window-footer"><span id="terminalFooterLeft">EMERGENCY RECOVERY CHANNELS</span><span id="terminalTTL">SHELL TTL / 05:00</span></div>
+      <div class="window-footer"><span id="terminalFooterLeft">INTRUSION PROTOCOL // READY</span><span id="terminalTTL">SHELL TTL / 05:00</span></div>
     </section>
   </div>
 
@@ -158,6 +158,25 @@
       <header class="window-title"><span id="gameTitle">RECOVERY PROTOCOL</span><button id="closeGame" class="icon-button" aria-label="Abort game">×</button></header>
       <div class="game-content" id="gameContent"></div>
     </section>
+  </div>
+
+
+  <div id="breachLayer" class="breach-layer hidden" role="dialog" aria-modal="true" aria-labelledby="breachHeadline" aria-hidden="true">
+    <div class="breach-matrix" id="breachMatrix" aria-hidden="true"></div>
+    <div class="breach-frame">
+      <div class="breach-frame-top"><span>◉ OBSERVATORY // UNAUTHORISED UPLINK</span><span id="breachChannel">CHANNEL 0x7F // UNKNOWN</span></div>
+      <div class="breach-core">
+        <div class="breach-mark" aria-hidden="true"><span class="breach-ring ring-a"></span><span class="breach-ring ring-b"></span><span class="breach-ring ring-c"></span><span class="breach-eye">◈</span></div>
+        <div class="breach-detail"><span class="breach-eyebrow">INTRUSION // ACTIVE</span><h2 id="breachHeadline">ESTABLISHING<br>CONNECTION<span class="breach-cursor">_</span></h2><p id="breachSubline">Spoofing trusted terminal signature...</p><div class="breach-tags"><span id="breachAuth">AUTH: DENIED</span><span id="breachNode">NODE: UNRESOLVED</span></div></div>
+      </div>
+      <div class="breach-glitch-display">
+        <div class="breach-console-top"><span>ROOT@OBSERVATORY:~#</span><span>LIVE PACKET STREAM</span></div>
+        <pre id="breachConsole" aria-live="off">> initiating kernel probe...</pre>
+      </div>
+      <div class="breach-progress-label"><span id="breachProgressText">BREACH PROGRESS // DECRYPTING</span><b id="breachPercent">00%</b></div>
+      <div class="breach-progress-track"><div id="breachProgressFill"></div></div>
+      <div class="breach-footer"><span id="breachFooterStatus">ENCRYPTED ACCESS NODE // SECURITY ACTIVE</span><button id="abortIntrusion" type="button" class="breach-abort">✕ TERMINATE LINK</button></div>
+    </div>
   </div>
 
   <div id="rebootLayer" class="reboot-layer hidden" role="status" aria-live="polite">
