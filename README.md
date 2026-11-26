@@ -1,6 +1,15 @@
-# The Observatory // Cortex Private Vault (V10)
+# The Observatory // Cortex Private Vault (V11)
 
 A fictional interactive archive website. V8 revises **the presentation of the V6 archive** so visitors see Cortex's own files, as though they have gained access to his private recovery system. The dossiers are not a player briefing or a set of missions.
+
+## New in V11 — Harmony Radio Tower / citywide facial-correlation simulation
+
+- **New story intercept:** A new Tiff-associated signal is logged at **Harmony Radio Tower**. The **Vinewood Sign** remains the previous signal, not the latest lead. No current position or confirmed image of Tiff has been obtained.
+- The archive dashboard and **all 16 dossier views** display a cross-index strip with the newest Harmony trace.
+- An **animated citywide surveillance panel** runs automatic simulated scan cycles across Harmony, Vinewood, Downtown Los Santos and Sandy Shores. Feed images, scan lines, facial targeting boxes, rolling activity messages and unverified candidate states are locally generated visual effects.
+- **FORCE NEW SCAN** manually triggers another sweep and an existing sound effect. No real camera, facial recognition, location permission or external service is used.
+- Cortex's private notes and linked cases now reference the Harmony intercept and expanded sweeps while keeping his knowledge limited; Delilah's memory recovery remains unknown to him.
+- New file **surveillance.js** is required. Publish **eight** root-level website files (index.html, styles.css, data.js, archive.js, audio.js, app.js, surveillance.js, README.md).
 
 ## What changed in V10
 
@@ -45,7 +54,7 @@ A fictional interactive archive website. V8 revises **the presentation of the V6
 ## Publish on GitHub Pages
 
 1. Extract this ZIP.
-2. Upload all **seven files** to the root of your existing `observatory-rp` GitHub repository, replacing the old versions.
+2. Upload all **eight files** to the root of your existing `observatory-rp` GitHub repository, replacing the old versions.
 3. Commit. GitHub Pages updates the published site automatically when configured to deploy from `main` / `/(root)`.
 4. If you still see the previous version, hard-refresh the page or reopen it in a private browser tab to avoid cached JavaScript.
 
