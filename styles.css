@@ -257,3 +257,27 @@ body:has(.trace-layer:not(.hidden)) .sound-toggle{border-color:#ad4b4b;backgroun
 @media(prefers-reduced-motion:reduce){.breach-matrix,.breach-ring,.breach-eye,.breach-layer:before,.breach-layer:after,.breach-cursor,.breach-alert .breach-frame{animation:none!important}}
 
 .breach-layer{align-items:safe center}
+
+
+/* V13 LIVE RELEASE UPDATE NOTICE */
+.site-update-notice{position:fixed;z-index:110;top:18px;right:18px;width:min(360px,calc(100vw - 24px));border:1px solid #83bd8f;background:linear-gradient(135deg,#122a19f5,#08130cfa 75%);box-shadow:0 18px 60px #000d,0 0 35px #68ca8440;padding:17px 19px;color:#d5e9d9;backdrop-filter:blur(12px);animation:siteUpdateEnter .28s ease-out}
+.site-update-notice:before{content:"";position:absolute;inset:0 0 auto 0;height:2px;background:linear-gradient(90deg,#447e55,#c1efc9,#407c50);box-shadow:0 0 13px #90d9a9aa}
+.site-update-heading{color:#98c6a2;font:9px/1.6 var(--mono);letter-spacing:.13em;margin-bottom:7px}
+.site-update-led{color:#c4fac6;display:inline-block;margin-right:4px;animation:siteUpdateBlink 1.7s infinite}
+.site-update-notice>strong{font:normal 23px/1.15 var(--display);letter-spacing:.04em;color:#f3fff4}
+.site-update-notice>p{font:11px/1.7 var(--mono);color:#afc9b4;margin:9px 0 15px}
+.site-update-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.site-update-actions button{padding:11px 15px;border:1px solid #496a52;color:#c6dacb;background:#0d1c12;min-height:40px;font:10px var(--mono);letter-spacing:.07em}
+.site-update-actions .site-update-refresh{border-color:#91cb9e;color:#09170d;background:#b6e6bd;font-weight:700}
+.site-update-actions .site-update-refresh:hover,.site-update-actions .site-update-refresh:focus-visible{background:#e0fce2;border-color:#e0fce2}
+.site-update-actions .site-update-later:hover,.site-update-actions .site-update-later:focus-visible{background:#24432c;border-color:#91ba98}
+@keyframes siteUpdateEnter{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes siteUpdateBlink{50%{opacity:.3}}
+@media(max-width:550px){.site-update-notice{top:10px;right:10px;padding:14px 15px;width:calc(100vw - 20px)}.site-update-notice>strong{font-size:20px}}
+/* Do not cover active games, intrusion, reboot or the location-cutoff screen. */
+body:has(#gameModal:not(.hidden)) .site-update-notice,
+body:has(#terminalModal:not(.hidden)) .site-update-notice,
+body:has(#breachLayer:not(.hidden)) .site-update-notice,
+body:has(#rebootLayer:not(.hidden)) .site-update-notice,
+body:has(#traceLayer:not(.hidden)) .site-update-notice{visibility:hidden}
+@media(prefers-reduced-motion:reduce){.site-update-notice,.site-update-led{animation:none}}
