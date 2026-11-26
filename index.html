@@ -4,15 +4,17 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#050505">
+  <meta name="observatory-release" content="v13">
   <meta name="description" content="The Observatory classified intelligence archive and recovery gateway.">
   <title>THE OBSERVATORY // ACCESS</title>
-  <link rel="stylesheet" href="styles.css?v=12">
+  <link rel="stylesheet" href="styles.css?v=13">
   <script defer src="data.js"></script>
   <script defer src="archive.js"></script>
   <script defer src="audio.js?v=12"></script>
   <script defer src="app.js?v=12"></script>
   <script defer src="breach.js?v=12"></script>
   <script defer src="surveillance.js"></script>
+  <script defer src="release-check.js?v=13"></script>
 </head>
 <body>
   <div class="screen-grain" aria-hidden="true"></div>
@@ -201,6 +203,15 @@
     <input type="range" id="musicVolume" min="0" max="100" step="1" value="82" aria-label="Background music volume">
     <button type="button" id="testMusic" class="test-music" title="Hear a test chord and start the atmospheric soundtrack">▶ TEST MUSIC</button>
   </div>
+  <aside id="siteUpdateNotice" class="site-update-notice hidden" role="status" aria-live="polite" aria-atomic="true">
+    <div class="site-update-heading"><span class="site-update-led" aria-hidden="true">●</span> OBSERVATORY // REMOTE BUILD DETECTED</div>
+    <strong>NEW VERSION AVAILABLE</strong>
+    <p>The live archive has changed since this connection was established.</p>
+    <div class="site-update-actions">
+      <button id="applySiteUpdate" class="site-update-refresh" type="button">↻ REFRESH NOW</button>
+      <button id="dismissSiteUpdate" class="site-update-later" type="button">LATER</button>
+    </div>
+  </aside>
   <div id="toast" class="toast hidden" role="status"></div>
 </body>
 </html>
